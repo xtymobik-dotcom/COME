@@ -21,6 +21,7 @@ function init() {
 
   if (restoreSession()) {
     enterApp({ restored: true });
+    if (typeof cloudBootSync === "function") cloudBootSync();
   } else {
     document.documentElement.dataset.theme = "gallery";
     showLanding();
@@ -120,6 +121,18 @@ function formError(id, message) {
   void el.offsetWidth;
   el.classList.add("shake");
 }
+function authBusy(form, on, label) {
+  const btn = form.querySelector('button[type="submit"]');
+  if (!btn) return;
+  if (on) {
+    btn.dataset.label = btn.textContent;
+    btn.textContent = label;
+    btn.disabled = true;
+  } else {
+    btn.textContent = btn.dataset.label || btn.textContent;
+    btn.disabled = false;
+  }
+}
 function bindAuth() {
   document.querySelectorAll("[data-auth]").forEach(btn => {
     btn.addEventListener("click", () => openAuth(btn.dataset.auth));
@@ -133,12 +146,15 @@ function bindAuth() {
 
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
-    loginForm.addEventListener("submit", e => {
+    loginForm.addEventListener("submit", async e => {
       e.preventDefault();
       const username = document.getElementById("loginUsername").value;
       const pin = document.getElementById("loginPin").value;
-      const res = login(username, pin);
+      authBusy(loginForm, true, "Signing in…");
+      const res = await cloudLogin(username, pin);
+      authBusy(loginForm, false);
       if (!res.ok) { formError("loginError", res.error); return; }
+      formError("loginError", "");
       document.getElementById("loginPin").value = "";
       enterApp();
     });
@@ -146,13 +162,16 @@ function bindAuth() {
 
   const signupForm = document.getElementById("signupForm");
   if (signupForm) {
-    signupForm.addEventListener("submit", e => {
+    signupForm.addEventListener("submit", async e => {
       e.preventDefault();
       const name = document.getElementById("signupName").value;
       const username = document.getElementById("signupUsername").value;
       const pin = document.getElementById("signupPin").value;
-      const res = signup(name, username, pin);
+      authBusy(signupForm, true, "Creating…");
+      const res = await cloudSignup(name, username, pin);
+      authBusy(signupForm, false);
       if (!res.ok) { formError("signupError", res.error); return; }
+      formError("signupError", "");
       document.getElementById("signupPin").value = "";
       const first = res.user.name.split(" ")[0];
       enterApp({ newUser: true });
@@ -193,12 +212,14 @@ function setDbView(view) {
   if (user) renderPlanner();
 }
 function requestLogout() {
-  if (!window.confirm("Sign out of COME? Your studio stays saved in this browser.")) return;
+  if (!window.confirm("Sign out of COME? Your studio stays saved to your account.")) return;
+  const flushed = typeof cloudFlush === "function" ? cloudFlush() : Promise.resolve();
   logout();
   closeFocus();
   closeDock();
   showLanding();
   toast("Signed out. Your days are safe here.", "good");
+  Promise.resolve(flushed).then(() => { if (typeof cloudSignOut === "function") cloudSignOut(); });
 }
 function openSidebar() {
   const sidebar = document.getElementById("sidebar");

@@ -74,6 +74,7 @@ function loadDB() {
 }
 function save() {
   try { localStorage.setItem(STORE_KEY, JSON.stringify(DB)); } catch (e) { /* ignore */ }
+  if (typeof cloudQueueSync === "function") cloudQueueSync();
 }
 function hashPin(pin) {
   let h = 5381;

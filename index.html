@@ -924,7 +924,7 @@
         <label class="field"><span>4-digit PIN</span><input id="signupPin" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" placeholder="a number only you know" required /></label>
         <p class="form-error" id="signupError" role="alert"></p>
         <button class="btn btn-primary btn-block" type="submit">Create my studio</button>
-        <p class="auth-fine">Free · local-only · stored in this browser. Your PIN isn’t sent anywhere.</p>
+        <p class="auth-fine">Free · saved to your account, so you can sign in from any device.</p>
       </form>
 
       <div class="auth-ornament" aria-hidden="true">✦</div>
@@ -976,8 +976,11 @@
   <div id="toastStack" class="toast-stack" aria-live="polite"></div>
   <canvas id="confetti" class="confetti"></canvas>
 
+  <script src="js/cloud-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
   <script src="js/data.js"></script>
   <script src="js/store.js"></script>
+  <script src="js/cloud.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/render-more.js"></script>
   <script src="js/features.js"></script>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>COME · Admin</title>
+<style>
+  :root { --bg:#0a1228; --card:#122048; --line:#2d4a88; --text:#f3e8d0; --mute:#9fb0d6; --red:#ff5c6a; --teal:#38d6a4; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui, "Segoe UI", sans-serif; padding:24px; }
+  h1 { margin:0 0 4px; font-size:24px; }
+  .sub { color:var(--mute); margin:0 0 20px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  .login { max-width:340px; margin:12vh auto; }
+  label { display:block; margin:10px 0 4px; color:var(--mute); font-size:13px; }
+  input { width:100%; padding:9px 10px; border-radius:6px; border:1px solid var(--line); background:var(--bg); color:var(--text); font:inherit; }
+  button { padding:9px 14px; border-radius:6px; border:0; background:var(--teal); color:#04210f; font:inherit; font-weight:600; cursor:pointer; }
+  button.ghost { background:transparent; color:var(--text); border:1px solid var(--line); }
+  button:disabled { opacity:.6; cursor:wait; }
+  .err { color:var(--red); min-height:1.4em; margin:10px 0 0; font-size:14px; }
+  .bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:0 0 16px; }
+  .bar input { max-width:260px; }
+  .bar .sp { flex:1; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:16px; }
+  .stat strong { display:block; font-size:26px; }
+  .stat span { color:var(--mute); font-size:13px; }
+  .wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; min-width:760px; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th { color:var(--mute); font-weight:600; font-size:12px; letter-spacing:.04em; text-transform:uppercase; }
+  td.num, th.num { text-align:right; }
+  .hidden { display:none !important; }
+  .tag { background:var(--teal); color:#04210f; border-radius:4px; padding:1px 6px; font-size:11px; font-weight:700; margin-left:6px; }
+</style>
+</head>
+<body>
+
+<div id="loginView" class="card login hidden">
+  <h1>COME admin</h1>
+  <p class="sub">Sign in with your admin account.</p>
+  <form id="loginForm">
+    <label for="u">Username</label>
+    <input id="u" type="text" autocomplete="username" required />
+    <label for="p">PIN</label>
+    <input id="p" type="password" inputmode="numeric" maxlength="8" autocomplete="current-password" required />
+    <p class="err" id="loginErr" role="alert"></p>
+    <button type="submit" id="loginBtn">Sign in</button>
+  </form>
+</div>
+
+<div id="dashView" class="hidden">
+  <h1>COME admin</h1>
+  <p class="sub" id="who"></p>
+  <div class="stats" id="stats"></div>
+  <div class="bar">
+    <input id="search" type="search" placeholder="Search name or username" />
+    <button class="ghost" id="refresh" type="button">Refresh</button>
+    <span class="sp"></span>
+    <button class="ghost" id="signout" type="button">Sign out</button>
+  </div>
+  <div class="card wrap">
+    <table>
+      <thead><tr>
+        <th>Username</th><th>Name</th><th>Joined</th><th>Last seen</th>
+        <th class="num">CP</th><th class="num">Lifetime CP</th><th class="num">Streak</th><th class="num">Tasks done</th><th class="num">Focus (min)</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="sub" id="note"></p>
+</div>
+
+<script src="js/cloud-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const ready = typeof SUPABASE_URL === "string" && !SUPABASE_URL.includes("PASTE") && window.supabase;
+  if (!ready) {
+    document.body.innerHTML = "";
+    const p = document.createElement("p");
+    p.textContent = "Fill in js/cloud-config.js with your Supabase URL and key first.";
+    document.body.appendChild(p);
+    return;
+  }
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let people = [];
+
+  const fmt = iso => iso ? new Date(iso).toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) : "—";
+  const num = n => Number(n || 0).toLocaleString("en-US");
+  const show = which => {
+    $("loginView").classList.toggle("hidden", which !== "login");
+    $("dashView").classList.toggle("hidden", which !== "dash");
+  };
+
+  function cell(tr, text, cls) {
+    const td = document.createElement("td");
+    td.textContent = text;           // textContent: user-written names can't inject HTML
+    if (cls) td.className = cls;
+    tr.appendChild(td);
+    return td;
+  }
+
+  function render() {
+    const q = $("search").value.trim().toLowerCase();
+    const list = people.filter(p => !q || (p.username || "").toLowerCase().includes(q) || (p.name || "").toLowerCase().includes(q));
+    const tbody = $("rows");
+    tbody.textContent = "";
+    list.forEach(p => {
+      const tr = document.createElement("tr");
+      const first = cell(tr, p.username);
+      if (p.is_admin) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "admin"; first.appendChild(t); }
+      cell(tr, p.name || "—");
+      cell(tr, fmt(p.created_at));
+      cell(tr, fmt(p.last_seen));
+      cell(tr, num(p.cp), "num");
+      cell(tr, num(p.lifetime), "num");
+      cell(tr, num(p.streak), "num");
+      cell(tr, num(p.tasks_done), "num");
+      cell(tr, num(p.focus_minutes), "num");
+      tbody.appendChild(tr);
+    });
+    $("note").textContent = `Showing ${list.length} of ${people.length} accounts.`;
+
+    const day = Date.now() - 864e5, week = Date.now() - 7 * 864e5;
+    const seen = ms => people.filter(p => p.last_seen && Date.parse(p.last_seen) >= ms).length;
+    const stats = [
+      ["Accounts", people.length],
+      ["Active (24h)", seen(day)],
+      ["Active (7 days)", seen(week)],
+      ["Total CP earned", people.reduce((s, p) => s + (p.lifetime || 0), 0)]
+    ];
+    $("stats").textContent = "";
+    stats.forEach(([label, value]) => {
+      const d = document.createElement("div"); d.className = "card stat";
+      const s = document.createElement("strong"); s.textContent = num(value);
+      const l = document.createElement("span"); l.textContent = label;
+      d.append(s, l); $("stats").appendChild(d);
+    });
+  }
+
+  async function load() {
+    const { data: s } = await sb.auth.getSession();
+    if (!s.session) { show("login"); return; }
+    const me = await sb.from("profiles").select("username,is_admin").eq("id", s.session.user.id).maybeSingle();
+    if (!me.data || !me.data.is_admin) {
+      show("login");
+      $("loginErr").textContent = "This account is not an admin.";
+      await sb.auth.signOut({ scope: "local" });
+      return;
+    }
+    $("who").textContent = "Signed in as " + me.data.username;
+    const all = await sb.from("profiles")
+      .select("username,name,created_at,last_seen,cp,lifetime,streak,tasks_done,focus_minutes,is_admin")
+      .order("created_at", { ascending: false });
+    if (all.error) { show("login"); $("loginErr").textContent = all.error.message; return; }
+    people = all.data || [];
+    show("dash");
+    render();
+  }
+
+  $("loginForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    $("loginErr").textContent = "";
+    $("loginBtn").disabled = true;
+    const key = $("u").value.trim().toLowerCase();
+    const { error } = await sb.auth.signInWithPassword({ email: key + "@come.example.com", password: "come-pin-" + $("p").value });
+    $("loginBtn").disabled = false;
+    if (error) { $("loginErr").textContent = "That username and PIN don’t match."; return; }
+    $("p").value = "";
+    load();
+  });
+  $("search").addEventListener("input", render);
+  $("refresh").addEventListener("click", load);
+  $("signout").addEventListener("click", async () => { await sb.auth.signOut({ scope: "local" }); people = []; show("login"); });
+
+  load();
+})();
+</script>
+</body>
+</html>
