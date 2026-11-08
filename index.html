@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="gallery">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a1228" />
+  <title>COME — the activity studio</title>
+  <meta name="description" content="COME is a pixel-perfect time planner that feels like a place. Plan in a Notion-style database, focus with sound, keep a streak and earn CP." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400..700&family=Manrope:wght@300..800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════ LANDING ══════════════════════════ -->
+  <main id="landing" class="landing">
+    <div class="landing-bg" aria-hidden="true">
+      <div class="blob blob-a"></div>
+      <div class="blob blob-b"></div>
+      <div class="blob blob-c"></div>
+      <div class="grain"></div>
+      <div class="cursor-glow" id="cursorGlow"></div>
+    </div>
+
+    <nav class="landing-nav" id="landingNav">
+      <a class="brand" href="#top" aria-label="COME">
+        <span class="brand-mark">
+          <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges" stroke="none"><rect x="3" y="3" width="26" height="26" fill="#070d20"/><rect x="7" y="7" width="4" height="18" fill="#f3e8d0"/><rect x="11" y="7" width="12" height="4" fill="#f3e8d0"/><rect x="11" y="21" width="12" height="4" fill="#f3e8d0"/><rect x="23" y="11" width="4" height="4" fill="#38d6a4"/><rect x="23" y="17" width="4" height="4" fill="#c14a55"/></svg>
+        </span>
+        <span class="brand-word">CO<span class="dot">·</span>ME</span>
+      </a>
+      <div class="nav-links">
+        <a href="#method">Method</a>
+        <a href="#features">Features</a>
+        <a href="#studio">Studio</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn btn-quiet" data-auth="login">Sign in</button>
+        <button class="btn btn-primary btn-sm" data-auth="signup">Start free</button>
+      </div>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="hero-copy">
+        <div class="eyebrow reveal" style="--d:0">
+          <span class="eyebrow-dot"></span> The activity studio · est. 2026
+        </div>
+        <h1 class="hero-title reveal" style="--d:1">
+          Your days,<br />
+          <em>beautifully</em> kept.
+        </h1>
+        <p class="hero-sub reveal" style="--d:2">
+          A time planner that feels less like a spreadsheet and more like a place you want to be.
+          Plan in a living database, focus with your own sound, and grow a streak worth keeping.
+        </p>
+        <div class="hero-cta reveal" style="--d:3">
+          <button class="btn btn-primary btn-lg magnetic" data-auth="signup">
+            <span>Create your studio</span>
+            <svg viewBox="0 0 24 24" class="arr" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </button>
+          <button class="btn btn-outline btn-lg" data-action="demo">
+            <span class="play-dot"></span> Explore the demo
+          </button>
+        </div>
+        <div class="hero-note reveal" style="--d:4">
+          <span class="mini-flame">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 3.2-1.6 4.4-1.6 6.7 0 1.4 1 2.3 2.2 2.3 2 0 3-1.7 2.7-3.7 2.4 1.9 4 4.5 4 7.5A7.3 7.3 0 0 1 12 22a7.3 7.3 0 0 1-7.3-7.2c0-4.6 3.5-6.3 5-9.7.7 1 1.4 1.3 2.3 1.3"/></svg>
+          </span>
+          <span>Local-first & private by design — your studio lives in your browser.</span>
+        </div>
+      </div>
+
+      <div class="hero-stage reveal" style="--d:2" id="heroStage">
+        <div class="stage-orbit orbit-1"></div>
+        <div class="stage-orbit orbit-2"></div>
+
+        <div class="plane plane-main">
+          <div class="mini-planner">
+            <div class="mp-head">
+              <div>
+                <span class="mp-kicker">WEDNESDAY · 12</span>
+                <strong>Today’s ritual</strong>
+              </div>
+              <div class="mp-ring">
+                <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18"/><circle class="fill" cx="22" cy="22" r="18"/></svg>
+                <span>72%</span>
+              </div>
+            </div>
+            <div class="mp-tasks">
+              <div class="mp-task done"><span class="tick"></span><div><b>Morning pages</b><i>Study · 20 min</i></div></div>
+              <div class="mp-task done"><span class="tick"></span><div><b>Deep work — thesis</b><i>Study · 90 min</i></div></div>
+              <div class="mp-task"><span class="tick"></span><div><b>Play something, guilt-free</b><i>Gaming · 45 min</i></div><em>3:00</em></div>
+            </div>
+            <div class="mp-foot"><span>2 of 3 kept</span><span class="mp-pill">+8 CP</span></div>
+          </div>
+        </div>
+
+        <div class="plane plane-streak">
+          <div class="mini-streak">
+            <div class="ms-top">
+              <span class="mono">STREAK</span>
+              <svg viewBox="0 0 24 24" class="flame"><path d="M12 2c1 3.2-1.6 4.4-1.6 6.7 0 1.4 1 2.3 2.2 2.3 2 0 3-1.7 2.7-3.7 2.4 1.9 4 4.5 4 7.5A7.3 7.3 0 0 1 12 22a7.3 7.3 0 0 1-7.3-7.2c0-4.6 3.5-6.3 5-9.7.7 1 1.4 1.3 2.3 1.3"/></svg>
+            </div>
+            <div class="ms-num">12<span>days</span></div>
+            <div class="ms-days"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+            <div class="ms-foot">Next reward · 120 CP</div>
+          </div>
+        </div>
+
+        <div class="plane plane-cp">
+          <div class="mini-cp">
+            <svg viewBox="0 0 24 24" class="coin"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg>
+            <div><span class="mono">COME POINTS</span><strong>1,248</strong></div>
+            <span class="cp-up">+24</span>
+          </div>
+        </div>
+
+        <div class="plane plane-music">
+          <div class="mini-music">
+            <div class="mm-art"><span class="vinyl"></span></div>
+            <div class="mm-meta"><span class="mono">ON ROTATION</span><strong>Lofi Beats</strong><i>lo-fi · 42 tracks</i></div>
+            <div class="eq"><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+
+        <div class="plane plane-chip">
+          <div class="mini-chip"><span class="dot"></span> Focus 2h 15m logged</div>
+        </div>
+
+        <div class="stage-shadow" aria-hidden="true"></div>
+      </div>
+
+      <div class="scroll-cue reveal" style="--d:5">
+        <span>Scroll to wander</span>
+        <span class="scroll-line"></span>
+      </div>
+    </header>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Plan</span><i>✦</i><span class="ital">focus</span><i>✦</i><span>play</span><i>✦</i><span class="ital">repeat</span><i>✦</i>
+        <span>Plan</span><i>✦</i><span class="ital">focus</span><i>✦</i><span>play</span><i>✦</i><span class="ital">repeat</span><i>✦</i>
+      </div>
+    </div>
+
+    <section class="section method" id="method">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> The method</div>
+        <h2>Three small rituals.<br /><em>One softer life.</em></h2>
+        <p>No productivity theatre. Just enough structure to hold the things you actually care about.</p>
+      </div>
+      <div class="steps">
+        <article class="step reveal" style="--d:1">
+          <span class="step-num">01</span>
+          <div class="step-icon icon-capture">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="19" cy="16" r="3"/></svg>
+          </div>
+          <h3>Capture, gently</h3>
+          <p>Everything lives in one warm database. Tasks, statuses, categories, time — all editable in a click.</p>
+        </article>
+        <article class="step reveal" style="--d:2">
+          <span class="step-num">02</span>
+          <div class="step-icon icon-focus">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2.5 1.6M9 2h6"/></svg>
+          </div>
+          <h3>Focus, softly</h3>
+          <p>Start a session, choose a task, let the room fade. Focus minutes become points you can keep.</p>
+        </article>
+        <article class="step reveal" style="--d:3">
+          <span class="step-num">03</span>
+          <div class="step-icon icon-streak">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 3.2-1.6 4.4-1.6 6.7 0 1.4 1 2.3 2.2 2.3 2 0 3-1.7 2.7-3.7 2.4 1.9 4 4.5 4 7.5A7.3 7.3 0 0 1 12 22a7.3 7.3 0 0 1-7.3-7.2c0-4.6 3.5-6.3 5-9.7.7 1 1.4 1.3 2.3 1.3"/></svg>
+          </div>
+          <h3>Keep the thread</h3>
+          <p>Show up, keep the streak, earn CP. Spend it on frames, themes and small beautiful things.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section features" id="features">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Inside the studio</div>
+        <h2>A planner with<br /><em>a pulse.</em></h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature feature-wide reveal tilt" style="--d:1">
+          <div class="feature-copy">
+            <span class="mono">01 · DATABASES</span>
+            <h3>Databases, but <em>human.</em></h3>
+            <p>Table, board, calendar — three ways to see the same day. Edit inline, drag between states, filter by mood of work.</p>
+            <ul class="feature-list">
+              <li>Inline everything</li>
+              <li>Board & month view</li>
+              <li>Categories with colour</li>
+            </ul>
+          </div>
+          <div class="feature-visual">
+            <div class="mock-table">
+              <div class="mock-row mock-head"><span>TASK</span><span>STATUS</span><span>CAT</span></div>
+              <div class="mock-row"><span class="m-title">Morning pages</span><span class="pill done">Done</span><span class="cat-dot c-study"></span></div>
+              <div class="mock-row"><span class="m-title">Deep work</span><span class="pill doing">Focus</span><span class="cat-dot c-study"></span></div>
+              <div class="mock-row"><span class="m-title">Play, guilt-free</span><span class="pill todo">Later</span><span class="cat-dot c-game"></span></div>
+              <div class="mock-row"><span class="m-title">Sketch the poster</span><span class="pill todo">Later</span><span class="cat-dot c-create"></span></div>
+              <div class="mock-row mock-add"><span>+ New page</span><span></span><span></span></div>
+            </div>
+            <div class="float-pill fp-1">drag me</div>
+            <div class="float-pill fp-2">3 views</div>
+          </div>
+        </article>
+
+        <article class="feature feature-navy reveal tilt" style="--d:2">
+          <div class="feature-copy">
+            <span class="mono">02 · REWARDS</span>
+            <h3>Streaks with <em>a soul.</em></h3>
+            <p>Every good day earns CP. Every CP can become a little more <span class="ital">you</span>.</p>
+          </div>
+          <div class="reward-visual">
+            <div class="big-coin">
+              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg>
+              <span>CP</span>
+            </div>
+            <div class="reward-chips">
+              <span class="shop-chip">Peach Halo <b>220</b></span>
+              <span class="shop-chip">Red Inferno <b>260</b></span>
+              <span class="shop-chip">Terminal <b>420</b></span>
+            </div>
+            <div class="reward-glow"></div>
+          </div>
+        </article>
+
+        <article class="feature feature-red reveal tilt" style="--d:3">
+          <div class="feature-copy">
+            <span class="mono">03 · SOUND</span>
+            <h3>Your sound,<br /><em>no noise.</em></h3>
+            <p>Paste a Spotify playlist and keep it inside the studio — one quiet player, no feed, no scroll hole.</p>
+          </div>
+          <div class="sound-visual">
+            <div class="sound-art"><span class="sound-vinyl"></span></div>
+            <div class="sound-meta"><b>Slow Focus</b><i>lo-fi beats</i></div>
+            <div class="big-eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <span class="sound-note">Spotify · embedded</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="micro-features">
+        <article class="micro reveal" style="--d:1"><span>◷</span><h4>Focus timer</h4><p>5, 25 or 50 minutes. Logged to your task, paid in CP.</p></article>
+        <article class="micro reveal" style="--d:2"><span>▦</span><h4>Activity rhythm</h4><p>A 10-week heatmap of the life you’re actually living.</p></article>
+        <article class="micro reveal" style="--d:3"><span>✦</span><h4>Profile studio</h4><p>Frames, banners, titles and themes. More arriving.</p></article>
+        <article class="micro reveal" style="--d:4"><span>⌘</span><h4>Command bar</h4><p>Hit ⌘K and move at the speed of thought.</p></article>
+      </div>
+    </section>
+
+    <section class="section studio" id="studio">
+      <div class="studio-panel reveal">
+        <div class="studio-copy">
+          <div class="eyebrow light"><span class="eyebrow-dot"></span> The dressing room</div>
+          <h2>Dress up your<br /><em>progress.</em></h2>
+          <p>CP buys the small things: a gilded frame, a midnight theme, a title that sounds like you. Basic collection included — more drops later.</p>
+          <button class="btn btn-cream btn-lg magnetic" data-auth="signup">Start earning CP</button>
+        </div>
+        <div class="studio-preview">
+          <div class="preview-row">
+            <div class="pa pa-gold"><span>A</span></div>
+            <div class="pa pa-orbit"><span>M</span></div>
+            <div class="pa pa-inferno"><span>S</span></div>
+          </div>
+          <div class="preview-swatches">
+            <span class="sw sw-bone">Cream</span>
+            <span class="sw sw-navy">Midnight Navy</span>
+            <span class="sw sw-red">Red Inferno</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-band">
+      <div class="stat reveal"><strong data-count="3">0</strong><span>database views</span></div>
+      <div class="stat reveal" style="--d:1"><strong>25<small>min</small></strong><span>to a first focus</span></div>
+      <div class="stat reveal" style="--d:2"><strong data-count="7">0</strong><span>streak milestones</span></div>
+      <div class="stat reveal" style="--d:3"><strong>∞</strong><span>quiet hours</span></div>
+    </section>
+
+    <section class="section cta-final">
+      <div class="cta-inner reveal">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> A quiet invitation</span>
+        <h2>Make time feel<br /><em>like yours.</em></h2>
+        <p>Your studio is free, local, and waiting. It takes about twenty seconds to begin.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg magnetic" data-auth="signup">Create your studio</button>
+          <button class="btn btn-outline btn-lg" data-action="demo">Try the demo first</button>
+        </div>
+      </div>
+      <div class="cta-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-brand">
+        <span class="brand-word">CO<span class="dot">·</span>ME</span>
+        <p>A place for your days.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#method">Method</a>
+        <a href="#features">Features</a>
+        <a href="#studio">Studio</a>
+        <button data-auth="login">Sign in</button>
+      </div>
+      <p class="footer-fine">© 2026 COME · Built with care, coffee and deep red ink.</p>
+    </footer>
+  </main>
+
+  <!-- ══════════════════════════ APP ══════════════════════════ -->
+  <div id="app" class="app hidden">
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+    <aside class="sidebar" id="sidebar" aria-label="Workspace sidebar">
+      <div class="side-head">
+        <a class="brand" href="#" data-action="home" aria-label="COME">
+          <span class="brand-mark">
+            <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges" stroke="none"><rect x="3" y="3" width="26" height="26" fill="#070d20"/><rect x="7" y="7" width="4" height="18" fill="#f3e8d0"/><rect x="11" y="7" width="12" height="4" fill="#f3e8d0"/><rect x="11" y="21" width="12" height="4" fill="#f3e8d0"/><rect x="23" y="11" width="4" height="4" fill="#38d6a4"/><rect x="23" y="17" width="4" height="4" fill="#c14a55"/></svg>
+          </span>
+          <span class="brand-word">CO<span class="dot">·</span>ME</span>
+        </a>
+        <button class="icon-btn side-collapse" id="sidebarClose" aria-label="Close sidebar">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <button class="workspace-switch" data-action="profile">
+        <span class="ws-badge">CS</span>
+        <span class="ws-copy"><strong>My Studio</strong><i>personal workspace</i></span>
+        <svg viewBox="0 0 24 24" class="chev"><path d="M8 10l4 4 4-4"/></svg>
+      </button>
+
+      <nav class="side-nav" aria-label="Main">
+        <span class="side-label">Workspace</span>
+        <button class="nav-item active" data-view="today">
+          <svg viewBox="0 0 24 24"><path d="M4 5.5h16M4 12h16M4 18.5h9"/><circle cx="19" cy="18.5" r="2"/></svg>
+          <span>Today</span><i class="nav-dot"></i>
+        </button>
+        <button class="nav-item" data-view="planner">
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17M8 3v3M16 3v3"/></svg>
+          <span>Planner</span><span class="nav-badge" id="navTaskCount">0</span>
+        </button>
+        <button class="nav-item" data-view="music">
+          <svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+          <span>Music</span>
+        </button>
+        <button class="nav-item" data-view="shop">
+          <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+          <span>Studio shop</span>
+          <span class="nav-cp" id="sideCP">0</span>
+        </button>
+        <button class="nav-item" data-view="profile">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+
+      <div class="side-block">
+        <span class="side-label">Rituals</span>
+        <button class="side-link" data-action="open-focus">
+          <span class="side-emoji">◷</span> Focus session <kbd>F</kbd>
+        </button>
+        <button class="side-link" data-action="new-task">
+          <span class="side-emoji">＋</span> New task <kbd>N</kbd>
+        </button>
+        <button class="side-link" data-action="open-command">
+          <span class="side-emoji">⌘</span> Command bar <kbd>⌘K</kbd>
+        </button>
+      </div>
+
+      <div class="side-foot">
+        <button class="user-card" data-view="profile">
+          <span class="avatar avatar-sm" id="sideAvatar" data-frame="frame-classic"><span class="avatar-letter">A</span></span>
+          <span class="uc-copy"><strong id="sideName">You</strong><i id="sideTitle">Curator</i></span>
+          <span class="uc-flame" id="sideStreak">0</span>
+        </button>
+        <button class="side-mini" data-action="logout" title="Sign out">
+          <svg viewBox="0 0 24 24"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3M15 8l4 4-4 4M19 12H9"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn menu-btn" id="sidebarOpen" aria-label="Open sidebar" aria-controls="sidebar" aria-expanded="false">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <div class="crumb">
+            <span>Studio</span>
+            <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            <strong id="viewCrumb">Today</strong>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="search-btn" data-action="open-command">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+            <span>Search or jump…</span>
+            <kbd>⌘K</kbd>
+          </button>
+          <button class="chip chip-cp" data-view="shop" title="Your COME Points">
+            <svg viewBox="0 0 24 24" class="coin"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg>
+            <span id="topCP">0</span><em>CP</em>
+          </button>
+          <button class="chip chip-streak" data-view="today" title="Your streak">
+            <svg viewBox="0 0 24 24"><path d="M12 2c1 3.2-1.6 4.4-1.6 6.7 0 1.4 1 2.3 2.2 2.3 2 0 3-1.7 2.7-3.7 2.4 1.9 4 4.5 4 7.5A7.3 7.3 0 0 1 12 22a7.3 7.3 0 0 1-7.3-7.2c0-4.6 3.5-6.3 5-9.7.7 1 1.4 1.3 2.3 1.3"/></svg>
+            <span id="topStreak">0</span>
+          </button>
+          <button class="avatar avatar-top" id="topAvatar" data-frame="frame-classic" data-view="profile" aria-label="Profile">
+            <span class="avatar-letter">A</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="views" id="views">
+
+        <!-- TODAY -->
+        <section class="view active" id="view-today" data-view="today">
+          <div class="view-inner">
+            <header class="page-head">
+              <div class="page-head-copy">
+                <div class="eyebrow" id="todayEyebrow">WEDNESDAY · 5 NOVEMBER</div>
+                <h1 id="greeting">Good evening, <em>friend</em>.</h1>
+                <p class="page-sub" id="todayLine">A quiet day is still a good day. Here’s where you are.</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn btn-outline" data-action="open-focus">
+                  <svg viewBox="0 0 24 24" class="btn-ic"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2.5 1.6M9 2h6"/></svg>
+                  Focus
+                </button>
+                <button class="btn btn-primary" data-action="new-task">
+                  <svg viewBox="0 0 24 24" class="btn-ic"><path d="M12 5v14M5 12h14"/></svg>
+                  New task
+                </button>
+              </div>
+            </header>
+
+            <div class="today-grid">
+              <div class="today-main">
+                <article class="card ritual-card reveal-app" style="--i:0">
+                  <div class="ritual-glow" aria-hidden="true"></div>
+                  <div class="ritual-copy">
+                    <span class="mono">TODAY’S RITUAL</span>
+                    <h2><span id="ritualKept">0 of 0</span><br /><em>kept today.</em></h2>
+                    <p id="ritualLine">Small steps, kept softly. Add the first one.</p>
+                    <div class="ritual-actions">
+                      <button class="btn btn-primary btn-sm" data-action="open-focus">Start a focus</button>
+                      <button class="btn btn-ghost btn-sm" data-action="new-task">Add a task</button>
+                    </div>
+                  </div>
+                  <div class="ring-wrap">
+                    <svg class="progress-ring" viewBox="0 0 120 120">
+                      <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                      <circle class="ring-fill" id="todayRing" cx="60" cy="60" r="52"></circle>
+                    </svg>
+                    <div class="ring-label"><strong id="todayPercent">0%</strong><span>kept</span></div>
+                  </div>
+                  <div class="ritual-stamp" aria-hidden="true">COME</div>
+                </article>
+
+                <article class="card tasks-card reveal-app" style="--i:1">
+                  <div class="card-head">
+                    <div>
+                      <span class="mono">THE PLAN</span>
+                      <h3>Today’s pages</h3>
+                    </div>
+                    <div class="card-head-actions">
+                      <button class="text-btn" data-action="go-planner">Open database <span>→</span></button>
+                      <button class="icon-btn soft" data-action="new-task" aria-label="Add task">
+                        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div id="todayTasks" class="today-tasks"></div>
+                </article>
+
+                <article class="card rhythm-card reveal-app" style="--i:2">
+                  <div class="card-head">
+                    <div>
+                      <span class="mono">RHYTHM</span>
+                      <h3>This week, in colour</h3>
+                    </div>
+                    <div class="rhythm-total"><strong id="weekMinutes">0m</strong><span>focused</span></div>
+                  </div>
+                  <div class="week-chart" id="weekChart"></div>
+                  <div class="rhythm-foot">
+                    <span><i class="legend-dot study"></i> Study</span>
+                    <span><i class="legend-dot game"></i> Gaming</span>
+                    <span><i class="legend-dot work"></i> Work</span>
+                    <span><i class="legend-dot life"></i> Life</span>
+                  </div>
+                </article>
+              </div>
+
+              <aside class="today-side">
+                <article class="card cp-card reveal-app" style="--i:1">
+                  <div class="cp-card-top">
+                    <span class="mono light">COME POINTS</span>
+                    <span class="cp-card-level">LV <b id="levelNum">1</b></span>
+                  </div>
+                  <div class="cp-big">
+                    <svg viewBox="0 0 24 24" class="coin"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg>
+                    <span id="cpBig">0</span>
+                  </div>
+                  <div class="level-row"><span id="levelName">Curator</span><span id="levelNext">500 CP to level 2</span></div>
+                  <div class="level-bar"><i id="levelBar"></i></div>
+                  <button class="cp-card-link" data-view="shop">Spend in the studio <span>→</span></button>
+                </article>
+
+                <article class="card streak-card reveal-app" style="--i:2">
+                  <div class="streak-top">
+                    <span class="mono">STREAK</span>
+                    <span class="flame-wrap">
+                      <svg viewBox="0 0 24 24" class="flame"><path d="M12 2c1 3.2-1.6 4.4-1.6 6.7 0 1.4 1 2.3 2.2 2.3 2 0 3-1.7 2.7-3.7 2.4 1.9 4 4.5 4 7.5A7.3 7.3 0 0 1 12 22a7.3 7.3 0 0 1-7.3-7.2c0-4.6 3.5-6.3 5-9.7.7 1 1.4 1.3 2.3 1.3"/></svg>
+                    </span>
+                  </div>
+                  <div class="streak-num"><span id="streakNum">0</span><em>days</em></div>
+                  <p id="streakMsg">Show up today to light it.</p>
+                  <div class="week-dots" id="streakDots"></div>
+                  <div class="streak-foot">
+                    <span>Next reward</span>
+                    <strong id="streakNext">+25 CP at 3 days</strong>
+                  </div>
+                </article>
+
+                <article class="card music-mini reveal-app" id="musicMini" style="--i:3"></article>
+
+                <article class="card heat-card reveal-app" style="--i:4">
+                  <div class="card-head compact">
+                    <div><span class="mono">CONSISTENCY</span><h3>Last ten weeks</h3></div>
+                    <span class="heat-key">less <i></i><i></i><i></i><i></i> more</span>
+                  </div>
+                  <div class="heatmap" id="heatmap"></div>
+                  <p class="heat-foot" id="heatFoot">Your rhythm will appear here.</p>
+                </article>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <!-- PLANNER -->
+        <section class="view" id="view-planner" data-view="planner">
+          <div class="view-inner">
+            <header class="page-head">
+              <div class="page-head-copy">
+                <div class="eyebrow">DATABASE · MY STUDIO</div>
+                <h1>The <em>planner.</em></h1>
+                <p class="page-sub" id="plannerSub">Everything you’re keeping, in one living table.</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn btn-outline" data-action="open-focus">Focus</button>
+                <button class="btn btn-primary" data-action="new-task">
+                  <svg viewBox="0 0 24 24" class="btn-ic"><path d="M12 5v14M5 12h14"/></svg>
+                  New task
+                </button>
+              </div>
+            </header>
+
+            <div class="db-toolbar reveal-app">
+              <div class="view-switch" id="plannerViews">
+                <button class="vs-btn active" data-dbview="table">
+                  <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 10h17M9.5 10v9"/></svg> Table
+                </button>
+                <button class="vs-btn" data-dbview="board">
+                  <svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="5" height="15" rx="1.5"/><rect x="9.8" y="4.5" width="5" height="11" rx="1.5"/><rect x="16.1" y="4.5" width="5" height="7" rx="1.5"/></svg> Board
+                </button>
+                <button class="vs-btn" data-dbview="calendar">
+                  <svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 3v3M16 3v3"/></svg> Calendar
+                </button>
+              </div>
+              <div class="db-filters">
+                <label class="db-search">
+                  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+                  <input id="plannerSearch" type="search" placeholder="Search tasks…" autocomplete="off" />
+                </label>
+                <select id="plannerCategory" class="select-mini" aria-label="Filter by category">
+                  <option value="all">All categories</option>
+                  <option value="study">Study</option>
+                  <option value="gaming">Gaming</option>
+                  <option value="work">Work</option>
+                  <option value="creative">Creative</option>
+                  <option value="life">Life</option>
+                </select>
+                <select id="plannerSort" class="select-mini" aria-label="Sort tasks">
+                  <option value="date">By date</option>
+                  <option value="created">Newest</option>
+                  <option value="priority">Priority</option>
+                  <option value="title">A–Z</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="db-toolbar-sub reveal-app">
+              <div class="db-meta"><span class="db-live-dot"></span><span id="dbCount">0 pages</span><span class="db-sep">/</span><span id="dbFocus">0m focused</span></div>
+              <div class="db-hint">Click any cell to edit · drag cards in Board</div>
+            </div>
+
+            <div id="plannerTable" class="db-view-panel active"></div>
+            <div id="plannerBoard" class="db-view-panel"></div>
+            <div id="plannerCalendar" class="db-view-panel"></div>
+          </div>
+        </section>
+
+        <!-- MUSIC -->
+        <section class="view" id="view-music" data-view="music">
+          <div class="view-inner">
+            <header class="page-head">
+              <div class="page-head-copy">
+                <div class="eyebrow">STUDIO · SOUND</div>
+                <h1>Your <em>sound.</em></h1>
+                <p class="page-sub">Keep the playlist close, the feed far away. Music lives inside the room you’re working in.</p>
+              </div>
+              <div class="head-actions">
+                <span class="quiet-badge"><span class="live-dot"></span> One quiet player</span>
+              </div>
+            </header>
+
+            <div class="music-layout">
+              <div class="music-main">
+                <article class="card spotify-player reveal-app" id="spotifyPlayerCard">
+                  <div class="sp-head">
+                    <div>
+                      <span class="mono">OFFICIAL SPOTIFY PLAYER</span>
+                      <h3 id="spTitle">Nothing loaded</h3>
+                    </div>
+                    <a class="sp-link hidden" id="spOpen" href="#" target="_blank" rel="noopener">Open in Spotify ↗</a>
+                  </div>
+                  <div class="music-player-slot" id="musicPlayer"></div>
+                  <p class="music-note">Spotify’s official player. Signed in, Spotify plays full tracks; signed out it plays 30-second previews. Use “Open in Spotify” for the full playlist.</p>
+                </article>
+
+                <form class="card playlist-form reveal-app" id="playlistForm">
+                  <div class="pf-copy">
+                    <span class="mono">ADD TO THE ROOM</span>
+                    <h3>Paste a Spotify link</h3>
+                    <p>Playlist, album or single track. We’ll wrap it in a quiet frame — no feed, no recommendations, no rabbit holes.</p>
+                  </div>
+                  <div class="pf-fields">
+                    <label class="field">
+                      <span>Spotify link or URI</span>
+                      <input id="playlistUrl" type="text" placeholder="open.spotify.com/playlist/…" autocomplete="off" required />
+                    </label>
+                    <label class="field">
+                      <span>Name it <i>optional</i></span>
+                      <input id="playlistName" type="text" placeholder="Slow focus" autocomplete="off" maxlength="48" />
+                    </label>
+                    <button class="btn btn-primary" type="submit">Add to studio</button>
+                    <p class="form-error" id="playlistError" role="alert"></p>
+                  </div>
+                </form>
+
+                <div class="music-list-head reveal-app">
+                  <div><span class="mono">YOUR ROTATION</span><h3 id="playlistCount">Nothing yet</h3></div>
+                  <span class="music-note">Playback follows your Spotify plan — Premium stays ad-free.</span>
+                </div>
+
+                <div class="playlist-grid" id="playlistGrid"></div>
+              </div>
+
+              <aside class="music-side">
+                <article class="card now-card reveal-app">
+                  <div class="now-art" id="nowArt"><span class="sound-vinyl"></span></div>
+                  <span class="mono light">NOW IN THE ROOM</span>
+                  <h3 id="nowTitle">Nothing playing</h3>
+                  <p id="nowSub">Activate a playlist and it will wait here, quietly.</p>
+                  <div class="now-eq" id="nowEq"><i></i><i></i><i></i><i></i><i></i></div>
+                  <button class="btn btn-cream btn-sm" data-action="open-focus">Enter focus room</button>
+                </article>
+                <article class="card music-tip reveal-app">
+                  <span class="mono">A SMALL RITUAL</span>
+                  <h4>Sound on, tabs closed.</h4>
+                  <p>Start a 25-minute focus session and let the playlist be the only tab that follows you in.</p>
+                  <div class="tip-stars">✦ ✦ ✦</div>
+                </article>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <!-- SHOP -->
+        <section class="view" id="view-shop" data-view="shop">
+          <div class="view-inner">
+            <header class="page-head">
+              <div class="page-head-copy">
+                <div class="eyebrow">STUDIO · DRESSING ROOM</div>
+                <h1>The <em>studio shop.</em></h1>
+                <p class="page-sub">Small beautiful things, bought with days well kept. More drops are on their way.</p>
+              </div>
+              <div class="shop-balance">
+                <span class="mono">YOUR BALANCE</span>
+                <strong><svg viewBox="0 0 24 24" class="coin"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg><span id="shopCP">0</span> <em>CP</em></strong>
+              </div>
+            </header>
+
+            <div class="shop-tabs reveal-app" id="shopTabs">
+              <button class="shop-tab active" data-shop="all">Everything</button>
+              <button class="shop-tab" data-shop="frame">Frames</button>
+              <button class="shop-tab" data-shop="theme">Themes</button>
+              <button class="shop-tab" data-shop="title">Titles</button>
+              <button class="shop-tab" data-shop="banner">Banners</button>
+            </div>
+
+            <div class="shop-grid" id="shopGrid"></div>
+
+            <div class="shop-foot reveal-app">
+              <span>✦</span>
+              <p><strong>How CP works:</strong> keep tasks (+3–8), focus (+1 per 4 minutes), show up daily (+2 and rising with your streak). Streak milestones bring bigger drops. Themes cost real effort — choose one you’ll actually wear.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROFILE -->
+        <section class="view" id="view-profile" data-view="profile">
+          <div class="view-inner">
+            <div class="profile-banner reveal-app" id="profileBanner" data-banner="banner-bone">
+              <img class="pb-img hidden" id="profileCoverImg" alt="Profile cover" />
+              <div class="pb-glow"></div>
+              <span class="pb-word">COME</span>
+              <div class="pb-actions">
+                <button class="btn btn-cream btn-sm pb-edit" data-action="upload-cover">Change cover</button>
+                <button class="btn btn-cream btn-sm pb-edit" data-action="edit-profile">Edit profile</button>
+              </div>
+            </div>
+
+            <div class="profile-head reveal-app">
+              <div class="profile-avatar-wrap">
+                <span class="avatar avatar-xl" id="profileAvatar" data-frame="frame-classic"><span class="avatar-letter">A</span></span>
+                <span class="profile-level">LV <b id="profileLevel">1</b></span>
+              </div>
+              <div class="profile-id">
+                <span class="profile-title" id="profileTitle">Curator</span>
+                <h1 id="profileName">Your name</h1>
+                <p id="profileMeta">Keeping the thread since 2026</p>
+                <div class="profile-actions">
+                  <button class="btn btn-outline btn-sm" data-action="edit-profile">Edit profile</button>
+                  <button class="btn btn-ghost btn-sm" data-action="upload-avatar">Change photo</button>
+                  <button class="btn btn-ghost btn-sm" data-action="logout">Sign out</button>
+                </div>
+              </div>
+              <div class="profile-cp">
+                <span class="mono">BALANCE</span>
+                <strong><span id="profileCP">0</span><em>CP</em></strong>
+                <button class="text-btn" data-view="shop">Visit shop →</button>
+              </div>
+            </div>
+
+            <div class="profile-stats reveal-app" id="profileStats"></div>
+
+            <div class="profile-columns">
+              <div class="profile-col">
+                <div class="card reveal-app">
+                  <div class="card-head"><div><span class="mono">MILESTONES</span><h3>Small badges</h3></div><span class="badge-count" id="badgeCount"></span></div>
+                  <div class="badge-grid" id="badgeGrid"></div>
+                </div>
+                <div class="card reveal-app">
+                  <div class="card-head"><div><span class="mono">COLLECTION</span><h3>What you own</h3></div><button class="text-btn" data-view="shop">Shop →</button></div>
+                  <div class="collection" id="profileCollection"></div>
+                </div>
+              </div>
+              <div class="profile-col">
+                <div class="card reveal-app">
+                  <div class="card-head"><div><span class="mono">THE LOOK</span><h3>Currently wearing</h3></div></div>
+                  <div class="wearing" id="profileWearing"></div>
+                </div>
+                <div class="card reveal-app profile-quote">
+                  <span class="quote-mark">“</span>
+                  <p>Time is the only luxury you can’t buy. But a nicer frame for it? That we can do.</p>
+                  <span class="quote-by">— the COME studio</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- ══════════════ PLAYER DOCK ══════════════ -->
+  <div id="playerDock" class="player-dock hidden">
+    <div class="dock-top">
+      <span class="dock-art" id="dockArt"><span class="sound-vinyl"></span></span>
+      <span class="dock-copy"><strong id="dockTitle">Playlist</strong><i id="dockSub">Spotify</i></span>
+      <span class="dock-eq" id="dockEq"><i></i><i></i><i></i><i></i></span>
+      <button class="icon-btn dock-btn" data-action="dock-focus" title="Focus room">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2.5 1.6M9 2h6"/></svg>
+      </button>
+      <button class="icon-btn dock-btn" data-action="dock-toggle" title="Expand player">
+        <svg viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></svg>
+      </button>
+      <button class="icon-btn dock-btn" data-action="dock-close" title="Close player">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="dock-body" id="dockBody"><div id="dockEmbedSlot"></div></div>
+    <p class="dock-note">Spotify’s official player · full tracks need a Spotify sign-in.</p>
+  </div>
+
+  <!-- ══════════════ FOCUS ROOM ══════════════ -->
+  <div id="focusOverlay" class="focus-overlay hidden" role="dialog" aria-modal="true" aria-label="Focus room">
+    <div class="focus-bg" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="focus-top">
+      <span class="focus-brand">CO<span class="dot">·</span>ME</span>
+      <span class="mono light">THE FOCUS ROOM</span>
+      <button class="icon-btn light" data-action="close-focus" aria-label="Close focus room">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="focus-grid">
+      <div class="focus-left">
+        <div class="focus-ring-wrap">
+          <svg class="focus-ring" viewBox="0 0 320 320">
+            <circle class="fr-track" cx="160" cy="160" r="146"></circle>
+            <circle class="fr-fill" id="focusRing" cx="160" cy="160" r="146"></circle>
+          </svg>
+          <div class="focus-clock">
+            <span id="focusTime">25:00</span>
+            <em id="focusState">ready when you are</em>
+          </div>
+        </div>
+        <div class="focus-lengths" id="focusLengths">
+          <button data-min="5">5 min</button>
+          <button class="active" data-min="25">25 min</button>
+          <button data-min="50">50 min</button>
+        </div>
+        <div class="focus-controls">
+          <button class="btn btn-cream btn-lg" id="focusStart">Begin focus</button>
+          <button class="btn btn-outline-cream" id="focusReset">Reset</button>
+        </div>
+        <p class="focus-hint">1 CP per 4 focused minutes · logged to your task</p>
+      </div>
+      <div class="focus-right">
+        <label class="field dark">
+          <span>What are you keeping?</span>
+          <select id="focusTask"><option value="">No particular task</option></select>
+        </label>
+        <div class="focus-music" id="focusMusic"></div>
+        <div class="focus-pix" id="focusPix">
+          <span class="focus-pix-art" id="focusPixArt" aria-hidden="true"></span>
+          <span class="focus-pix-line" id="focusPixLine">I’ll keep watch while you work.</span>
+        </div>
+        <div class="focus-quote">
+          <span class="quote-mark">“</span>
+          <p>The quieter the room, the louder the good work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TASK DRAWER ══════════════ -->
+  <div id="taskDrawer" class="drawer-backdrop hidden">
+    <aside class="task-drawer" role="dialog" aria-modal="true" aria-label="Task details">
+      <div class="drawer-head">
+        <span class="mono" id="drawerKicker">NEW PAGE</span>
+        <div class="drawer-head-actions">
+          <button class="icon-btn soft danger" id="taskDelete" title="Delete task">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5h6v2M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/></svg>
+          </button>
+          <button class="icon-btn soft" data-action="close-drawer" title="Close">
+            <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </div>
+      <form id="taskForm" class="task-form">
+        <input class="task-title-input" id="taskTitle" type="text" placeholder="Untitled page" autocomplete="off" maxlength="120" />
+        <div class="task-props">
+          <label class="prop"><span>Status</span>
+            <select id="taskStatus"><option value="todo">To do</option><option value="doing">In focus</option><option value="done">Done</option></select>
+          </label>
+          <label class="prop"><span>Category</span>
+            <select id="taskCategory"><option value="study">Study</option><option value="gaming">Gaming</option><option value="work">Work</option><option value="creative">Creative</option><option value="life">Life</option></select>
+          </label>
+          <label class="prop"><span>Priority</span>
+            <select id="taskPriority"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select>
+          </label>
+          <label class="prop"><span>Date</span>
+            <input id="taskDate" type="date" />
+          </label>
+        </div>
+        <label class="field"><span>Notes</span><textarea id="taskNotes" rows="5" placeholder="A thought, a plan, a small detail…"></textarea></label>
+        <div class="task-meta" id="taskMeta"></div>
+        <div class="drawer-foot">
+          <button type="button" class="btn btn-ghost" data-action="close-drawer">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save page</button>
+        </div>
+      </form>
+    </aside>
+  </div>
+
+  <!-- ══════════════ AUTH ══════════════ -->
+  <div id="authModal" class="modal-backdrop hidden">
+    <div class="auth-card" role="dialog" aria-modal="true" aria-label="Account">
+      <button class="icon-btn modal-close" data-auth-close aria-label="Close">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="auth-brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges" stroke="none"><rect x="3" y="3" width="26" height="26" fill="#070d20"/><rect x="7" y="7" width="4" height="18" fill="#f3e8d0"/><rect x="11" y="7" width="12" height="4" fill="#f3e8d0"/><rect x="11" y="21" width="12" height="4" fill="#f3e8d0"/><rect x="23" y="11" width="4" height="4" fill="#38d6a4"/><rect x="23" y="17" width="4" height="4" fill="#c14a55"/></svg>
+        </span>
+        <span class="brand-word">CO<span class="dot">·</span>ME</span>
+      </div>
+      <h2 id="authTitle">Welcome back.</h2>
+      <p class="auth-sub" id="authSub">Your days have been waiting, patiently.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth-tab="login">Sign in</button>
+        <button class="auth-tab" data-auth-tab="signup">Create account</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <label class="field"><span>Username</span><input id="loginUsername" type="text" autocomplete="username" placeholder="your-studio" required /></label>
+        <label class="field"><span>4-digit PIN</span><input id="loginPin" type="password" inputmode="numeric" maxlength="8" autocomplete="current-password" placeholder="••••" required /></label>
+        <p class="form-error" id="loginError" role="alert"></p>
+        <button class="btn btn-primary btn-block" type="submit">Enter the studio</button>
+        <button class="demo-link" type="button" data-action="demo">or wander through the demo studio →</button>
+      </form>
+
+      <form id="signupForm" class="auth-form hidden">
+        <label class="field"><span>Your name</span><input id="signupName" type="text" autocomplete="name" placeholder="Ahmed" required maxlength="40" /></label>
+        <label class="field"><span>Username</span><input id="signupUsername" type="text" autocomplete="username" placeholder="ahmed" required maxlength="24" /></label>
+        <label class="field"><span>4-digit PIN</span><input id="signupPin" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" placeholder="a number only you know" required /></label>
+        <p class="form-error" id="signupError" role="alert"></p>
+        <button class="btn btn-primary btn-block" type="submit">Create my studio</button>
+        <p class="auth-fine">Free · local-only · stored in this browser. Your PIN isn’t sent anywhere.</p>
+      </form>
+
+      <div class="auth-ornament" aria-hidden="true">✦</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ EDIT PROFILE ══════════════ -->
+  <div id="profileModal" class="modal-backdrop hidden">
+    <div class="auth-card small" role="dialog" aria-modal="true" aria-label="Edit profile">
+      <button class="icon-btn modal-close" data-profile-close aria-label="Close">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h2>Edit <em>you.</em></h2>
+      <p class="auth-sub">A name, a letter, a little ceremony.</p>
+      <form id="profileForm" class="auth-form">
+        <label class="field"><span>Display name</span><input id="editName" type="text" maxlength="40" required /></label>
+        <label class="field"><span>Avatar letter</span><input id="editLetter" type="text" maxlength="2" placeholder="A" /></label>
+        <div class="upload-row">
+          <span class="mono">PROFILE PHOTO</span>
+          <button type="button" class="btn btn-outline btn-sm" data-upload="avatar">Choose photo</button>
+          <button type="button" class="text-btn" data-remove="avatar">Remove</button>
+        </div>
+        <div class="upload-row">
+          <span class="mono">COVER PHOTO</span>
+          <button type="button" class="btn btn-outline btn-sm" data-upload="cover">Choose cover</button>
+          <button type="button" class="text-btn" data-remove="cover">Remove</button>
+        </div>
+        <p class="form-error" id="profileError" role="alert"></p>
+        <button class="btn btn-primary btn-block" type="submit">Save changes</button>
+      </form>
+      <input type="file" id="avatarFileInput" accept="image/*" class="hidden" />
+      <input type="file" id="coverFileInput" accept="image/*" class="hidden" />
+    </div>
+  </div>
+
+  <!-- ══════════════ COMMAND PALETTE ══════════════ -->
+  <div id="commandPalette" class="command-backdrop hidden">
+    <div class="command-card">
+      <div class="command-input-wrap">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        <input id="commandInput" type="text" placeholder="Search, jump, create…" autocomplete="off" />
+        <kbd>esc</kbd>
+      </div>
+      <div class="command-list" id="commandList"></div>
+      <div class="command-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> select</span><span><kbd>esc</kbd> close</span></div>
+    </div>
+  </div>
+
+  <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+  <canvas id="confetti" class="confetti"></canvas>
+
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/render-more.js"></script>
+  <script src="js/features.js"></script>
+  <script src="js/mascot.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
