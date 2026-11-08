@@ -197,7 +197,34 @@ async function cloudLogin(username, pin) {
     await cloudEnsureProfile(uid, key, u.name);
     await cloudPush(u);
   }
+  await cloudClaimGrant(true);
   return { ok: true, user: u };
+}
+
+/* ── admin CP gifts ──────────────────────────────────────────── */
+// The admin sets profiles.cp_grant in Supabase. The next time the person's
+// app runs, it claims the gift once (atomically) and adds it to their CP.
+async function cloudClaimGrant(quiet) {
+  if (!CLOUD.client || !user || user.username === "demo") return;
+  try {
+    const session = await cloudSession();
+    if (!session || cloudSessionKey(session) !== user.username) return;
+    const r = await CLOUD.client.from("profiles").select("cp_grant").eq("id", session.user.id).maybeSingle();
+    const grant = r.data && Number(r.data.cp_grant);
+    if (!grant || grant <= 0) return;
+    // claim only if the value is still the one we read, so it can't be applied twice
+    const c = await CLOUD.client.from("profiles").update({ cp_grant: 0 })
+      .eq("id", session.user.id).eq("cp_grant", grant).select("cp_grant");
+    if (c.error || !c.data || !c.data.length) return;
+    user.cp += grant;
+    save();
+    if (!quiet) {
+      if (typeof renderAll === "function") renderAll();
+      if (typeof toast === "function") toast("+" + grant + " CP added to your studio", "good");
+    }
+  } catch (e) {
+    console.warn("COME: gift check failed", e);
+  }
 }
 
 /* ── boot / sign out ─────────────────────────────────────────── */
@@ -231,6 +258,7 @@ async function cloudBootSync() {
   } finally {
     CLOUD.hold = false;
     cloudQueueSync();
+    cloudClaimGrant();
   }
 }
 async function cloudSignOut() {
@@ -240,5 +268,7 @@ async function cloudSignOut() {
 
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") cloudFlush();
+  else cloudClaimGrant();
 });
+setInterval(() => { if (document.visibilityState === "visible") cloudClaimGrant(); }, 60000);
 window.addEventListener("online", () => cloudFlush());
