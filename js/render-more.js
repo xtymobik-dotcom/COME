@@ -95,49 +95,72 @@ function renderShop() {
   });
 
   const items = SHOP_ITEMS.filter(item => ui.shopTab === "all" || item.type === ui.shopTab);
+  const initial = esc(String(user.avatarLetter || (user.name || "A").charAt(0) || "A").toUpperCase());
 
-  grid.innerHTML = items.map(item => {
-    const owned = user.owned.includes(item.id);
-    const equipped = user.equipped[item.type] === item.id;
-    let preview = "";
-    if (item.type === "pix") {
-      preview = `<div class="pv-pix">${pixSVG(pixSkinById(item.value), "pv-pix-svg")}</div>`;
-    } else if (item.type === "frame") {
-      preview = `<div class="pv-avatar pvf-${item.css}">${esc((user.avatarLetter || user.name.charAt(0) || "A").toUpperCase())}</div>`;
-    } else if (item.type === "theme") {
-      const colors = item.colors || (THEMES[item.value] && THEMES[item.value].colors) || THEMES.gallery.colors;
-      preview = `<div class="pv-theme pv-theme-${esc(item.value)}">${colors.map(c => `<span style="background:${c}"></span>`).join("")}</div>`;
-    } else if (item.type === "title") {
-      preview = `<div class="pv-title">${esc(item.value)}</div>`;
-    } else if (item.type === "banner") {
-      preview = `<div class="pv-banner ${item.value}"></div>`;
-    } else if (item.type === "effect") {
-      preview = `<div class="pv-effect" data-effect="${esc(item.value)}">
-        <span class="pv-effect-ava">${esc((user.avatarLetter || user.name.charAt(0) || "A").toUpperCase())}</span>
-        <span class="profile-fx" aria-hidden="true"></span>
-      </div>`;
-    } else if (item.type === "font") {
-      preview = `<div class="pv-font" data-font="${esc(item.value)}">
-        <span class="pv-font-big">Aa</span>
-        <span class="pv-font-small">Study · Focus · Keep</span>
-      </div>`;
-    }
-    return `<article class="shop-item ${owned ? "owned" : ""}" data-id="${item.id}">
-      <div class="si-preview">
-        <span class="si-type">${item.type}</span>
-        ${owned ? `<span class="si-owned-tag">owned</span>` : ""}
-        ${preview}
-      </div>
-      <div class="si-body">
-        <div class="si-name">${esc(item.name)}</div>
-        <div class="si-desc">${esc(item.desc)}</div>
-        <div class="si-foot">
-          <span class="si-price ${item.price === 0 ? "free" : ""}">${item.price === 0 ? "Included" : `<svg viewBox="0 0 24 24" class="coin"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg>${item.price}`}</span>
-          <button class="si-buy ${equipped ? "equipped" : owned ? "equip" : ""}" data-action="shop-item" data-id="${item.id}">${equipped ? "Wearing" : owned ? "Equip" : "Buy"}</button>
+  const cards = items.map(item => {
+    try {
+      const owned = Array.isArray(user.owned) && user.owned.includes(item.id);
+      const equipped = user.equipped && user.equipped[item.type] === item.id;
+      let preview = "";
+      if (item.type === "pix") {
+        const art = typeof pixSVG === "function"
+          ? pixSVG(typeof pixSkinById === "function" ? pixSkinById(item.value) : null, "pv-pix-svg")
+          : `<span class="pv-fallback">${initial}</span>`;
+        preview = `<div class="pv-pix">${art || `<span class="pv-fallback">${initial}</span>`}</div>`;
+      } else if (item.type === "frame") {
+        const css = esc(item.css || "classic");
+        preview = `<div class="pv-frame-scene pvfs-${css}">
+          <span class="pv-frame-haze" aria-hidden="true"></span>
+          <span class="pv-frame-spark" aria-hidden="true"></span>
+          <div class="pv-avatar pvf-${css}">${initial}</div>
+        </div>`;
+      } else if (item.type === "theme") {
+        const theme = (typeof THEMES !== "undefined" && THEMES[item.value]) || null;
+        const colors = item.colors || (theme && theme.colors) || ["#0a1228", "#c14a55", "#38d6a4"];
+        preview = `<div class="pv-theme pv-theme-${esc(item.value)}">${colors.map(c => `<span style="background:${esc(c)}"></span>`).join("")}</div>`;
+      } else if (item.type === "title") {
+        preview = `<div class="pv-title">${esc(item.value)}</div>`;
+      } else if (item.type === "banner") {
+        preview = `<div class="pv-banner ${esc(item.value)}"></div>`;
+      } else if (item.type === "effect") {
+        preview = `<div class="pv-effect" data-effect="${esc(item.value)}">
+          <span class="pv-effect-ava">${initial}</span>
+          <span class="profile-fx" aria-hidden="true"></span>
+        </div>`;
+      } else if (item.type === "font") {
+        preview = `<div class="pv-font" data-font="${esc(item.value)}">
+          <span class="pv-font-big">Aa</span>
+          <span class="pv-font-small">Study · Focus · Keep</span>
+        </div>`;
+      }
+      return `<article class="shop-item ${owned ? "owned" : ""}" data-id="${esc(item.id)}">
+        <div class="si-preview">
+          <span class="si-type">${esc(item.type)}</span>
+          ${owned ? `<span class="si-owned-tag">owned</span>` : ""}
+          ${item.animated ? `<span class="si-animated">✦ animated</span>` : ""}
+          ${preview}
         </div>
-      </div>
-    </article>`;
-  }).join("");
+        <div class="si-body">
+          <div class="si-name">${esc(item.name)}</div>
+          <div class="si-desc">${esc(item.desc)}</div>
+          <div class="si-foot">
+            <span class="si-price ${item.price === 0 ? "free" : ""}">${item.price === 0 ? "Included" : `<svg viewBox="0 0 24 24" class="coin"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg>${item.price}`}</span>
+            <button class="si-buy ${equipped ? "equipped" : owned ? "equip" : ""}" data-action="shop-item" data-id="${esc(item.id)}">${equipped ? "Wearing" : owned ? "Equip" : "Buy"}</button>
+          </div>
+        </div>
+      </article>`;
+    } catch (err) {
+      console.warn("Shop item failed to render", item && item.id, err);
+      return "";
+    }
+  }).filter(Boolean);
+
+  grid.innerHTML = cards.length
+    ? cards.join("")
+    : `<div class="shop-empty">
+        <span class="mono">Nothing here yet</span>
+        <p>No items in this tab. If you just updated, hard-refresh the page (Ctrl/Cmd + Shift + R) so the newest shop files load.</p>
+      </div>`;
 }
 
 /* ── profile ─────────────────────────────────────────────────── */
