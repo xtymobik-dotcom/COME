@@ -100,7 +100,9 @@ function renderShop() {
     const owned = user.owned.includes(item.id);
     const equipped = user.equipped[item.type] === item.id;
     let preview = "";
-    if (item.type === "frame") {
+    if (item.type === "pix") {
+      preview = `<div class="pv-pix">${pixSVG(pixSkinById(item.value), "pv-pix-svg")}</div>`;
+    } else if (item.type === "frame") {
       preview = `<div class="pv-avatar pvf-${item.css}">${esc((user.avatarLetter || user.name.charAt(0) || "A").toUpperCase())}</div>`;
     } else if (item.type === "theme") {
       const colors = item.colors || (THEMES[item.value] && THEMES[item.value].colors) || THEMES.gallery.colors;
@@ -109,6 +111,16 @@ function renderShop() {
       preview = `<div class="pv-title">${esc(item.value)}</div>`;
     } else if (item.type === "banner") {
       preview = `<div class="pv-banner ${item.value}"></div>`;
+    } else if (item.type === "effect") {
+      preview = `<div class="pv-effect" data-effect="${esc(item.value)}">
+        <span class="pv-effect-ava">${esc((user.avatarLetter || user.name.charAt(0) || "A").toUpperCase())}</span>
+        <span class="profile-fx" aria-hidden="true"></span>
+      </div>`;
+    } else if (item.type === "font") {
+      preview = `<div class="pv-font" data-font="${esc(item.value)}">
+        <span class="pv-font-big">Aa</span>
+        <span class="pv-font-small">Study · Focus · Keep</span>
+      </div>`;
     }
     return `<article class="shop-item ${owned ? "owned" : ""}" data-id="${item.id}">
       <div class="si-preview">
@@ -134,12 +146,16 @@ function renderProfile() {
   const frame = equippedItem("frame");
   const title = equippedItem("title");
   const banner = equippedItem("banner");
+  const effect = equippedItem("effect");
   const level = levelInfo(user);
   const face = document.getElementById("profileAvatar");
   if (face) face.dataset.frame = frame ? frame.id : "frame-classic";
+  const wrap = document.querySelector(".profile-avatar-wrap");
+  if (wrap) wrap.dataset.effect = effect ? effect.value : "effect-none";
   const bannerEl = document.getElementById("profileBanner");
   if (bannerEl) {
     bannerEl.dataset.banner = banner ? banner.value : "banner-bone";
+    bannerEl.dataset.effect = effect ? effect.value : "effect-none";
     bannerEl.classList.toggle("has-cover", !!user.coverImage);
   }
   const coverImg = document.getElementById("profileCoverImg");
@@ -208,26 +224,49 @@ function renderProfile() {
   if (wearing) {
     const themeItem = equippedItem("theme");
     const themeColors = (themeItem && themeItem.colors) || THEMES.gallery.colors;
+    const pixItem = equippedItem("pix");
+    const effectItem = equippedItem("effect");
+    const fontItem = equippedItem("font");
+    const skin = pixSkinById(pixItem ? pixItem.value : "pix-original");
+    const pixPal = Object.assign({}, PIX_BASE_PALETTE, (skin && skin.palette) || {});
     const swatches = {
+      pix: `linear-gradient(135deg, ${pixPal.hair}, ${pixPal.skin}, ${pixPal.shirt})`,
       frame: frame && frame.css === "gold" ? "linear-gradient(135deg,#f3c9a0,#c47748)" :
         frame && frame.css === "inferno" ? "linear-gradient(135deg,#ff5c6a,#6e1f2c)" :
         frame && frame.css === "orbit" ? "radial-gradient(circle,#122048 35%,#38d6a4 36%)" :
-        frame && frame.css === "starlit" ? "linear-gradient(135deg,#38d6a4,#0a1228)" : "#122048",
+        frame && frame.css === "starlit" ? "linear-gradient(135deg,#38d6a4,#0a1228)" :
+        frame && frame.css === "neon" ? "linear-gradient(135deg,#ff2e88,#00e5ff)" :
+        frame && frame.css === "holo" ? "linear-gradient(135deg,#ff2e88,#ffd166,#2bff88,#6fd4ff)" :
+        frame && frame.css === "flame" ? "linear-gradient(135deg,#ff7a1a,#c14a55)" :
+        frame && frame.css === "frost" ? "linear-gradient(135deg,#b8e8ff,#6bb3d9)" :
+        frame && frame.css === "anime" ? "linear-gradient(135deg,#ff5c8a,#ffd166)" :
+        frame && frame.css === "football" ? "linear-gradient(135deg,#38d67a,#f3e8d0)" : "#122048",
+      effect: (effectItem && effectItem.swatch) || "linear-gradient(135deg,#122048,#1a2e4d)",
+      font: "linear-gradient(135deg, var(--ink), var(--accent))",
       theme: `linear-gradient(135deg, ${themeColors[0]} 0 33%, ${themeColors[1]} 33% 66%, ${themeColors[2]} 66%)`,
       title: "linear-gradient(135deg,#e8a06d,#c14a55)",
       banner: banner && banner.value === "banner-navy" ? "linear-gradient(135deg,#0a1228,#2d4a88)" :
         banner && banner.value === "banner-oxblood" ? "linear-gradient(135deg,#6e1f2c,#c14a55)" :
-        banner && banner.value === "banner-sunset" ? "linear-gradient(135deg,#c14a55,#e8a06d,#f3e8d0)" : "linear-gradient(135deg,#0a1228,#122048)"
+        banner && banner.value === "banner-sunset" ? "linear-gradient(135deg,#c14a55,#e8a06d,#f3e8d0)" :
+        banner && banner.value === "banner-anime" ? "linear-gradient(135deg,#2a1830,#ff5c8a,#6ff0ff)" :
+        banner && banner.value === "banner-football" ? "linear-gradient(135deg,#07140d,#38d67a,#f3e8d0)" :
+        banner && banner.value === "banner-gamer" ? "linear-gradient(135deg,#08060f,#b06bff,#2bff88)" :
+        banner && banner.value === "banner-science" ? "linear-gradient(135deg,#061020,#4d8dff,#6fd4ff)" :
+        banner && banner.value === "banner-solo" ? "linear-gradient(135deg,#120a24,#6b4ad6,#9fd6ff)" :
+        banner && banner.value === "banner-stars" ? "linear-gradient(135deg,#05060f,#8b6bff,#ffd166)" : "linear-gradient(135deg,#0a1228,#122048)"
     };
     const rows = [
-      { label: "FRAME", item: frame },
-      { label: "THEME", item: equippedItem("theme") },
-      { label: "TITLE", item: title },
-      { label: "BANNER", item: banner }
+      { label: "PIX", key: "pix", item: pixItem },
+      { label: "FRAME", key: "frame", item: frame },
+      { label: "PROFILE FX", key: "effect", item: effectItem },
+      { label: "FONT", key: "font", item: fontItem },
+      { label: "THEME", key: "theme", item: themeItem },
+      { label: "TITLE", key: "title", item: title },
+      { label: "BANNER", key: "banner", item: banner }
     ];
     wearing.innerHTML = rows.map(r => `<div class="wear-row">
       <span class="mono">${r.label}</span>
-      <span class="wear-swatch" style="background:${swatches[r.label.toLowerCase()] || swatches.frame}"></span>
+      <span class="wear-swatch" style="background:${swatches[r.key] || swatches.frame}"></span>
       <strong>${esc(r.item ? r.item.name : "—")}</strong>
       <button class="text-btn" data-view="shop">change →</button>
     </div>`).join("");

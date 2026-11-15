@@ -280,15 +280,291 @@ const THEMES = {
     accent: "#b06bd6", "accent-2": "#ffc2a8", "btn-bg": "#b06bd6", "btn-fg": "#0d0614",
     line: "rgba(248,236,255,.14)", "line-2": "rgba(248,236,255,.28)",
     "glow-a": "rgba(176,107,214,.22)", "glow-b": "rgba(255,194,168,.12)"
+  }),
+
+  /* ── student-type themes ─────────────────────────────────────── */
+  football: makeTheme(["#07140d", "#38d67a", "#f3e8d0"], {
+    bone: "#07140d", "bone-2": "#0a1a11", paper: "#0d2217", "paper-2": "#0a1a11", card: "#10291c",
+    navy: "#0d2217", "navy-deep": "#030a06", oxblood: "#123a24", red: "#c14a55", brass: "#f3e8d0",
+    ink: "#f0fff4", "ink-soft": "#c4e8d0", muted: "#8bb89a",
+    accent: "#38d67a", "accent-2": "#f3e8d0", "btn-bg": "#38d67a", "btn-fg": "#04140a",
+    line: "rgba(240,255,244,.14)", "line-2": "rgba(240,255,244,.28)",
+    "glow-a": "rgba(56,214,122,.20)", "glow-b": "rgba(243,232,208,.10)"
+  }),
+  gamer: makeTheme(["#08060f", "#b06bff", "#2bff88"], {
+    bone: "#08060f", "bone-2": "#0c0916", paper: "#110d1f", "paper-2": "#0c0916", card: "#171128",
+    navy: "#110d1f", "navy-deep": "#030206", oxblood: "#2a0f3a", red: "#7a2ab0", brass: "#ffe14d",
+    ink: "#f6f0ff", "ink-soft": "#d0c4e8", muted: "#9a8ab8",
+    accent: "#b06bff", "accent-2": "#2bff88", "btn-bg": "#b06bff", "btn-fg": "#0a0414",
+    line: "rgba(246,240,255,.14)", "line-2": "rgba(246,240,255,.28)",
+    "glow-a": "rgba(176,107,255,.22)", "glow-b": "rgba(43,255,136,.14)"
+  }),
+  anime: makeTheme(["#0e0a1c", "#ff5c8a", "#6ff0ff"], {
+    bone: "#0e0a1c", "bone-2": "#130e24", paper: "#1a1330", "paper-2": "#130e24", card: "#21183c",
+    navy: "#1a1330", "navy-deep": "#06040e", oxblood: "#3a1d5c", red: "#7a3ab0", brass: "#ffd166",
+    ink: "#f4efff", "ink-soft": "#d4c8ee", muted: "#a498c0",
+    accent: "#ff5c8a", "accent-2": "#6ff0ff", "btn-bg": "#ff5c8a", "btn-fg": "#1a0612",
+    line: "rgba(244,239,255,.14)", "line-2": "rgba(244,239,255,.28)",
+    "glow-a": "rgba(255,92,138,.22)", "glow-b": "rgba(111,240,255,.14)"
+  }),
+  physics: makeTheme(["#050b18", "#4d8dff", "#ffd166"], {
+    bone: "#050b18", "bone-2": "#071022", paper: "#0a1830", "paper-2": "#071022", card: "#0d2040",
+    navy: "#0a1830", "navy-deep": "#020610", oxblood: "#123a6b", red: "#2b6bd6", brass: "#ffd166",
+    ink: "#eaf4ff", "ink-soft": "#c0d8ee", muted: "#88a4c0",
+    accent: "#4d8dff", "accent-2": "#ffd166", "btn-bg": "#4d8dff", "btn-fg": "#041020",
+    line: "rgba(234,244,255,.14)", "line-2": "rgba(234,244,255,.28)",
+    "glow-a": "rgba(77,141,255,.22)", "glow-b": "rgba(255,209,102,.12)"
+  }),
+  medical: makeTheme(["#061414", "#2bd6c4", "#ff8f98"], {
+    bone: "#061414", "bone-2": "#081c1c", paper: "#0b2626", "paper-2": "#081c1c", card: "#0e3030",
+    navy: "#0b2626", "navy-deep": "#020a0a", oxblood: "#0f4a4a", red: "#1f8a8a", brass: "#f3e8d0",
+    ink: "#eaffff", "ink-soft": "#b8e8e8", muted: "#7faeae",
+    accent: "#2bd6c4", "accent-2": "#ff8f98", "btn-bg": "#2bd6c4", "btn-fg": "#02140f",
+    line: "rgba(234,255,255,.14)", "line-2": "rgba(234,255,255,.28)",
+    "glow-a": "rgba(43,214,196,.20)", "glow-b": "rgba(255,143,152,.12)"
+  }),
+  engineering: makeTheme(["#061020", "#ffb347", "#6fd4ff"], {
+    bone: "#061020", "bone-2": "#08162a", paper: "#0b1e38", "paper-2": "#08162a", card: "#0e2646",
+    navy: "#0b1e38", "navy-deep": "#020812", oxblood: "#123a5c", red: "#2b6b9d", brass: "#ffb347",
+    ink: "#e8f2ff", "ink-soft": "#bcd0e8", muted: "#8298b8",
+    accent: "#ffb347", "accent-2": "#6fd4ff", "btn-bg": "#ffb347", "btn-fg": "#1a0e02",
+    line: "rgba(232,242,255,.14)", "line-2": "rgba(232,242,255,.28)",
+    "glow-a": "rgba(255,179,71,.20)", "glow-b": "rgba(111,212,255,.12)"
+  }),
+  law: makeTheme(["#140c0c", "#c9a15d", "#f3e8d0"], {
+    bone: "#140c0c", "bone-2": "#1a1010", paper: "#221414", "paper-2": "#1a1010", card: "#2a1a1a",
+    navy: "#221414", "navy-deep": "#0a0404", oxblood: "#4a1d1d", red: "#8a2a2a", brass: "#d9b26b",
+    ink: "#f6ece0", "ink-soft": "#d8c4b0", muted: "#a88f80",
+    accent: "#c9a15d", "accent-2": "#f3e8d0", "btn-bg": "#c9a15d", "btn-fg": "#1a0e06",
+    line: "rgba(246,236,224,.14)", "line-2": "rgba(246,236,224,.28)",
+    "glow-a": "rgba(201,161,93,.20)", "glow-b": "rgba(243,232,208,.10)"
+  }),
+  art: makeTheme(["#121016", "#ff5c8a", "#6fb8ff"], {
+    bone: "#121016", "bone-2": "#18141c", paper: "#201a26", "paper-2": "#18141c", card: "#281f30",
+    navy: "#201a26", "navy-deep": "#08060a", oxblood: "#3a1d3a", red: "#8a2a5a", brass: "#ffd166",
+    ink: "#fff4f0", "ink-soft": "#e8d0d8", muted: "#b89aa8",
+    accent: "#ff5c8a", "accent-2": "#6fb8ff", "btn-bg": "#ff5c8a", "btn-fg": "#1a0610",
+    line: "rgba(255,244,240,.14)", "line-2": "rgba(255,244,240,.28)",
+    "glow-a": "rgba(255,92,138,.22)", "glow-b": "rgba(111,184,255,.14)"
   })
 };
 
+/* ── PIX skins ───────────────────────────────────────────────────
+   Every skin recolours the same verified portrait and can add a
+   small pixel accessory. The original is free and stays default. */
+const PIX_BASE_PALETTE = {
+  hair: "#14131a", hairHi: "#26242e", rim: "#0f1118",
+  skin: "#f0b98f", skinShade: "#d99a70",
+  lens: "#fbf8ee", lensShade: "#e5e0d2", glint: "#ffffff",
+  shirt: "#f7eeda", shirtShade: "#e3d3b6", mouth: "#b06a60"
+};
+
+const PIX_SKINS = [
+  {
+    id: "pix-original", name: "Classic PIX", price: 0, value: "pix-original",
+    desc: "The original: black hair, round glasses, cream tee. Always included.",
+    palette: {}, acc: []
+  },
+  {
+    id: "pix-sakura", name: "Sakura PIX", price: 260, value: "pix-sakura",
+    desc: "Blossom-pink hair, a soft tee and two tiny flower clips.",
+    palette: { hair: "#5a2340", hairHi: "#7a3058", rim: "#2a0f1f", skin: "#f4c2a0", skinShade: "#d99a70", lens: "#fff2f8", lensShade: "#f0c8dc", shirt: "#ffd6e6", shirtShade: "#f0b8ce", mouth: "#c2406b" },
+    acc: [
+      [4,1,1,1,"#ff8fb3"],[6,1,1,1,"#ff8fb3"],[5,0,1,1,"#ffd6e6"],[5,2,1,1,"#ffd6e6"],[5,1,1,1,"#fff0f6"],
+      [27,4,1,1,"#ff8fb3"],[26,5,1,1,"#ffd6e6"],[28,5,1,1,"#ffd6e6"],[27,6,1,1,"#ff8fb3"]
+    ]
+  },
+  {
+    id: "pix-neon", name: "Neon PIX", price: 420, value: "pix-neon",
+    desc: "A magenta visor and electric cyan edges. Very after-hours.",
+    palette: { hair: "#0a2a3a", hairHi: "#0f4a5c", rim: "#04121a", lens: "#d8ffff", lensShade: "#9ff5ff", shirt: "#101d3f", shirtShade: "#0a1228" },
+    acc: [
+      [6,8,20,1,"#ff2e88"],[6,9,20,1,"#7a1a5c"],[5,8,1,2,"#00e5ff"],[26,8,1,2,"#00e5ff"],
+      [9,8,2,1,"#ff9ad0"],[19,8,2,1,"#ff9ad0"]
+    ]
+  },
+  {
+    id: "pix-gamer", name: "Gamer PIX", price: 520, value: "pix-gamer",
+    desc: "Purple headset, mint mic light and a hoodie-dark tee.",
+    palette: { hair: "#2a1a3e", hairHi: "#3d2857", rim: "#120a1c", lens: "#e8d8ff", lensShade: "#c4a8ee", shirt: "#1a2430", shirtShade: "#101720" },
+    acc: [
+      [8,1,16,1,"#7a4dff"],[6,2,2,1,"#7a4dff"],[24,2,2,1,"#7a4dff"],[5,3,1,2,"#7a4dff"],[26,3,1,2,"#7a4dff"],
+      [0,9,2,4,"#7a4dff"],[30,9,2,4,"#7a4dff"],[0,12,2,1,"#38d6a4"],[30,12,2,1,"#38d6a4"],
+      [3,17,1,3,"#7a4dff"],[3,20,1,1,"#38d6a4"]
+    ]
+  },
+  {
+    id: "pix-scholar", name: "Scholar PIX", price: 380, value: "pix-scholar",
+    desc: "A forest-green cardigan and a warm tie. Library approved.",
+    palette: { hair: "#4a2e1a", hairHi: "#6b4528", rim: "#241408", lens: "#f7f0dc", lensShade: "#ddd0b0", shirt: "#2f5d46", shirtShade: "#234838", mouth: "#a05a50" },
+    acc: [
+      [9,18,1,5,"#234838"],[22,18,1,5,"#234838"],[13,18,6,1,"#f7eeda"],[15,19,2,4,"#e8a06d"],[14,23,4,1,"#e8a06d"]
+    ]
+  },
+  {
+    id: "pix-astro", name: "Astro PIX", price: 640, value: "pix-astro",
+    desc: "Silver hair, a clear helmet ring and one red antenna.",
+    palette: { hair: "#cfd8e8", hairHi: "#eef2f8", rim: "#8fa8c0", skin: "#e8b48c", skinShade: "#c98f68", lens: "#e6f6ff", lensShade: "#b8d8ee", shirt: "#1a2a4a", shirtShade: "#122040" },
+    acc: [
+      [4,0,24,1,"#9fd6ff"],[2,1,2,1,"#9fd6ff"],[28,1,2,1,"#9fd6ff"],[1,2,1,3,"#9fd6ff"],[30,2,1,3,"#9fd6ff"],
+      [0,5,1,16,"#9fd6ff"],[31,5,1,16,"#9fd6ff"],[1,21,2,1,"#9fd6ff"],[29,21,2,1,"#9fd6ff"],
+      [15,0,1,1,"#ff5c6a"],[15,1,1,1,"#ffd166"],[14,21,4,1,"#9fd6ff"]
+    ]
+  },
+  {
+    id: "pix-striker", name: "Striker PIX", price: 480, value: "pix-striker",
+    desc: "Matchday headband, red jersey and a chalk-white collar.",
+    palette: { hair: "#2a1810", hairHi: "#3d2418", rim: "#140a04", lens: "#f7eeda", lensShade: "#e3d3b6", shirt: "#c14a55", shirtShade: "#8e2a34", mouth: "#8e2a34" },
+    acc: [
+      [5,7,22,1,"#f3e8d0"],[5,8,22,1,"#c14a55"],[27,8,1,5,"#f3e8d0"],[27,13,1,3,"#c14a55"],
+      [10,18,2,5,"#8e2a34"],[20,18,2,5,"#8e2a34"],[13,18,6,1,"#f3e8d0"],[15,20,2,3,"#f3e8d0"]
+    ]
+  },
+  {
+    id: "pix-samurai", name: "Samurai PIX", price: 560, value: "pix-samurai",
+    desc: "Orange hair, a trailing hachimaki and a dark gi collar.",
+    palette: { hair: "#ff7a1a", hairHi: "#ffb347", rim: "#8e3a0a", lens: "#fff1dc", lensShade: "#e8cfb2", shirt: "#24180f", shirtShade: "#1b110a", mouth: "#8e2a1d" },
+    acc: [
+      [5,7,22,1,"#f3e8d0"],[5,8,22,1,"#c14a55"],[26,9,1,6,"#f3e8d0"],[27,13,1,4,"#c14a55"],
+      [11,18,1,5,"#0f1118"],[20,18,1,5,"#0f1118"],[12,19,8,1,"#0f1118"],[15,20,2,1,"#c14a55"]
+    ]
+  },
+  {
+    id: "pix-wizard", name: "Wizard PIX", price: 700, value: "pix-wizard",
+    desc: "White hair, a star hat and a deep-violet robe collar.",
+    palette: { hair: "#e8e8f0", hairHi: "#ffffff", rim: "#a8a8c0", lens: "#f4f0ff", lensShade: "#d4c8ee", shirt: "#3a1d5c", shirtShade: "#2a1444" },
+    acc: [
+      [2,3,28,1,"#6b3ab0"],[6,2,20,1,"#6b3ab0"],[9,1,14,1,"#6b3ab0"],[12,0,8,1,"#6b3ab0"],
+      [15,1,1,1,"#ffd166"],[13,2,1,1,"#ffd166"],[17,2,1,1,"#ffd166"],
+      [11,18,1,5,"#2a1444"],[20,18,1,5,"#2a1444"],[13,19,6,1,"#2a1444"]
+    ]
+  },
+  {
+    id: "pix-sleepy", name: "Sleepy PIX", price: 300, value: "pix-sleepy",
+    desc: "Mint hair, a nightcap with a peach pom and soft pyjamas.",
+    palette: { hair: "#7fbfa8", hairHi: "#a8dcc8", rim: "#4a8a70", skin: "#f4c8a8", skinShade: "#d9a080", lens: "#f0f8ff", lensShade: "#d0e0f0", shirt: "#d8e8ff", shirtShade: "#b8ccee" },
+    acc: [
+      [4,2,24,1,"#7a8cff"],[6,1,20,1,"#7a8cff"],[8,0,16,1,"#7a8cff"],[4,0,2,2,"#ffd6a5"],
+      [5,3,22,1,"#ffd6a5"],[13,18,6,1,"#b8ccee"],[15,19,2,3,"#b8ccee"]
+    ]
+  },
+  {
+    id: "pix-punk", name: "Punk PIX", price: 440, value: "pix-punk",
+    desc: "A yellow mohawk, one earring and a black jacket collar.",
+    palette: { hair: "#ff5c6a", hairHi: "#ff8f98", rim: "#8e1a2a", lens: "#f2f2f2", lensShade: "#c8c8c8", shirt: "#0a0a0a", shirtShade: "#000000", mouth: "#6e1f2c" },
+    acc: [
+      [14,0,4,1,"#ffe14d"],[13,1,6,1,"#ffe14d"],[14,2,4,1,"#ffe14d"],[15,3,2,1,"#ffe14d"],
+      [27,13,1,2,"#ffe14d"],[26,15,1,1,"#ffe14d"],[11,18,1,5,"#1a1a1a"],[20,18,1,5,"#1a1a1a"],[12,19,8,1,"#1a1a1a"]
+    ]
+  }
+];
+
+/* ── font packs ──────────────────────────────────────────────────
+   Equipping one overrides --serif / --sans / --mono on <html>. */
+const FONT_PACKS = [
+  {
+    id: "font-classic", name: "Pixel Classic", price: 0, value: "font-classic",
+    desc: "The original Silkscreen and Pixelify pairing. Always included.",
+    serif: '"Silkscreen", "Courier New", monospace',
+    sans: '"Pixelify Sans", "Manrope", sans-serif',
+    mono: '"Silkscreen", "DM Mono", monospace'
+  },
+  {
+    id: "font-modern", name: "Modern Studio", price: 260, value: "font-modern",
+    desc: "Clean grotesk headings and a calm reading face.",
+    serif: '"Space Grotesk", "Inter", sans-serif',
+    sans: '"Inter", system-ui, sans-serif',
+    mono: '"JetBrains Mono", "DM Mono", monospace'
+  },
+  {
+    id: "font-serif", name: "Editorial Serif", price: 300, value: "font-serif",
+    desc: "Playfair headlines with a bookish body and quiet mono labels.",
+    serif: '"Playfair Display", Georgia, serif',
+    sans: '"Source Serif 4", Georgia, serif',
+    mono: '"IBM Plex Mono", monospace'
+  },
+  {
+    id: "font-typewriter", name: "Typewriter", price: 240, value: "font-typewriter",
+    desc: "Ink, paper and a machine that only knows one speed.",
+    serif: '"Special Elite", "Courier Prime", monospace',
+    sans: '"Courier Prime", "Courier New", monospace',
+    mono: '"Courier Prime", monospace'
+  },
+  {
+    id: "font-hand", name: "Handwritten", price: 280, value: "font-hand",
+    desc: "Notes in the margin, headings in a quick pen.",
+    serif: '"Caveat", cursive',
+    sans: '"Patrick Hand", cursive',
+    mono: '"Courier Prime", monospace'
+  },
+  {
+    id: "font-tech", name: "Tech Deck", price: 360, value: "font-tech",
+    desc: "Orbitron headings, Rajdhani body and terminal labels.",
+    serif: '"Orbitron", sans-serif',
+    sans: '"Rajdhani", sans-serif',
+    mono: '"Share Tech Mono", monospace'
+  },
+  {
+    id: "font-anime", name: "Anime Dub", price: 340, value: "font-anime",
+    desc: "Bangers titles, rounded body text and a dot-matrix label.",
+    serif: '"Bangers", cursive',
+    sans: '"M PLUS Rounded 1c", sans-serif',
+    mono: '"DotGothic16", monospace'
+  },
+  {
+    id: "font-academic", name: "Academic Press", price: 320, value: "font-academic",
+    desc: "Cormorant, Lora and Plex Mono. For the long argument.",
+    serif: '"Cormorant Garamond", Georgia, serif',
+    sans: '"Lora", Georgia, serif',
+    mono: '"IBM Plex Mono", monospace'
+  },
+  {
+    id: "font-arcade", name: "Arcade Cabinet", price: 400, value: "font-arcade",
+    desc: "Press Start headings and VT323 everything else.",
+    serif: '"Press Start 2P", monospace',
+    sans: '"VT323", monospace',
+    mono: '"VT323", monospace'
+  },
+  {
+    id: "font-street", name: "Street Poster", price: 300, value: "font-street",
+    desc: "Bebas headlines, Oswald body and Space Mono labels.",
+    serif: '"Bebas Neue", sans-serif',
+    sans: '"Oswald", sans-serif',
+    mono: '"Space Mono", monospace'
+  }
+];
+
+/* ── animated profile effects ────────────────────────────────────
+   Applied to the avatar wrapper and the profile banner. Pure CSS. */
+const PROFILE_EFFECTS = [
+  { id: "effect-none", name: "Clean Slate", price: 0, value: "effect-none", desc: "No extra motion. Just you and your frame.", swatch: "linear-gradient(135deg,#122048,#1a2e4d)" },
+  { id: "effect-solo", name: "Monarch Aura", price: 900, value: "effect-solo", desc: "Solo Leveling energy — violet shadow light and rising sparks.", swatch: "linear-gradient(135deg,#2a1a5c,#6b4ad6,#9fd6ff)" },
+  { id: "effect-sakura", name: "Blossom Drift", price: 420, value: "effect-sakura", desc: "Petals crossing the frame, forever in spring.", swatch: "linear-gradient(135deg,#ff5c8a,#ffd6e6)" },
+  { id: "effect-lightning", name: "Thunder Step", price: 520, value: "effect-lightning", desc: "Anime lightning cracks around your avatar.", swatch: "linear-gradient(135deg,#f5e642,#ffd166)" },
+  { id: "effect-fire", name: "Flame Focus", price: 560, value: "effect-fire", desc: "Embers and heat haze for the ones on a run.", swatch: "linear-gradient(135deg,#ff7a1a,#c14a55)" },
+  { id: "effect-football", name: "Stadium Lights", price: 480, value: "effect-football", desc: "Pitch-green light sweeping like a night match.", swatch: "linear-gradient(135deg,#38d67a,#f3e8d0)" },
+  { id: "effect-derby", name: "Derby Day", price: 540, value: "effect-derby", desc: "Scarf red, chalk white and matchday confetti.", swatch: "linear-gradient(135deg,#c14a55,#f3e8d0)" },
+  { id: "effect-gamer", name: "RGB Setup", price: 460, value: "effect-gamer", desc: "A slow rainbow cycle around the frame.", swatch: "linear-gradient(135deg,#ff2e88,#b06bff,#2bff88)" },
+  { id: "effect-matrix", name: "Data Rain", price: 580, value: "effect-matrix", desc: "Green code falling behind the glass.", swatch: "linear-gradient(135deg,#07120d,#2bff88)" },
+  { id: "effect-cosmos", name: "Star Field", price: 500, value: "effect-cosmos", desc: "A quiet orbit of stars and dust.", swatch: "linear-gradient(135deg,#070818,#8b6bff,#ffd166)" },
+  { id: "effect-heart", name: "Heartbeat", price: 380, value: "effect-heart", desc: "Soft pink pulse rings, twice a second.", swatch: "linear-gradient(135deg,#ff5c8a,#ffb3d9)" },
+  { id: "effect-frost", name: "Frostbite", price: 420, value: "effect-frost", desc: "Ice-blue shimmer and crystal dust.", swatch: "linear-gradient(135deg,#6bb3d9,#b8e8ff)" }
+];
+
 const SHOP_ITEMS = [
+  ...PIX_SKINS.map(s => ({ id: s.id, type: "pix", name: s.name, price: s.price, value: s.id, desc: s.desc })),
+
   { id: "frame-classic", type: "frame",  name: "Starter Frame",  price: 0,   value: "frame-classic", css: "classic", desc: "A clean cream edge. The default." },
   { id: "frame-gold",    type: "frame",  name: "Peach Halo",     price: 220, value: "frame-gold",    css: "gold",    desc: "Warm peach light around your avatar." },
   { id: "frame-orbit",   type: "frame",  name: "Teal Orbit",     price: 280, value: "frame-orbit",   css: "orbit",   desc: "A slow teal ring, going nowhere." },
   { id: "frame-inferno", type: "frame",  name: "Red Alert Ring", price: 320, value: "frame-inferno", css: "inferno", desc: "Inferno red, for the focused ones." },
   { id: "frame-starlit", type: "frame",  name: "Midnight Halo",  price: 560, value: "frame-starlit", css: "starlit", desc: "A little midnight sky, worn close." },
+  { id: "frame-neon",    type: "frame",  name: "Neon Pulse",     price: 460, value: "frame-neon",    css: "neon",    desc: "A magenta-cyan ring that never sits still." },
+  { id: "frame-holo",    type: "frame",  name: "Holo Shift",     price: 620, value: "frame-holo",    css: "holo",    desc: "A slow rainbow border. Slightly illegal." },
+  { id: "frame-flame",   type: "frame",  name: "Ember Ring",     price: 520, value: "frame-flame",   css: "flame",   desc: "Orange heat that flickers at the edges." },
+  { id: "frame-frost",   type: "frame",  name: "Frost Ring",     price: 480, value: "frame-frost",   css: "frost",   desc: "Ice-blue shimmer with a winter bite." },
+  { id: "frame-anime",   type: "frame",  name: "Manga Burst",    price: 580, value: "frame-anime",   css: "anime",   desc: "Speed lines and a hero sparkle." },
+  { id: "frame-football",type: "frame",  name: "Pitch Ring",     price: 500, value: "frame-football",css: "football",desc: "Green chalk and a matchday glow." },
 
   { id: "theme-gallery", type: "theme",  name: "Default",        price: 0,    value: "gallery",    colors: THEMES.gallery.colors,    desc: "Midnight navy, cream and red ink. The original." },
   { id: "theme-sand",    type: "theme",  name: "Peach Shift",    price: 180,  value: "sand",       colors: THEMES.sand.colors,       desc: "Warm peach light on a deep navy studio." },
@@ -324,6 +600,18 @@ const SHOP_ITEMS = [
   { id: "theme-matcha",  type: "theme",  name: "Matcha",         price: 400,  value: "matcha",     colors: THEMES.matcha.colors,     desc: "Whisked green, rice paper and a quiet tea room." },
   { id: "theme-dusk",    type: "theme",  name: "Dusk Bloom",     price: 520,  value: "dusk",       colors: THEMES.dusk.colors,       desc: "Orchid purple, peach light and the end of the day." },
 
+  { id: "theme-football", type: "theme", name: "Matchday",       price: 560,  value: "football",    colors: THEMES.football.colors,    desc: "Football student · pitch green, chalk white and stadium red." },
+  { id: "theme-gamer",    type: "theme", name: "RGB Arena",      price: 540,  value: "gamer",       colors: THEMES.gamer.colors,       desc: "Gamer · violet cabinet, neon mint and one more run." },
+  { id: "theme-anime",    type: "theme", name: "Anime Club",     price: 500,  value: "anime",       colors: THEMES.anime.colors,       desc: "Anime lover · hot pink, sky cyan and midnight ink." },
+  { id: "theme-physics",  type: "theme", name: "Physics Lab",    price: 500,  value: "physics",     colors: THEMES.physics.colors,     desc: "Science student · deep-space blue and particle gold." },
+  { id: "theme-medical",  type: "theme", name: "Med School",     price: 520,  value: "medical",     colors: THEMES.medical.colors,     desc: "Med student · scrub teal, anatomy pink and clean light." },
+  { id: "theme-engineering", type: "theme", name: "Blueprint",   price: 500,  value: "engineering", colors: THEMES.engineering.colors, desc: "Engineering · blueprint blue and safety orange." },
+  { id: "theme-law",      type: "theme", name: "Law School",     price: 560,  value: "law",         colors: THEMES.law.colors,         desc: "Law student · burgundy leather, parchment and gold." },
+  { id: "theme-art",      type: "theme", name: "Art Studio",     price: 460,  value: "art",         colors: THEMES.art.colors,         desc: "Art student · paint pink, cobalt and canvas light." },
+
+  ...PROFILE_EFFECTS.map(e => ({ id: e.id, type: "effect", name: e.name, price: e.price, value: e.value, desc: e.desc, swatch: e.swatch })),
+  ...FONT_PACKS.map(f => ({ id: f.id, type: "font", name: f.name, price: f.price, value: f.value, desc: f.desc })),
+
   { id: "title-curator", type: "title",  name: "Curator",        price: 0,   value: "Curator",      desc: "Of days, of small things." },
   { id: "title-deep",    type: "title",  name: "Deep Worker",    price: 150, value: "Deep Worker",  desc: "For the 90-minute kind of mornings." },
   { id: "title-owl",     type: "title",  name: "Night Owl",      price: 240, value: "Night Owl",    desc: "Best ideas arrive after midnight." },
@@ -332,7 +620,13 @@ const SHOP_ITEMS = [
   { id: "banner-bone",   type: "banner", name: "Cream",          price: 0,   value: "banner-bone",   desc: "Clean, warm, endlessly quiet." },
   { id: "banner-navy",   type: "banner", name: "Navy Wash",      price: 160, value: "banner-navy",   desc: "A deep blue horizon." },
   { id: "banner-oxblood",type: "banner", name: "Red Haze",       price: 220, value: "banner-oxblood",desc: "Red inferno at the edges." },
-  { id: "banner-sunset", type: "banner", name: "Peach Dusk",     price: 380, value: "banner-sunset", desc: "A sky that decided to be bold." }
+  { id: "banner-sunset", type: "banner", name: "Peach Dusk",     price: 380, value: "banner-sunset", desc: "A sky that decided to be bold." },
+  { id: "banner-anime",  type: "banner", name: "Sakura Sky",     price: 340, value: "banner-anime",  desc: "Pink petals drifting over a midnight sky." },
+  { id: "banner-football", type: "banner", name: "Matchday",     price: 360, value: "banner-football", desc: "Pitch stripes and stadium floodlight." },
+  { id: "banner-gamer",  type: "banner", name: "RGB Grid",       price: 320, value: "banner-gamer",  desc: "A dark grid with a rainbow edge." },
+  { id: "banner-science",type: "banner", name: "Blueprint",      price: 300, value: "banner-science",desc: "Graph paper, cold light and clean lines." },
+  { id: "banner-solo",   type: "banner", name: "Monarch",        price: 480, value: "banner-solo",   desc: "Violet shadow light, rising from the floor." },
+  { id: "banner-stars",  type: "banner", name: "Starfield",      price: 420, value: "banner-stars",  desc: "A quiet field of stars and dust." }
 ];
 
 const BADGES = [

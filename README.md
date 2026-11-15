@@ -1,19 +1,6 @@
 # COME — the activity studio
 
 A local-first activity and time planner with a Notion-style database, focus room, Spotify embeds, streaks, CP rewards and a small cosmetics shop. Built as a static site with vanilla HTML, CSS and JavaScript — no build step, no backend, no account server. The look is a pixel-art skin in midnight navy, cream, red and teal, with PIX the mascot running a short first-run tour.
-
-## Run it
-
-The app is currently served at **http://localhost:4173/**.
-
-To start it again later, from this folder:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\serve.ps1
-```
-
-Then open <http://localhost:4173/>. You can also use any static file server pointed at this folder.
-
 ## Accounts
 
 - **Explore the demo** enters Mira's demo studio immediately.

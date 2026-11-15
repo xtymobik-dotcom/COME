@@ -89,7 +89,10 @@ function makeDefaultLook() {
     theme: "theme-gallery",
     frame: "frame-classic",
     title: "title-curator",
-    banner: "banner-bone"
+    banner: "banner-bone",
+    pix: "pix-original",
+    effect: "effect-none",
+    font: "font-classic"
   };
 }
 function starterTasks() {
@@ -123,7 +126,7 @@ function createUser({ name, username, pin }) {
     tasks: starterTasks(),
     sessions: [],
     playlists: [],
-    owned: ["frame-classic", "theme-gallery", "title-curator", "banner-bone"],
+    owned: ["frame-classic", "theme-gallery", "title-curator", "banner-bone", "pix-original", "effect-none", "font-classic"],
     equipped: makeDefaultLook(),
     activePlaylist: null,
     tutorialSeen: false
@@ -195,9 +198,10 @@ function makeDemoUser() {
       addedAt: Date.now() - i * 100000
     })),
     owned: [
-      "frame-classic", "frame-gold", "theme-gallery", "title-curator", "title-deep", "banner-bone", "banner-navy"
+      "frame-classic", "frame-gold", "theme-gallery", "title-curator", "title-deep", "banner-bone", "banner-navy",
+      "pix-original", "effect-none", "font-classic"
     ],
-    equipped: { theme: "theme-gallery", frame: "frame-gold", title: "title-deep", banner: "banner-bone" },
+    equipped: { theme: "theme-gallery", frame: "frame-gold", title: "title-deep", banner: "banner-bone", pix: "pix-original", effect: "effect-none", font: "font-classic" },
     activePlaylist: null,
     tutorialSeen: false
   };
@@ -222,6 +226,7 @@ function logout() {
   user = null;
   document.documentElement.dataset.theme = "gallery";
   clearThemeTokens();
+  clearFontTokens();
 }
 
 /* ── streak & rewards ────────────────────────────────────────── */
@@ -455,12 +460,15 @@ function applyLook() {
   if (!user) {
     document.documentElement.dataset.theme = "gallery";
     clearThemeTokens();
+    clearFontTokens();
     return;
   }
   const theme = itemById(user.equipped.theme);
   const value = theme && theme.value ? theme.value : "gallery";
   document.documentElement.dataset.theme = value;
   applyThemeTokens(value);
+  applyFont(user.equipped.font);
+  if (typeof refreshMascotArt === "function") refreshMascotArt();
 }
 function clearThemeTokens() {
   const root = document.documentElement;
@@ -474,10 +482,37 @@ function applyThemeTokens(name) {
     document.documentElement.style.setProperty("--" + key, value);
   });
 }
+function applyFont(id) {
+  clearFontTokens();
+  const list = typeof FONT_PACKS !== "undefined" ? FONT_PACKS : [];
+  const pack = list.find(f => f.id === id) || list[0];
+  if (!pack) return;
+  const root = document.documentElement;
+  if (pack.serif) root.style.setProperty("--serif", pack.serif);
+  if (pack.sans) root.style.setProperty("--sans", pack.sans);
+  if (pack.mono) root.style.setProperty("--mono", pack.mono);
+  root.dataset.font = pack.value || pack.id;
+}
+function clearFontTokens() {
+  const root = document.documentElement;
+  ["--serif", "--sans", "--mono"].forEach(key => root.style.removeProperty(key));
+  delete root.dataset.font;
+}
 
 /* ── session bootstrap ───────────────────────────────────────── */
 function migrateUser(u) {
-  if (!u || !Array.isArray(u.playlists)) return;
+  if (!u) return;
+  if (!Array.isArray(u.owned)) u.owned = [];
+  if (!u.equipped || typeof u.equipped !== "object") u.equipped = makeDefaultLook();
+
+  /* Add only the missing defaults — never overwrite a real choice. */
+  const defaults = makeDefaultLook();
+  Object.entries(defaults).forEach(([type, id]) => {
+    if (!u.equipped[type] || !itemById(u.equipped[type])) u.equipped[type] = id;
+    if (!u.owned.includes(id)) u.owned.push(id);
+  });
+
+  if (!Array.isArray(u.playlists)) u.playlists = [];
   u.playlists.forEach(p => {
     if (p.spotifyId === "37i9dQZF1DWWQRwui0ExPn" && p.title === "Slow Focus") p.title = "Lofi Beats";
   });

@@ -10,7 +10,8 @@ const MASCOT_TIPS = [
   ["Sound on", "Paste any Spotify playlist link in Music. It plays in the official embed — no tricks."],
   ["Streaks", "Finish one thing a day. The streak grows, and streak milestones pay CP."],
   ["CP", "Kept tasks, focus minutes and daily check-ins earn CP. Spend it in the Studio shop."],
-  ["Themes", "There are 30 themes in the shop now. Anime, study labs, vaporwave — pick a whole new room."],
+  ["Themes", "There are 38 themes in the shop now. Anime, football, labs, vaporwave — pick a whole new room."],
+  ["Skins", "PIX has new skins, profile effects and font packs in the shop. The classic look stays free."],
   ["Keyboard", "Press N for a new task, F for the focus room and Ctrl/Cmd + K for anything else."]
 ];
 
@@ -52,7 +53,7 @@ const MASCOT_TOUR = [
     placement: "right",
     kicker: "STEP 5 · REWARDS",
     title: "Spend what you keep.",
-    body: "Kept tasks and focus minutes earn CP. The shop has frames, titles and 30 full themes — anime, science labs, vaporwave and more.",
+    body: "Kept tasks and focus minutes earn CP. The shop has PIX skins, font packs, animated profile effects, frames, titles and 38 full themes — anime, football, science labs, vaporwave and more.",
     before: () => openSidebar()
   },
   {
@@ -75,91 +76,89 @@ const mascotState = {
 };
 
 /* ── the character ───────────────────────────────────────────── */
-function mascotSVG(extraClass = "") {
-  return `<svg class="pix-svg ${extraClass}" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="PIX, the COME mascot">
-    <!-- hair spikes and crown -->
-    <rect x="11" y="1" width="3" height="2" fill="#101d3f"/>
-    <rect x="16" y="0" width="3" height="3" fill="#101d3f"/>
-    <rect x="20" y="2" width="2" height="2" fill="#101d3f"/>
-    <rect x="7" y="4" width="2" height="3" fill="#101d3f"/>
-    <rect x="23" y="4" width="2" height="3" fill="#101d3f"/>
-    <rect x="8" y="3" width="16" height="3" fill="#101d3f"/>
-    <rect x="12" y="2" width="2" height="1" fill="#24406e"/>
-    <rect x="19" y="4" width="2" height="1" fill="#24406e"/>
-    <!-- face -->
-    <rect x="10" y="6" width="12" height="10" fill="#e8a06d"/>
-    <rect x="9" y="10" width="1" height="3" fill="#e8a06d"/>
-    <rect x="22" y="10" width="1" height="3" fill="#e8a06d"/>
-    <rect x="10" y="12" width="1" height="3" fill="#c97f52"/>
-    <rect x="21" y="12" width="1" height="3" fill="#c97f52"/>
-    <rect x="12" y="15" width="8" height="1" fill="#e8a06d"/>
-    <rect x="13" y="16" width="6" height="1" fill="#c97f52"/>
-    <!-- hair sides and bangs -->
-    <rect x="8" y="5" width="2" height="8" fill="#101d3f"/>
-    <rect x="22" y="5" width="2" height="8" fill="#101d3f"/>
-    <rect x="10" y="5" width="5" height="2" fill="#101d3f"/>
-    <rect x="18" y="5" width="4" height="2" fill="#101d3f"/>
-    <rect x="15" y="6" width="1" height="2" fill="#101d3f"/>
-    <rect x="21" y="6" width="1" height="2" fill="#101d3f"/>
-    <!-- eyes, brows, nose, mouth, blush -->
-    <rect x="12" y="8" width="2" height="1" fill="#101d3f"/>
-    <rect x="18" y="8" width="2" height="1" fill="#101d3f"/>
-    <rect x="12" y="9" width="2" height="3" fill="#070d20"/>
-    <rect x="18" y="9" width="2" height="3" fill="#070d20"/>
-    <rect x="12" y="9" width="1" height="1" fill="#f3e8d0"/>
-    <rect x="18" y="9" width="1" height="1" fill="#f3e8d0"/>
-    <rect x="13" y="11" width="1" height="1" fill="#38d6a4"/>
-    <rect x="19" y="11" width="1" height="1" fill="#38d6a4"/>
-    <rect x="15" y="11" width="2" height="1" fill="#c97f52"/>
-    <rect x="16" y="12" width="1" height="1" fill="#c97f52"/>
-    <rect x="14" y="13" width="4" height="1" fill="#6e1f2c"/>
-    <rect x="15" y="14" width="2" height="1" fill="#6e1f2c"/>
-    <rect x="11" y="12" width="1" height="1" fill="#d97a6a"/>
-    <rect x="20" y="12" width="1" height="1" fill="#d97a6a"/>
-    <!-- neck and cream shirt -->
-    <rect x="14" y="16" width="4" height="1" fill="#c97f52"/>
-    <rect x="8" y="17" width="16" height="9" fill="#f3e8d0"/>
-    <rect x="7" y="18" width="2" height="5" fill="#f3e8d0"/>
-    <rect x="23" y="18" width="2" height="5" fill="#f3e8d0"/>
-    <rect x="8" y="25" width="16" height="1" fill="#d9c9a8"/>
-    <rect x="13" y="17" width="6" height="1" fill="#c14a55"/>
-    <rect x="12" y="18" width="1" height="1" fill="#c14a55"/>
-    <rect x="19" y="18" width="1" height="1" fill="#c14a55"/>
-    <!-- sleeves and cuffs -->
-    <rect x="6" y="19" width="2" height="4" fill="#f3e8d0"/>
-    <rect x="24" y="19" width="2" height="4" fill="#f3e8d0"/>
-    <rect x="6" y="23" width="2" height="1" fill="#d9c9a8"/>
-    <rect x="24" y="23" width="2" height="1" fill="#d9c9a8"/>
-    <!-- the handheld console, with the one teal light -->
-    <rect x="9" y="19" width="14" height="6" fill="#070d20"/>
-    <rect x="10" y="20" width="12" height="4" fill="#c14a55"/>
-    <rect x="12" y="20" width="8" height="3" fill="#38d6a4"/>
-    <rect x="12" y="20" width="2" height="1" fill="#9ff5d8"/>
-    <rect x="10" y="21" width="1" height="1" fill="#f3e8d0"/>
-    <rect x="21" y="21" width="1" height="1" fill="#f3e8d0"/>
-    <rect x="10" y="23" width="1" height="1" fill="#6e1f2c"/>
-    <rect x="12" y="23" width="1" height="1" fill="#6e1f2c"/>
-    <rect x="14" y="23" width="1" height="1" fill="#6e1f2c"/>
-    <!-- hands over the console edges -->
-    <rect x="8" y="21" width="2" height="2" fill="#e8a06d"/>
-    <rect x="22" y="21" width="2" height="2" fill="#e8a06d"/>
-    <!-- belt and trousers -->
-    <rect x="8" y="26" width="16" height="1" fill="#070d20"/>
-    <rect x="15" y="26" width="2" height="1" fill="#c14a55"/>
-    <rect x="9" y="27" width="6" height="3" fill="#101d3f"/>
-    <rect x="17" y="27" width="6" height="3" fill="#101d3f"/>
-    <rect x="15" y="27" width="2" height="3" fill="#070d20"/>
-    <rect x="10" y="28" width="1" height="1" fill="#24406e"/>
-    <rect x="18" y="28" width="1" height="1" fill="#24406e"/>
-    <!-- red sneakers -->
-    <rect x="8" y="30" width="7" height="2" fill="#c14a55"/>
-    <rect x="17" y="30" width="7" height="2" fill="#c14a55"/>
-    <rect x="8" y="31" width="7" height="1" fill="#f3e8d0"/>
-    <rect x="17" y="31" width="7" height="1" fill="#f3e8d0"/>
-    <rect x="10" y="30" width="2" height="1" fill="#d9c9a8"/>
-    <rect x="19" y="30" width="2" height="1" fill="#d9c9a8"/>
-  </svg>`;
+/* The verified 32×32 portrait, stored as colour-keyed pixel runs so
+   every skin can recolour the same drawing without redrawing it. */
+const PIX_ART = {
+  hair: [
+    [15,0,1,1],[10,1,2,1],[15,1,2,1],[20,1,2,1],[8,2,1,1],[10,2,14,1],[6,3,1,1],[8,3,18,1],
+    [5,4,1,1],[7,4,20,1],[6,5,21,1],[5,6,23,1],[4,7,24,1],[4,8,24,1],[4,9,3,1],[10,9,2,1],
+    [16,9,2,1],[21,9,2,1],[25,9,3,1],[4,10,2,1],[11,10,1,1],[21,10,1,1],[25,10,3,1],
+    [25,11,3,1],[25,12,3,1],[25,13,3,1],[25,14,3,1],[25,15,3,1],[5,16,2,1],[25,16,3,1],
+    [5,17,2,1],[25,17,3,1]
+  ],
+  hairHi: [[9,2,1,1],[7,3,1,1],[6,4,1,1],[5,5,1,1],[4,6,1,1]],
+  rim: [
+    [9,10,2,1],[12,10,4,1],[17,10,4,1],[22,10,2,1],[8,11,2,1],[15,11,3,1],[23,11,1,1],
+    [8,12,2,1],[15,12,1,1],[17,12,1,1],[23,12,1,1],[8,13,2,1],[15,13,1,1],[17,13,1,1],
+    [23,13,1,1],[6,14,1,1],[9,14,7,1],[17,14,7,1],[6,15,1,1],[4,16,1,1],[4,17,1,1],
+    [4,18,1,1],[4,19,1,1],[4,20,1,1],[4,21,1,1],[4,22,1,1]
+  ],
+  skin: [
+    [7,9,3,1],[12,9,4,1],[18,9,3,1],[23,9,2,1],[6,10,1,1],[8,10,1,1],[16,10,1,1],[24,10,1,1],
+    [4,11,2,1],[7,11,1,1],[24,11,1,1],[4,12,2,1],[7,12,1,1],[16,12,1,1],[24,12,1,1],
+    [4,13,2,1],[7,13,1,1],[16,13,1,1],[24,13,1,1],[3,14,1,1],[5,14,1,1],[7,14,2,1],
+    [16,14,1,1],[24,14,1,1],[2,15,4,1],[7,15,9,1],[17,15,8,1],[1,16,3,1],[7,16,8,1],
+    [18,16,7,1],[1,17,3,1],[8,17,7,1],[17,17,7,1],[1,18,3,1],[13,18,6,1],[1,19,3,1],
+    [1,20,3,1],[2,21,2,1],[1,22,3,1]
+  ],
+  skinShade: [
+    [7,10,1,1],[6,11,1,1],[6,12,1,1],[6,13,1,1],[4,14,1,1],[16,15,1,1],[7,17,1,1],
+    [15,17,2,1],[24,17,1,1]
+  ],
+  lens: [
+    [11,11,4,1],[19,11,4,1],[10,12,5,1],[18,12,5,1],[10,13,2,1],[18,13,2,1]
+  ],
+  glint: [[10,11,1,1],[18,11,1,1]],
+  lensShade: [[12,13,3,1],[20,13,3,1]],
+  mouth: [[15,16,3,1]],
+  shirt: [
+    [5,18,7,1],[20,18,6,1],[5,19,8,1],[19,19,7,1],[5,20,21,1],[5,21,21,1],[5,22,22,1],
+    [0,23,5,1],[7,23,17,1],[0,24,5,1],[7,24,2,1],[10,24,12,1],[23,24,1,1],[0,25,9,1],
+    [10,25,12,1],[23,25,5,1],[0,26,9,1],[10,26,12,1],[23,26,5,1],[1,27,8,1],[10,27,12,1],
+    [23,27,4,1],[2,28,7,1],[10,28,11,1],[22,28,4,1],[3,29,7,1],[11,29,9,1],[21,29,4,1],
+    [4,30,3,1],[21,30,3,1],[4,31,2,1],[22,31,2,1]
+  ],
+  shirtShade: [
+    [12,18,1,1],[19,18,1,1],[13,19,6,1],[5,23,2,1],[24,23,3,1],[5,24,2,1],[9,24,1,1],
+    [22,24,1,1],[24,24,3,1],[9,25,1,1],[22,25,1,1],[9,26,1,1],[22,26,1,1],[9,27,1,1],
+    [22,27,1,1],[9,28,1,1],[21,28,1,1],[10,29,1,1],[20,29,1,1],[7,30,14,1],[6,31,16,1]
+  ]
+};
+
+function pixSkinById(id) {
+  const list = typeof PIX_SKINS !== "undefined" ? PIX_SKINS : [];
+  return list.find(s => s.id === id) || list[0] || null;
 }
+
+function pixSVG(skin, extraClass = "") {
+  const s = skin || pixSkinById("pix-original");
+  if (!s) return "";
+  const pal = Object.assign({}, (typeof PIX_BASE_PALETTE !== "undefined" ? PIX_BASE_PALETTE : {}), s.palette || {});
+  const run = (r, color) => `<rect x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" fill="${color}"/>`;
+  const layers = ["hair", "hairHi", "rim", "skin", "skinShade", "lens", "glint", "lensShade", "mouth", "shirt", "shirtShade"];
+  let body = layers.map(key => (PIX_ART[key] || []).map(r => run(r, pal[key] || "#000")).join("")).join("");
+  (s.acc || []).forEach(a => { body += run(a, a[4]); });
+  return `<svg class="pix-svg ${extraClass}" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="PIX, the COME mascot">${body}</svg>`;
+}
+
+function mascotSVG(extraClass = "") {
+  const id = (typeof user !== "undefined" && user && user.equipped) ? user.equipped.pix : "pix-original";
+  return pixSVG(pixSkinById(id), extraClass);
+}
+
+function refreshMascotArt() {
+  const btn = document.getElementById("mascotBtn");
+  if (btn) {
+    const old = btn.querySelector(".pix-svg");
+    if (old) old.outerHTML = mascotSVG();
+    else btn.insertAdjacentHTML("afterbegin", mascotSVG());
+  }
+  const coach = document.getElementById("coachPix");
+  if (coach) coach.innerHTML = mascotSVG();
+  const focus = document.getElementById("focusPixArt");
+  if (focus) focus.innerHTML = mascotSVG("focus-pix-svg");
+}
+
 
 /* ── build the UI once ───────────────────────────────────────── */
 function initMascot() {
