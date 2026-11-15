@@ -23,6 +23,8 @@ function renderIdentity() {
 
   document.querySelectorAll(".avatar").forEach(el => {
     el.dataset.frame = frame ? frame.id : "frame-classic";
+    el.classList.toggle("avatar-fire", !!(frame && frame.animated));
+    el.classList.toggle("avatar-crown", !!(frame && frame.crown));
     const letter = el.querySelector(".avatar-letter");
     if (letter) letter.textContent = (u.avatarLetter || u.name.charAt(0) || "A").toUpperCase();
     let img = el.querySelector(".avatar-img");

@@ -109,10 +109,11 @@ function renderShop() {
         preview = `<div class="pv-pix">${art || `<span class="pv-fallback">${initial}</span>`}</div>`;
       } else if (item.type === "frame") {
         const css = esc(item.css || "classic");
+        const deco = `${item.animated ? " pvf-fire" : ""}${item.crown ? " pvf-crown" : ""}`;
         preview = `<div class="pv-frame-scene pvfs-${css}">
           <span class="pv-frame-haze" aria-hidden="true"></span>
           <span class="pv-frame-spark" aria-hidden="true"></span>
-          <div class="pv-avatar pvf-${css}">${initial}</div>
+          <div class="pv-avatar pvf-${css}${deco}">${initial}</div>
         </div>`;
       } else if (item.type === "theme") {
         const theme = (typeof THEMES !== "undefined" && THEMES[item.value]) || null;
@@ -172,13 +173,21 @@ function renderProfile() {
   const effect = equippedItem("effect");
   const level = levelInfo(user);
   const face = document.getElementById("profileAvatar");
-  if (face) face.dataset.frame = frame ? frame.id : "frame-classic";
+  if (face) {
+    face.dataset.frame = frame ? frame.id : "frame-classic";
+    face.classList.toggle("avatar-fire", !!(frame && frame.animated));
+    face.classList.toggle("avatar-crown", !!(frame && frame.crown));
+  }
   const wrap = document.querySelector(".profile-avatar-wrap");
-  if (wrap) wrap.dataset.effect = effect ? effect.value : "effect-none";
+  if (wrap) {
+    wrap.dataset.effect = effect ? effect.value : "effect-none";
+    wrap.dataset.frame = frame ? frame.id : "frame-classic";
+  }
   const bannerEl = document.getElementById("profileBanner");
   if (bannerEl) {
     bannerEl.dataset.banner = banner ? banner.value : "banner-bone";
     bannerEl.dataset.effect = effect ? effect.value : "effect-none";
+    bannerEl.dataset.frame = frame ? frame.id : "frame-classic";
     bannerEl.classList.toggle("has-cover", !!user.coverImage);
   }
   const coverImg = document.getElementById("profileCoverImg");

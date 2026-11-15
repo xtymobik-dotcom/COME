@@ -559,24 +559,24 @@ const SHOP_ITEMS = [
   { id: "frame-orbit",   type: "frame",  name: "Teal Orbit",     price: 280, value: "frame-orbit",   css: "orbit",   desc: "A slow teal ring, going nowhere." },
   { id: "frame-inferno", type: "frame",  name: "Red Alert Ring", price: 320, value: "frame-inferno", css: "inferno", desc: "Inferno red, for the focused ones." },
   { id: "frame-starlit", type: "frame",  name: "Midnight Halo",  price: 560, value: "frame-starlit", css: "starlit", desc: "A little midnight sky, worn close." },
-  { id: "frame-neon",    type: "frame",  name: "Neon Pulse",     price: 460, value: "frame-neon",    css: "neon",    desc: "A magenta-cyan ring that never sits still." },
-  { id: "frame-holo",    type: "frame",  name: "Holo Shift",     price: 620, value: "frame-holo",    css: "holo",    desc: "A slow rainbow border. Slightly illegal." },
-  { id: "frame-flame",   type: "frame",  name: "Ember Ring",     price: 520, value: "frame-flame",   css: "flame",   desc: "Orange heat that flickers at the edges." },
-  { id: "frame-frost",   type: "frame",  name: "Frost Ring",     price: 480, value: "frame-frost",   css: "frost",   desc: "Ice-blue shimmer with a winter bite." },
-  { id: "frame-anime",   type: "frame",  name: "Manga Burst",    price: 580, value: "frame-anime",   css: "anime",   desc: "Speed lines and a hero sparkle." },
-  { id: "frame-football",type: "frame",  name: "Pitch Ring",     price: 500, value: "frame-football",css: "football",desc: "Green chalk and a matchday glow." },
+  { id: "frame-neon",    type: "frame",  name: "Neon Pulse",     price: 460, value: "frame-neon",    css: "neon",    animated: true, desc: "A magenta-cyan ring that never sits still." },
+  { id: "frame-holo",    type: "frame",  name: "Holo Shift",     price: 620, value: "frame-holo",    css: "holo",    animated: true, desc: "A slow rainbow border. Slightly illegal." },
+  { id: "frame-flame",   type: "frame",  name: "Ember Ring",     price: 520, value: "frame-flame",   css: "flame",   animated: true, desc: "Orange heat that flickers at the edges." },
+  { id: "frame-frost",   type: "frame",  name: "Frost Ring",     price: 480, value: "frame-frost",   css: "frost",   animated: true, desc: "Ice-blue shimmer with a winter bite." },
+  { id: "frame-anime",   type: "frame",  name: "Manga Burst",    price: 580, value: "frame-anime",   css: "anime",   animated: true, desc: "Speed lines and a hero sparkle." },
+  { id: "frame-football",type: "frame",  name: "Pitch Ring",     price: 500, value: "frame-football",css: "football",animated: true, desc: "Green chalk and a matchday glow." },
 
   /* ── animated anime / gaming / study frames ─────────────────── */
-  { id: "frame-monarch", type: "frame", name: "Shadow Crown",  price: 1100, value: "frame-monarch", css: "monarch", animated: true, desc: "Anime · violet shadow flame and a crown that never falls." },
-  { id: "frame-gate",    type: "frame", name: "Dungeon Gate",  price: 920,  value: "frame-gate",    css: "gate",    animated: true, desc: "Anime · a blue portal ring spinning behind your avatar." },
-  { id: "frame-blossom", type: "frame", name: "Blossom Storm", price: 760,  value: "frame-blossom", css: "blossom", animated: true, desc: "Anime · a petal storm circling the frame, forever spring." },
-  { id: "frame-thunder", type: "frame", name: "Thunder Breath",price: 940,  value: "frame-thunder", css: "thunder", animated: true, desc: "Anime · electric arcs and a lightning flash on the edge." },
-  { id: "frame-curse",   type: "frame", name: "Cursed Energy", price: 1000, value: "frame-curse",   css: "curse",   animated: true, desc: "Anime · black-red smoke leaking out of the frame." },
-  { id: "frame-player",  type: "frame", name: "Player One",    price: 820,  value: "frame-player",  css: "player",  animated: true, desc: "Gaming · RGB corners, scanlines and a ready-up pulse." },
-  { id: "frame-boss",    type: "frame", name: "Boss Raid",     price: 880,  value: "frame-boss",    css: "boss",    animated: true, desc: "Gaming · red warning ticks and a health-bar sweep." },
-  { id: "frame-mecha",   type: "frame", name: "Mecha Core",    price: 980,  value: "frame-mecha",   css: "mecha",   animated: true, desc: "Gaming · a cyan reactor ring with rotating HUD ticks." },
-  { id: "frame-study",   type: "frame", name: "Deep Study",    price: 680,  value: "frame-study",   css: "study",   animated: true, desc: "Study · warm lamp light and drifting formulas." },
-  { id: "frame-library", type: "frame", name: "Library Dust",  price: 640,  value: "frame-library", css: "library", animated: true, desc: "Study · gold dust and slow pages in the lamplight." },
+  { id: "frame-monarch", type: "frame", name: "Shadow Crown",  price: 1100, value: "frame-monarch", css: "monarch", animated: true, crown: true, desc: "Anime · violet shadow flame and a crown that never falls." },
+  { id: "frame-gate",    type: "frame", name: "Dungeon Gate",  price: 920,  value: "frame-gate",    css: "gate",    animated: true, crown: true, desc: "Anime · a blue portal ring spinning behind your avatar." },
+  { id: "frame-blossom", type: "frame", name: "Blossom Storm", price: 760,  value: "frame-blossom", css: "blossom", animated: true, crown: true, desc: "Anime · a petal storm circling the frame, forever spring." },
+  { id: "frame-thunder", type: "frame", name: "Thunder Breath",price: 940,  value: "frame-thunder", css: "thunder", animated: true, crown: true, desc: "Anime · electric arcs and a lightning flash on the edge." },
+  { id: "frame-curse",   type: "frame", name: "Cursed Energy", price: 1000, value: "frame-curse",   css: "curse",   animated: true, crown: true, desc: "Anime · black-red smoke leaking out of the frame." },
+  { id: "frame-player",  type: "frame", name: "Player One",    price: 820,  value: "frame-player",  css: "player",  animated: true, crown: true, desc: "Gaming · RGB corners, scanlines and a ready-up pulse." },
+  { id: "frame-boss",    type: "frame", name: "Boss Raid",     price: 880,  value: "frame-boss",    css: "boss",    animated: true, crown: true, desc: "Gaming · red warning ticks and a health-bar sweep." },
+  { id: "frame-mecha",   type: "frame", name: "Mecha Core",    price: 980,  value: "frame-mecha",   css: "mecha",   animated: true, crown: true, desc: "Gaming · a cyan reactor ring with rotating HUD ticks." },
+  { id: "frame-study",   type: "frame", name: "Deep Study",    price: 680,  value: "frame-study",   css: "study",   animated: true, crown: true, desc: "Study · warm lamp light and drifting formulas." },
+  { id: "frame-library", type: "frame", name: "Library Dust",  price: 640,  value: "frame-library", css: "library", animated: true, crown: true, desc: "Study · gold dust and slow pages in the lamplight." },
 
   { id: "theme-gallery", type: "theme",  name: "Default",        price: 0,    value: "gallery",    colors: THEMES.gallery.colors,    desc: "Midnight navy, cream and red ink. The original." },
   { id: "theme-sand",    type: "theme",  name: "Peach Shift",    price: 180,  value: "sand",       colors: THEMES.sand.colors,       desc: "Warm peach light on a deep navy studio." },
@@ -640,6 +640,10 @@ const SHOP_ITEMS = [
   { id: "banner-solo",   type: "banner", name: "Monarch",        price: 480, value: "banner-solo",   desc: "Violet shadow light, rising from the floor." },
   { id: "banner-stars",  type: "banner", name: "Starfield",      price: 420, value: "banner-stars",  desc: "A quiet field of stars and dust." }
 ];
+
+/* Frames that wear the Discord-style fire ring. Crowns come from the
+   item's own `crown` flag so we can add or remove them per frame. */
+const ANIMATED_FRAME_IDS = SHOP_ITEMS.filter(i => i.type === "frame" && i.animated).map(i => i.id);
 
 const BADGES = [
   { id: "first",     icon: "✦", name: "First Kept",   desc: "Complete one task",        test: u => u.tasks.some(t => t.status === "done") },

@@ -908,3 +908,402 @@ html.coach-tour .sidebar-scrim { transition: none !important; }
   display: grid; place-items: center; width: 100%; height: 100%;
   font-family: var(--serif); font-size: 2rem; color: var(--ink);
 }
+
+/* =============================================================
+   ANIMATED FRAME CARDS - anime / gaming / study scenes
+   ============================================================= */
+.si-animated {
+  position: absolute; left: 11px; bottom: 9px; z-index: 3;
+  font-family: var(--mono); font-size: 6px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--btn-fg);
+  background: var(--accent); border: 1px solid color-mix(in srgb, var(--bone) 40%, transparent);
+  padding: 2px 5px;
+}
+.shop-tabs { scrollbar-width: none; -ms-overflow-style: none; }
+.shop-tabs::-webkit-scrollbar { display: none; }
+
+.pv-frame-scene {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  overflow: hidden; isolation: isolate;
+  background: var(--scene, radial-gradient(circle at 50% 38%, #1a2e4d, #0a1228 72%));
+}
+.pv-frame-scene::before {
+  content: ""; position: absolute; inset: var(--layer-inset, -25%);
+  border-radius: var(--layer-radius, 0);
+  background: var(--layer, none);
+  filter: var(--layer-blur, none);
+  opacity: var(--layer-opacity, .95);
+  animation: var(--layer-anim, sceneDrift 9s ease-in-out infinite alternate);
+}
+.pv-frame-scene::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 42%, rgba(3, 7, 18, .58));
+}
+.pv-frame-haze {
+  position: absolute; inset: -18%; pointer-events: none;
+  background: var(--haze, none); filter: blur(12px); opacity: .85;
+  animation: var(--haze-anim, sceneDrift 7s ease-in-out infinite alternate);
+}
+.pv-frame-spark {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: var(--spark, none);
+  background-size: var(--spark-size, 68px 68px);
+  animation: var(--spark-anim, sceneFall 9s linear infinite);
+  opacity: .9;
+}
+.pv-frame-scene .pv-avatar { position: relative; z-index: 2; }
+
+/* anime: shadow monarch */
+.pvfs-monarch {
+  --scene: radial-gradient(circle at 64% 20%, #7a5cff 0, transparent 40%), radial-gradient(circle at 26% 92%, #3a1d8c 0, transparent 56%), linear-gradient(160deg, #160a2e, #07030f 72%);
+  --layer: radial-gradient(circle at 50% 82%, rgba(139, 107, 255, .65), transparent 62%);
+  --layer-anim: monarchShift 5s ease-in-out infinite alternate;
+  --spark: radial-gradient(circle, #c9b8ff 0 1px, transparent 2px);
+  --spark-size: 56px 56px;
+  --spark-anim: sceneFall 7s linear infinite;
+}
+.pvf-monarch { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #8b6bff, 0 0 26px rgba(139, 107, 255, .85), 0 0 54px rgba(107, 74, 214, .5); animation: monarchPulse 2.2s ease-in-out infinite; }
+.pvf-monarch::after { content: "♛"; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 16px; color: #ffd166; text-shadow: 0 0 8px rgba(255, 209, 102, .9); animation: crownFloat 2.6s ease-in-out infinite; }
+.avatar[data-frame="frame-monarch"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #8b6bff, 0 0 30px rgba(139, 107, 255, .8), 0 0 60px rgba(107, 74, 214, .35); animation: monarchPulse 2.2s ease-in-out infinite; }
+
+/* anime: dungeon gate */
+.pvfs-gate {
+  --scene: radial-gradient(circle at 50% 50%, #0b2a5c 0 16%, #123a7a 17% 24%, #07142e 25% 58%, #03060f 100%);
+  --layer: conic-gradient(from 0deg, transparent, #4d8dff 18%, transparent 34%, #9fd6ff 52%, transparent 68%, #2b6bd6 86%, transparent);
+  --layer-inset: 16%; --layer-radius: 50%; --layer-blur: blur(5px);
+  --layer-anim: gateSpin 7s linear infinite;
+  --haze: radial-gradient(circle, rgba(77, 141, 255, .55), transparent 62%);
+}
+.pvf-gate { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #4d8dff, 0 0 26px rgba(77, 141, 255, .8); animation: gatePulse 2.4s ease-in-out infinite; }
+.pvf-gate::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; border: 1px dashed rgba(159, 214, 255, .8); animation: gateSpin 9s linear infinite; }
+.avatar[data-frame="frame-gate"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #4d8dff, 0 0 28px rgba(77, 141, 255, .75); animation: gatePulse 2.4s ease-in-out infinite; }
+
+/* anime: blossom storm */
+.pvfs-blossom {
+  --scene: radial-gradient(circle at 30% 20%, #ff8fb3 0, transparent 42%), linear-gradient(160deg, #3a1030, #14061a 74%);
+  --layer: radial-gradient(circle at 62% 78%, rgba(255, 92, 138, .5), transparent 60%);
+  --layer-anim: monarchShift 6s ease-in-out infinite alternate;
+  --spark: radial-gradient(circle, #ffd6e6 0 2px, transparent 3px), radial-gradient(circle, #ff5c8a 0 1.5px, transparent 2.5px);
+  --spark-size: 62px 62px, 94px 94px;
+  --spark-anim: petalFall 8s linear infinite;
+}
+.pvf-blossom { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #ff5c8a, 0 0 24px rgba(255, 92, 138, .75); animation: blossomPulse 3s ease-in-out infinite; }
+.avatar[data-frame="frame-blossom"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #ff5c8a, 0 0 26px rgba(255, 92, 138, .7); animation: blossomPulse 3s ease-in-out infinite; }
+
+/* anime: thunder breath */
+.pvfs-thunder {
+  --scene: linear-gradient(160deg, #0b1224, #05070f 70%);
+  --layer: linear-gradient(112deg, transparent 42%, rgba(245, 230, 66, .9) 43%, transparent 44%), linear-gradient(66deg, transparent 54%, rgba(111, 240, 255, .8) 55%, transparent 56%);
+  --layer-anim: thunderFlash 1.7s steps(2, end) infinite;
+  --haze: radial-gradient(circle at 50% 40%, rgba(245, 230, 66, .35), transparent 62%);
+}
+.pvf-thunder { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #f5e642, 0 0 28px rgba(245, 230, 66, .8); animation: thunderPulse 1.7s steps(2, end) infinite; }
+.avatar[data-frame="frame-thunder"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #f5e642, 0 0 30px rgba(245, 230, 66, .75); animation: thunderPulse 1.7s steps(2, end) infinite; }
+
+/* anime: cursed energy */
+.pvfs-curse {
+  --scene: radial-gradient(circle at 68% 24%, #6e0d1c 0, transparent 44%), linear-gradient(160deg, #12060a, #050205 72%);
+  --layer: radial-gradient(circle at 46% 82%, rgba(140, 20, 40, .7), transparent 60%), radial-gradient(circle at 70% 30%, rgba(90, 10, 60, .5), transparent 56%);
+  --layer-blur: blur(9px);
+  --layer-anim: curseDrift 6s ease-in-out infinite alternate;
+  --haze: radial-gradient(circle, rgba(110, 13, 28, .5), transparent 64%);
+  --haze-anim: curseDrift 8s ease-in-out infinite alternate-reverse;
+}
+.pvf-curse { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #8c1428, 0 0 28px rgba(140, 20, 40, .85), 0 0 48px rgba(60, 8, 30, .6); animation: cursePulse 2.8s ease-in-out infinite; }
+.avatar[data-frame="frame-curse"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #8c1428, 0 0 30px rgba(140, 20, 40, .8); animation: cursePulse 2.8s ease-in-out infinite; }
+
+/* gaming: player one */
+.pvfs-player {
+  --scene: repeating-linear-gradient(0deg, rgba(176, 107, 255, .14) 0 1px, transparent 1px 15px), repeating-linear-gradient(90deg, rgba(43, 255, 136, .12) 0 1px, transparent 1px 15px), linear-gradient(160deg, #0c0916, #171128 60%, #2a0f3a);
+  --layer: repeating-linear-gradient(0deg, rgba(43, 255, 136, .35) 0 1px, transparent 1px 7px);
+  --layer-inset: 0;
+  --layer-anim: sceneScan 2.2s linear infinite;
+  --haze: radial-gradient(circle at 50% 50%, rgba(176, 107, 255, .35), transparent 64%);
+}
+.pvf-player { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #b06bff, 0 0 24px rgba(43, 255, 136, .55); animation: playerRGB 4s linear infinite; }
+.avatar[data-frame="frame-player"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #b06bff, 0 0 26px rgba(43, 255, 136, .5); animation: playerRGB 4s linear infinite; }
+
+/* gaming: boss raid */
+.pvfs-boss {
+  --scene: radial-gradient(circle at 50% 30%, #5c0a10 0, transparent 52%), linear-gradient(160deg, #140406, #060203 72%);
+  --layer: repeating-linear-gradient(115deg, rgba(255, 46, 46, .28) 0 10px, transparent 10px 22px);
+  --layer-inset: -30%;
+  --layer-anim: sceneSweep 3.5s linear infinite;
+  --haze: radial-gradient(circle at 50% 80%, rgba(255, 46, 46, .4), transparent 62%);
+}
+.pvf-boss { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #ff2e2e, 0 0 28px rgba(255, 46, 46, .85); animation: bossPulse 1.3s ease-in-out infinite; }
+.avatar[data-frame="frame-boss"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #ff2e2e, 0 0 30px rgba(255, 46, 46, .8); animation: bossPulse 1.3s ease-in-out infinite; }
+
+/* gaming: mecha core */
+.pvfs-mecha {
+  --scene: radial-gradient(circle at 50% 50%, #0b2230 0 18%, #123448 19% 26%, #07121a 27% 62%, #03070a 100%);
+  --layer: conic-gradient(from 0deg, transparent, #6fd4ff 14%, transparent 30%, #ffb347 48%, transparent 64%, #6fd4ff 82%, transparent);
+  --layer-inset: 14%; --layer-radius: 50%; --layer-blur: blur(3px);
+  --layer-anim: gateSpin 5s linear infinite reverse;
+  --haze: radial-gradient(circle, rgba(111, 212, 255, .45), transparent 62%);
+}
+.pvf-mecha { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #6fd4ff, 0 0 26px rgba(111, 212, 255, .8); animation: mechaPulse 2s ease-in-out infinite; }
+.pvf-mecha::after { content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 2px dotted rgba(255, 179, 71, .8); animation: gateSpin 6s linear infinite; }
+.avatar[data-frame="frame-mecha"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #6fd4ff, 0 0 28px rgba(111, 212, 255, .75); animation: mechaPulse 2s ease-in-out infinite; }
+
+/* study: deep study */
+.pvfs-study {
+  --scene: radial-gradient(circle at 70% 18%, #ffb347 0, transparent 38%), linear-gradient(160deg, #1a1208, #0a0d18 68%);
+  --layer: radial-gradient(circle at 30% 82%, rgba(255, 179, 71, .35), transparent 58%);
+  --layer-anim: studyGlow 5s ease-in-out infinite alternate;
+  --spark: radial-gradient(circle, rgba(243, 232, 208, .8) 0 1px, transparent 2px);
+  --spark-size: 52px 52px;
+  --spark-anim: sceneFall 12s linear infinite;
+  --haze: radial-gradient(circle at 50% 30%, rgba(255, 179, 71, .3), transparent 64%);
+}
+.pvf-study { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #ffb347, 0 0 26px rgba(255, 179, 71, .65); animation: studyGlow 4s ease-in-out infinite alternate; }
+.avatar[data-frame="frame-study"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #ffb347, 0 0 28px rgba(255, 179, 71, .6); animation: studyGlow 4s ease-in-out infinite alternate; }
+
+/* study: library dust */
+.pvfs-library {
+  --scene: radial-gradient(circle at 26% 22%, #c9a15d 0, transparent 42%), linear-gradient(160deg, #1c140c, #0a0806 70%);
+  --layer: radial-gradient(circle at 70% 78%, rgba(201, 161, 93, .35), transparent 58%);
+  --layer-anim: studyGlow 7s ease-in-out infinite alternate;
+  --spark: radial-gradient(circle, #ffd166 0 1.5px, transparent 2.5px), radial-gradient(circle, rgba(243, 232, 208, .7) 0 1px, transparent 2px);
+  --spark-size: 74px 74px, 46px 46px;
+  --spark-anim: sceneFall 11s linear infinite;
+  --haze: radial-gradient(circle at 40% 40%, rgba(201, 161, 93, .28), transparent 64%);
+}
+.pvf-library { box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 6px #c9a15d, 0 0 24px rgba(201, 161, 93, .6); animation: libraryShimmer 5s ease-in-out infinite alternate; }
+.avatar[data-frame="frame-library"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #c9a15d, 0 0 26px rgba(201, 161, 93, .55); animation: libraryShimmer 5s ease-in-out infinite alternate; }
+
+/* keyframes */
+@keyframes sceneDrift { 0% { transform: translate3d(-2%, 0, 0) scale(1.02); } 100% { transform: translate3d(2%, -2%, 0) scale(1.06); } }
+@keyframes sceneFall { 0% { background-position: 0 0, 0 0; } 100% { background-position: 24px 96px, -18px 72px; } }
+@keyframes petalFall { 0% { background-position: 0 0, 0 0; } 100% { background-position: 34px 110px, -26px 84px; } }
+@keyframes sceneScan { 0% { transform: translateY(-10%); } 100% { transform: translateY(10%); } }
+@keyframes sceneSweep { 0% { transform: translateX(-14%); } 100% { transform: translateX(14%); } }
+@keyframes gateSpin { to { transform: rotate(360deg); } }
+@keyframes monarchShift { 0% { transform: translateY(6%) scale(1); opacity: .55; } 100% { transform: translateY(-4%) scale(1.12); opacity: .95; } }
+@keyframes monarchPulse { 0%, 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #8b6bff, 0 0 22px rgba(139, 107, 255, .55); } 50% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #b9a6ff, 0 0 40px rgba(139, 107, 255, .95), 0 0 70px rgba(107, 74, 214, .45); } }
+@keyframes gatePulse { 0%, 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #2b6bd6, 0 0 20px rgba(77, 141, 255, .55); } 50% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #9fd6ff, 0 0 38px rgba(77, 141, 255, .95); } }
+@keyframes blossomPulse { 0%, 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #ff5c8a, 0 0 20px rgba(255, 92, 138, .5); } 50% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #ffb3d9, 0 0 36px rgba(255, 92, 138, .9); } }
+@keyframes thunderPulse { 0%, 42%, 58%, 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #b8a800, 0 0 14px rgba(245, 230, 66, .35); } 46%, 54% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #f5e642, 0 0 40px rgba(245, 230, 66, 1); } }
+@keyframes cursePulse { 0%, 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #6e0d1c, 0 0 22px rgba(140, 20, 40, .6); } 50% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #c02a44, 0 0 40px rgba(140, 20, 40, .95), 0 0 60px rgba(60, 8, 30, .5); } }
+@keyframes curseDrift { 0% { transform: translate3d(-4%, 4%, 0) scale(1.05); } 100% { transform: translate3d(4%, -6%, 0) scale(1.18); } }
+@keyframes playerRGB { 0% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #ff2e88, 0 0 24px rgba(255, 46, 136, .6); } 33% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #2bff88, 0 0 24px rgba(43, 255, 136, .6); } 66% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #6fd4ff, 0 0 24px rgba(111, 212, 255, .6); } 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #ff2e88, 0 0 24px rgba(255, 46, 136, .6); } }
+@keyframes bossPulse { 0%, 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #a30d12, 0 0 18px rgba(255, 46, 46, .45); } 50% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #ff2e2e, 0 0 42px rgba(255, 46, 46, .95); } }
+@keyframes mechaPulse { 0%, 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #2b6b8c, 0 0 20px rgba(111, 212, 255, .5); } 50% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #6fd4ff, 0 0 36px rgba(111, 212, 255, .9); } }
+@keyframes studyGlow { 0% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #b87a20, 0 0 16px rgba(255, 179, 71, .35); } 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #ffd166, 0 0 34px rgba(255, 179, 71, .75); } }
+@keyframes libraryShimmer { 0% { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px #8a6a34, 0 0 16px rgba(201, 161, 93, .35); } 100% { box-shadow: 0 0 0 3px var(--card), 0 0 0 7px #e0c084, 0 0 32px rgba(201, 161, 93, .7); } }
+@keyframes crownFloat { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, -4px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pv-frame-scene::before, .pv-frame-haze, .pv-frame-spark,
+  .pv-frame-scene .pv-avatar, .pv-frame-scene .pv-avatar::after,
+  .avatar[data-frame^="frame-monarch"], .avatar[data-frame^="frame-gate"],
+  .avatar[data-frame^="frame-blossom"], .avatar[data-frame^="frame-thunder"],
+  .avatar[data-frame^="frame-curse"], .avatar[data-frame^="frame-player"],
+  .avatar[data-frame^="frame-boss"], .avatar[data-frame^="frame-mecha"],
+  .avatar[data-frame^="frame-study"], .avatar[data-frame^="frame-library"] { animation: none !important; }
+}
+
+/* keep preview labels above animated scene layers */
+.si-preview .si-type, .si-preview .si-owned-tag { z-index: 3; }
+
+/* =============================================================
+   ANIMATED FRAME SCENES ON THE PROFILE
+   Equipping one of the ten animated frames paints the profile
+   banner and a soft aura behind the avatar.
+   ============================================================= */
+.profile-frame-fx {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  opacity: 0; overflow: hidden; border-radius: inherit;
+  background: var(--pfs, none);
+  animation: var(--pfs-anim, none);
+}
+.profile-banner .profile-frame-fx { opacity: .95; }
+.profile-banner .profile-frame-fx::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(3, 7, 18, .6), rgba(3, 7, 18, .15) 58%, transparent);
+}
+.profile-banner.has-cover .profile-frame-fx { display: none; }
+.profile-avatar-wrap .avatar-frame-fx {
+  inset: -16px; border-radius: 50%; z-index: 0;
+  filter: blur(7px); opacity: .8;
+}
+
+.profile-banner[data-frame="frame-monarch"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-monarch"] .avatar-frame-fx {
+  --pfs: radial-gradient(circle at 70% 30%, rgba(139, 107, 255, .75), transparent 48%), radial-gradient(circle at 25% 85%, rgba(58, 29, 140, .7), transparent 55%), radial-gradient(circle, #c9b8ff 0 1px, transparent 2px), linear-gradient(120deg, #160a2e, #07030f 70%);
+  --pfs-anim: monarchShift 5s ease-in-out infinite alternate;
+  background-size: auto, auto, 56px 56px, auto;
+}
+.profile-banner[data-frame="frame-gate"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-gate"] .avatar-frame-fx {
+  --pfs: conic-gradient(from 0deg at 72% 46%, transparent, rgba(77, 141, 255, .8) 14%, transparent 30%, rgba(159, 214, 255, .7) 48%, transparent 64%, rgba(43, 107, 214, .8) 82%, transparent), linear-gradient(120deg, #07142e, #03060f 70%);
+  --pfs-anim: sceneDrift 6s ease-in-out infinite alternate;
+}
+.profile-banner[data-frame="frame-blossom"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-blossom"] .avatar-frame-fx {
+  --pfs: radial-gradient(circle, #ffd6e6 0 2px, transparent 3px), radial-gradient(circle, #ff5c8a 0 1.5px, transparent 2.5px), radial-gradient(circle at 30% 20%, rgba(255, 143, 179, .55), transparent 46%), linear-gradient(120deg, #3a1030, #14061a 72%);
+  --pfs-anim: petalFall 9s linear infinite;
+  background-size: 64px 64px, 96px 96px, auto, auto;
+}
+.profile-banner[data-frame="frame-thunder"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-thunder"] .avatar-frame-fx {
+  --pfs: linear-gradient(112deg, transparent 42%, rgba(245, 230, 66, .55) 43%, transparent 44%), linear-gradient(66deg, transparent 54%, rgba(111, 240, 255, .45) 55%, transparent 56%), linear-gradient(120deg, #0b1224, #05070f 70%);
+  --pfs-anim: thunderFlash 1.7s steps(2, end) infinite;
+}
+.profile-banner[data-frame="frame-curse"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-curse"] .avatar-frame-fx {
+  --pfs: radial-gradient(circle at 68% 24%, rgba(140, 20, 40, .8), transparent 46%), radial-gradient(circle at 40% 82%, rgba(90, 10, 60, .65), transparent 56%), linear-gradient(120deg, #12060a, #050205 72%);
+  --pfs-anim: curseDrift 7s ease-in-out infinite alternate;
+}
+.profile-banner[data-frame="frame-player"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-player"] .avatar-frame-fx {
+  --pfs: repeating-linear-gradient(0deg, rgba(176, 107, 255, .16) 0 1px, transparent 1px 16px), repeating-linear-gradient(90deg, rgba(43, 255, 136, .14) 0 1px, transparent 1px 16px), linear-gradient(120deg, #0c0916, #171128 60%, #2a0f3a);
+  --pfs-anim: sceneScan 2.6s linear infinite;
+}
+.profile-banner[data-frame="frame-boss"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-boss"] .avatar-frame-fx {
+  --pfs: repeating-linear-gradient(115deg, rgba(255, 46, 46, .22) 0 12px, transparent 12px 26px), radial-gradient(circle at 60% 30%, rgba(92, 10, 16, .85), transparent 52%), linear-gradient(120deg, #140406, #060203 72%);
+  --pfs-anim: sceneSweep 3.5s linear infinite;
+}
+.profile-banner[data-frame="frame-mecha"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-mecha"] .avatar-frame-fx {
+  --pfs: conic-gradient(from 0deg at 70% 50%, transparent, rgba(111, 212, 255, .6) 14%, transparent 30%, rgba(255, 179, 71, .5) 48%, transparent 64%, rgba(111, 212, 255, .6) 82%, transparent), linear-gradient(120deg, #07121a, #03070a 72%);
+  --pfs-anim: sceneDrift 5s ease-in-out infinite alternate;
+}
+.profile-banner[data-frame="frame-study"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-study"] .avatar-frame-fx {
+  --pfs: radial-gradient(circle at 72% 18%, rgba(255, 179, 71, .6), transparent 40%), radial-gradient(circle, rgba(243, 232, 208, .7) 0 1px, transparent 2px), linear-gradient(120deg, #1a1208, #0a0d18 68%);
+  --pfs-anim: sceneDrift 6s ease-in-out infinite alternate;
+  background-size: auto, 52px 52px, auto;
+}
+.profile-banner[data-frame="frame-library"] .profile-frame-fx,
+.profile-avatar-wrap[data-frame="frame-library"] .avatar-frame-fx {
+  --pfs: radial-gradient(circle, #ffd166 0 1.5px, transparent 2.5px), radial-gradient(circle at 26% 22%, rgba(201, 161, 93, .55), transparent 44%), linear-gradient(120deg, #1c140c, #0a0806 70%);
+  --pfs-anim: fxTwinkle 4s ease-in-out infinite alternate;
+  background-size: 74px 74px, auto, auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-frame-fx { animation: none !important; }
+}
+
+/* =============================================================
+   DISCORD-STYLE AVATAR DECORATIONS
+   Animated frames wear a fire ring hugging the picture and the
+   premium frames wear a crown. Everything scales with the avatar
+   so it shows in the topbar, sidebar, profile and shop previews.
+   ============================================================= */
+.avatar.avatar-fire,
+.pv-avatar.pvf-fire {
+  overflow: visible;
+  border-radius: 26% !important;
+  isolation: isolate;
+  --fire-a: #ff3b00;
+  --fire-b: #ff8a00;
+  --fire-c: #ffd166;
+}
+.avatar.avatar-fire .avatar-img { border-radius: 26% !important; }
+.avatar.avatar-crown { isolation: isolate; }
+
+.avatar.avatar-fire::before,
+.pv-avatar.pvf-fire::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  box-sizing: border-box;
+  padding: 15%;
+  z-index: -1;
+  border-radius: 32% !important;
+  pointer-events: none;
+  background:
+    repeating-conic-gradient(from 0deg,
+      transparent 0deg 4deg,
+      color-mix(in srgb, var(--fire-c) 70%, #fff) 4deg 7deg,
+      transparent 7deg 14deg),
+    repeating-conic-gradient(from 9deg,
+      transparent 0deg 3deg,
+      var(--fire-c) 3deg 5deg,
+      transparent 5deg 11deg),
+    conic-gradient(from 0deg,
+      var(--fire-a), var(--fire-b) 14%, var(--fire-c) 28%,
+      var(--fire-a) 42%, var(--fire-b) 56%, var(--fire-c) 70%,
+      var(--fire-a) 84%, var(--fire-b) 100%);
+  filter: blur(2.6px) saturate(1.4) contrast(1.08);
+  opacity: .95;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: fireSpin 4.2s linear infinite, fireFlicker .75s ease-in-out infinite alternate;
+}
+
+.avatar.avatar-crown::after,
+.pv-avatar.pvf-crown::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -30%;
+  width: 54%;
+  height: 32%;
+  z-index: 3;
+  pointer-events: none;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #fff6c4 0%, #ffd166 44%, #b8791f 100%);
+  clip-path: polygon(0% 100%, 0% 42%, 15% 62%, 26% 16%, 40% 56%, 50% 8%, 60% 56%, 74% 16%, 85% 62%, 100% 42%, 100% 100%);
+  filter: drop-shadow(0 2px 5px rgba(255, 209, 102, .85));
+  animation: crownBob 2.8s ease-in-out infinite;
+}
+
+/* per-frame fire palettes - real avatars */
+.avatar[data-frame="frame-neon"]    { --fire-a: #ff2e88; --fire-b: #b06bff; --fire-c: #6ff0ff; }
+.avatar[data-frame="frame-holo"]    { --fire-a: #ff2e88; --fire-b: #2bff88; --fire-c: #6fd4ff; }
+.avatar[data-frame="frame-flame"]   { --fire-a: #ff3b00; --fire-b: #ff8a00; --fire-c: #ffd166; }
+.avatar[data-frame="frame-frost"]   { --fire-a: #4d8dff; --fire-b: #9fd6ff; --fire-c: #e8fbff; }
+.avatar[data-frame="frame-anime"]   { --fire-a: #ff2e88; --fire-b: #ff8fb3; --fire-c: #ffd166; }
+.avatar[data-frame="frame-football"]{ --fire-a: #1f8a4c; --fire-b: #38d67a; --fire-c: #f3e8d0; }
+.avatar[data-frame="frame-monarch"] { --fire-a: #4a2bd6; --fire-b: #8b6bff; --fire-c: #c9b8ff; }
+.avatar[data-frame="frame-gate"]    { --fire-a: #1b4fa8; --fire-b: #4d8dff; --fire-c: #9fd6ff; }
+.avatar[data-frame="frame-blossom"] { --fire-a: #c81f5a; --fire-b: #ff5c8a; --fire-c: #ffd6e6; }
+.avatar[data-frame="frame-thunder"] { --fire-a: #a88f00; --fire-b: #f5e642; --fire-c: #fffbd1; }
+.avatar[data-frame="frame-curse"]   { --fire-a: #3a0410; --fire-b: #8c1428; --fire-c: #ff4d6d; }
+.avatar[data-frame="frame-player"]  { --fire-a: #ff2e88; --fire-b: #2bff88; --fire-c: #6fd4ff; }
+.avatar[data-frame="frame-boss"]    { --fire-a: #8c0f12; --fire-b: #ff2e2e; --fire-c: #ffb347; }
+.avatar[data-frame="frame-mecha"]   { --fire-a: #1b6b8c; --fire-b: #6fd4ff; --fire-c: #ffb347; }
+.avatar[data-frame="frame-study"]   { --fire-a: #a8621a; --fire-b: #ffb347; --fire-c: #ffe6a8; }
+.avatar[data-frame="frame-library"] { --fire-a: #7a5a24; --fire-b: #c9a15d; --fire-c: #ffe6a8; }
+
+/* per-frame fire palettes - shop previews */
+.pv-avatar.pvf-neon    { --fire-a: #ff2e88; --fire-b: #b06bff; --fire-c: #6ff0ff; }
+.pv-avatar.pvf-holo    { --fire-a: #ff2e88; --fire-b: #2bff88; --fire-c: #6fd4ff; }
+.pv-avatar.pvf-flame   { --fire-a: #ff3b00; --fire-b: #ff8a00; --fire-c: #ffd166; }
+.pv-avatar.pvf-frost   { --fire-a: #4d8dff; --fire-b: #9fd6ff; --fire-c: #e8fbff; }
+.pv-avatar.pvf-anime   { --fire-a: #ff2e88; --fire-b: #ff8fb3; --fire-c: #ffd166; }
+.pv-avatar.pvf-football{ --fire-a: #1f8a4c; --fire-b: #38d67a; --fire-c: #f3e8d0; }
+.pv-avatar.pvf-monarch { --fire-a: #4a2bd6; --fire-b: #8b6bff; --fire-c: #c9b8ff; }
+.pv-avatar.pvf-gate    { --fire-a: #1b4fa8; --fire-b: #4d8dff; --fire-c: #9fd6ff; }
+.pv-avatar.pvf-blossom { --fire-a: #c81f5a; --fire-b: #ff5c8a; --fire-c: #ffd6e6; }
+.pv-avatar.pvf-thunder { --fire-a: #a88f00; --fire-b: #f5e642; --fire-c: #fffbd1; }
+.pv-avatar.pvf-curse   { --fire-a: #3a0410; --fire-b: #8c1428; --fire-c: #ff4d6d; }
+.pv-avatar.pvf-player  { --fire-a: #ff2e88; --fire-b: #2bff88; --fire-c: #6fd4ff; }
+.pv-avatar.pvf-boss    { --fire-a: #8c0f12; --fire-b: #ff2e2e; --fire-c: #ffb347; }
+.pv-avatar.pvf-mecha   { --fire-a: #1b6b8c; --fire-b: #6fd4ff; --fire-c: #ffb347; }
+.pv-avatar.pvf-study   { --fire-a: #a8621a; --fire-b: #ffb347; --fire-c: #ffe6a8; }
+.pv-avatar.pvf-library { --fire-a: #7a5a24; --fire-b: #c9a15d; --fire-c: #ffe6a8; }
+
+@keyframes fireSpin { to { rotate: 360deg; } }
+@keyframes fireFlicker {
+  0%   { opacity: .8;  scale: .97; }
+  55%  { opacity: 1;   scale: 1.04; }
+  100% { opacity: .92; scale: 1; }
+}
+@keyframes crownBob {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -9%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar.avatar-fire::before,
+  .pv-avatar.pvf-fire::before,
+  .avatar.avatar-crown::after,
+  .pv-avatar.pvf-crown::after { animation: none !important; }
+}
