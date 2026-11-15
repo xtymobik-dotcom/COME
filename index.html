@@ -13,6 +13,43 @@
 </head>
 <body>
 
+  <!-- hidden SVG scene used by the frame cards -->
+  <svg class="svg-defs" aria-hidden="true" focusable="false">
+    <symbol id="scene-shadow" viewBox="0 0 800 450">
+      <circle class="fc-moon" cx="400" cy="178" r="150" fill="var(--scene-glow)" opacity=".16"/>
+      <circle cx="400" cy="178" r="118" fill="none" stroke="var(--scene-glow)" stroke-width="1.5" opacity=".28"/>
+      <g fill="#05020a" opacity=".92">
+        <path d="M 596 450 L 596 250 L 608 250 L 608 226 L 618 226 L 618 196 L 628 196 L 628 166 L 638 166 L 638 196 L 648 196 L 648 226 L 658 226 L 658 250 L 670 250 L 670 450 Z"/>
+        <path d="M 686 450 L 686 300 L 696 300 L 696 270 L 706 270 L 706 240 L 716 240 L 716 270 L 726 270 L 726 300 L 736 300 L 736 450 Z" opacity=".8"/>
+      </g>
+      <g class="fc-hero">
+        <path d="M 700 450 C 692 390 700 340 722 318 C 712 300 716 274 734 264 C 752 254 770 266 772 284 C 773 296 768 306 760 312 C 786 322 800 356 800 390 L 800 450 Z" fill="#05020a"/>
+        <path d="M 734 264 L 726 246 L 738 254 L 742 238 L 752 252 L 760 240 L 764 258 Z" fill="#05020a"/>
+        <circle cx="758" cy="286" r="3.2" fill="var(--scene-glow)"/>
+      </g>
+      <g fill="#07030d" opacity=".95">
+        <path d="M 20 450 C 20 420 30 404 46 398 C 38 386 42 370 56 366 C 70 362 78 374 74 386 C 88 394 92 418 88 450 Z"/>
+        <path d="M 96 450 C 96 426 104 414 116 410 C 110 400 114 388 124 386 C 134 384 140 394 136 404 C 148 410 152 430 148 450 Z"/>
+        <path d="M 168 450 C 168 430 176 420 186 416 C 180 406 184 396 194 394 C 204 392 210 402 206 412 C 216 418 220 434 216 450 Z"/>
+        <path d="M 560 450 C 560 428 568 416 580 412 C 574 402 578 390 588 388 C 598 386 604 396 600 406 C 612 412 616 432 612 450 Z"/>
+        <path d="M 636 450 C 636 426 646 412 660 406 C 652 394 656 378 670 374 C 684 370 692 382 688 394 C 702 402 706 426 702 450 Z"/>
+      </g>
+      <g fill="var(--scene-glow)">
+        <circle cx="54" cy="378" r="2.6"/><circle cx="66" cy="378" r="2.6"/>
+        <circle cx="120" cy="396" r="2.2"/><circle cx="130" cy="396" r="2.2"/>
+        <circle cx="192" cy="404" r="2.2"/><circle cx="200" cy="404" r="2.2"/>
+        <circle cx="586" cy="400" r="2.4"/><circle cx="596" cy="400" r="2.4"/>
+        <circle cx="668" cy="386" r="2.6"/><circle cx="680" cy="386" r="2.6"/>
+      </g>
+      <g fill="none" stroke="var(--scene-glow)" stroke-linecap="round" opacity=".45" class="fc-wisps">
+        <path d="M 40 450 C 90 400 140 430 190 390 C 230 358 260 380 300 350" stroke-width="3"/>
+        <path d="M 500 450 C 540 410 590 430 640 390 C 680 358 720 380 760 350" stroke-width="2.5"/>
+        <path d="M 120 450 C 160 420 200 440 240 410" stroke-width="2"/>
+      </g>
+      <path d="M 0 450 L 0 380 Q 200 350 400 372 Q 600 394 800 368 L 800 450 Z" fill="#030108" opacity=".8"/>
+    </symbol>
+  </svg>
+
   <!-- ══════════════════════════ LANDING ══════════════════════════ -->
   <main id="landing" class="landing">
     <div class="landing-bg" aria-hidden="true">

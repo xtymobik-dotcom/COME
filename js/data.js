@@ -559,7 +559,7 @@ const SHOP_ITEMS = [
   { id: "frame-orbit",   type: "frame",  name: "Teal Orbit",     price: 280, value: "frame-orbit",   css: "orbit",   desc: "A slow teal ring, going nowhere." },
   { id: "frame-inferno", type: "frame",  name: "Red Alert Ring", price: 320, value: "frame-inferno", css: "inferno", desc: "Inferno red, for the focused ones." },
   { id: "frame-starlit", type: "frame",  name: "Midnight Halo",  price: 560, value: "frame-starlit", css: "starlit", desc: "A little midnight sky, worn close." },
-  { id: "frame-neon",    type: "frame",  name: "Neon Pulse",     price: 460, value: "frame-neon",    css: "neon",    animated: true, desc: "A magenta-cyan ring that never sits still." },
+  { id: "frame-neon",    type: "frame",  name: "Neon Pulse",     price: 460, value: "frame-neon",    css: "neon",    animated: true, crown: true, desc: "Violet energy flames that never sit still." },
   { id: "frame-holo",    type: "frame",  name: "Holo Shift",     price: 620, value: "frame-holo",    css: "holo",    animated: true, desc: "A slow rainbow border. Slightly illegal." },
   { id: "frame-flame",   type: "frame",  name: "Ember Ring",     price: 520, value: "frame-flame",   css: "flame",   animated: true, desc: "Orange heat that flickers at the edges." },
   { id: "frame-frost",   type: "frame",  name: "Frost Ring",     price: 480, value: "frame-frost",   css: "frost",   animated: true, desc: "Ice-blue shimmer with a winter bite." },
@@ -644,6 +644,54 @@ const SHOP_ITEMS = [
 /* Frames that wear the Discord-style fire ring. Crowns come from the
    item's own `crown` flag so we can add or remove them per frame. */
 const ANIMATED_FRAME_IDS = SHOP_ITEMS.filter(i => i.type === "frame" && i.animated).map(i => i.id);
+
+/* Jagged flame tongues drawn around a 30..170 square inside a
+   200x200 viewBox. The avatar sits on that square; the flames lick
+   outward from every edge. */
+const FRAME_FLAME_PATHS = [
+  "M 38 32 C 30 24 28 14 26 6 C 36 16 42 24 46 30 Z",
+  "M 50 30 C 46 20 48 10 54 2 C 60 12 60 22 58 30 Z",
+  "M 66 30 C 64 18 68 8 74 0 C 80 10 82 20 80 30 Z",
+  "M 88 30 C 88 18 92 8 100 0 C 106 10 108 20 104 30 Z",
+  "M 112 30 C 114 20 118 10 124 2 C 128 12 126 22 120 30 Z",
+  "M 132 30 C 136 22 142 14 148 6 C 148 16 142 24 138 32 Z",
+  "M 150 30 C 156 24 162 16 168 10 C 166 20 158 26 154 32 Z",
+  "M 32 40 C 24 38 16 36 8 34 C 16 42 24 46 30 50 Z",
+  "M 30 56 C 20 54 12 54 2 56 C 12 62 22 62 30 64 Z",
+  "M 30 70 C 20 70 12 74 4 82 C 14 82 24 78 30 76 Z",
+  "M 30 86 C 22 88 14 94 6 104 C 16 100 24 94 30 92 Z",
+  "M 30 102 C 22 106 16 114 10 124 C 20 118 26 110 32 106 Z",
+  "M 168 40 C 176 38 184 36 192 34 C 184 42 176 46 170 50 Z",
+  "M 170 56 C 180 54 188 54 198 56 C 188 62 178 62 170 64 Z",
+  "M 170 70 C 180 70 188 74 196 82 C 186 82 176 78 170 76 Z",
+  "M 170 86 C 178 88 186 94 194 104 C 184 100 176 94 170 92 Z",
+  "M 170 102 C 178 106 184 114 190 124 C 180 118 174 110 168 106 Z",
+  "M 44 168 C 40 176 38 184 34 192 C 44 186 48 178 50 170 Z",
+  "M 64 170 C 62 180 64 190 70 198 C 74 188 74 178 72 170 Z",
+  "M 88 170 C 86 180 88 190 94 198 C 98 188 98 178 96 170 Z",
+  "M 112 170 C 110 180 112 190 118 198 C 122 188 122 178 120 170 Z",
+  "M 136 170 C 134 180 136 190 142 198 C 146 188 146 178 144 170 Z",
+  "M 156 168 C 160 176 162 184 166 192 C 168 182 164 176 162 170 Z"
+];
+
+function frameDecoSVG(crown) {
+  const paths = FRAME_FLAME_PATHS.map((d, i) =>
+    `<path d="${d}" style="animation-delay:${((i % 7) * -0.17).toFixed(2)}s"/>`
+  ).join("");
+  const crownSVG = crown
+    ? `<g class="deco-crown">
+        <path d="M 78 34 L 78 16 L 88 24 L 100 6 L 112 24 L 122 16 L 122 34 Z"/>
+        <rect x="78" y="30" width="44" height="6" rx="1"/>
+        <circle cx="100" cy="23" r="2.6" fill="var(--fire-b)"/>
+      </g>`
+    : "";
+  return `<span class="avatar-deco" aria-hidden="true"><svg class="avatar-deco-svg" viewBox="0 0 200 200" focusable="false">
+    <g class="flame-glow">${paths}</g>
+    <g class="flame-mid">${paths}</g>
+    <g class="flame-core">${paths}</g>
+    ${crownSVG}
+  </svg></span>`;
+}
 
 const BADGES = [
   { id: "first",     icon: "✦", name: "First Kept",   desc: "Complete one task",        test: u => u.tasks.some(t => t.status === "done") },

@@ -93,6 +93,7 @@ function renderShop() {
   document.querySelectorAll(".shop-tab").forEach(tab => {
     tab.classList.toggle("active", tab.dataset.shop === ui.shopTab);
   });
+  grid.classList.toggle("frame-grid", ui.shopTab === "frame");
 
   const items = SHOP_ITEMS.filter(item => ui.shopTab === "all" || item.type === ui.shopTab);
   const initial = esc(String(user.avatarLetter || (user.name || "A").charAt(0) || "A").toUpperCase());
@@ -101,7 +102,12 @@ function renderShop() {
     try {
       const owned = Array.isArray(user.owned) && user.owned.includes(item.id);
       const equipped = user.equipped && user.equipped[item.type] === item.id;
+      const bigFrame = item.type === "frame" && ui.shopTab === "frame";
+      const priceHtml = item.price === 0 ? "Included" : `<svg viewBox="0 0 24 24" class="coin"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg>${item.price}`;
+      const buyLabel = equipped ? "Wearing" : owned ? "Equip" : "Buy";
+      const buyClass = `si-buy ${equipped ? "equipped" : owned ? "equip" : ""}`;
       let preview = "";
+      let bigPreview = "";
       if (item.type === "pix") {
         const art = typeof pixSVG === "function"
           ? pixSVG(typeof pixSkinById === "function" ? pixSkinById(item.value) : null, "pv-pix-svg")
@@ -109,11 +115,37 @@ function renderShop() {
         preview = `<div class="pv-pix">${art || `<span class="pv-fallback">${initial}</span>`}</div>`;
       } else if (item.type === "frame") {
         const css = esc(item.css || "classic");
-        const deco = `${item.animated ? " pvf-fire" : ""}${item.crown ? " pvf-crown" : ""}`;
+        const fire = item.animated ? " pvf-fire" : "";
+        const deco = item.animated && typeof frameDecoSVG === "function" ? frameDecoSVG(!!item.crown) : "";
+        const catMatch = (item.desc || "").match(/^(Anime|Gaming|Study)\b/);
+        const cat = catMatch ? catMatch[1].toUpperCase() : "FRAME";
+        const descText = (item.desc || "").replace(/^(Anime|Gaming|Study)\s*[\u2014\u2013-]\s*/, "");
+        const crownIcon = item.crown
+          ? `<svg class="fc-crown-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4 4 5-7 5 7 4-4v10H3z"/></svg>`
+          : "";
         preview = `<div class="pv-frame-scene pvfs-${css}">
           <span class="pv-frame-haze" aria-hidden="true"></span>
           <span class="pv-frame-spark" aria-hidden="true"></span>
-          <div class="pv-avatar pvf-${css}${deco}">${initial}</div>
+          <div class="pv-avatar pvf-${css}${fire}">${initial}${deco}</div>
+        </div>`;
+        bigPreview = `<div class="pv-frame-scene pvfs-${css} fc-scene">
+          <svg class="fc-art" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#scene-shadow"></use></svg>
+          <span class="pv-frame-haze" aria-hidden="true"></span>
+          <span class="pv-frame-spark" aria-hidden="true"></span>
+          <div class="fc-stage">
+            <div class="pv-avatar pvf-${css}${fire}">${initial}${deco}</div>
+          </div>
+          <div class="fc-panel">
+            <div class="fc-top">
+              <div class="fc-name">${esc(item.name)}${crownIcon}</div>
+              <div class="fc-cat">${esc(cat)}<span></span></div>
+            </div>
+            <div class="fc-desc">${esc(descText)}</div>
+            <div class="fc-foot">
+              <span class="si-price ${item.price === 0 ? "free" : ""}">${priceHtml}</span>
+              <button class="${buyClass}" data-action="shop-item" data-id="${esc(item.id)}">${buyLabel}</button>
+            </div>
+          </div>
         </div>`;
       } else if (item.type === "theme") {
         const theme = (typeof THEMES !== "undefined" && THEMES[item.value]) || null;
@@ -134,6 +166,16 @@ function renderShop() {
           <span class="pv-font-small">Study · Focus · Keep</span>
         </div>`;
       }
+      if (bigFrame) {
+        return `<article class="shop-item frame-card ${owned ? "owned" : ""}" data-id="${esc(item.id)}">
+          <div class="si-preview fc-preview">
+            <span class="si-type">Frame</span>
+            ${owned ? `<span class="si-owned-tag">owned</span>` : ""}
+            ${item.animated ? `<span class="si-animated">✦ animated</span>` : ""}
+            ${bigPreview}
+          </div>
+        </article>`;
+      }
       return `<article class="shop-item ${owned ? "owned" : ""}" data-id="${esc(item.id)}">
         <div class="si-preview">
           <span class="si-type">${esc(item.type)}</span>
@@ -145,8 +187,8 @@ function renderShop() {
           <div class="si-name">${esc(item.name)}</div>
           <div class="si-desc">${esc(item.desc)}</div>
           <div class="si-foot">
-            <span class="si-price ${item.price === 0 ? "free" : ""}">${item.price === 0 ? "Included" : `<svg viewBox="0 0 24 24" class="coin"><path d="M12 2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.1 6.1 20.2l1.2-6.6L2.4 9l6.7-.9z"/></svg>${item.price}`}</span>
-            <button class="si-buy ${equipped ? "equipped" : owned ? "equip" : ""}" data-action="shop-item" data-id="${esc(item.id)}">${equipped ? "Wearing" : owned ? "Equip" : "Buy"}</button>
+            <span class="si-price ${item.price === 0 ? "free" : ""}">${priceHtml}</span>
+            <button class="${buyClass}" data-action="shop-item" data-id="${esc(item.id)}">${buyLabel}</button>
           </div>
         </div>
       </article>`;

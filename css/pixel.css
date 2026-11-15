@@ -1188,122 +1188,456 @@ html.coach-tour .sidebar-scrim { transition: none !important; }
 }
 
 /* =============================================================
-   DISCORD-STYLE AVATAR DECORATIONS
-   Animated frames wear a fire ring hugging the picture and the
-   premium frames wear a crown. Everything scales with the avatar
-   so it shows in the topbar, sidebar, profile and shop previews.
+   FRAME DECORATIONS - sharp SVG flame tongues + silver crown
+   The flames are drawn as separate jagged paths around a 30..170
+   square in a 200x200 viewBox. Three copies (glow, mid, core)
+   give the fire depth; every tongue flickers on its own delay.
    ============================================================= */
+.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* square PFP inside the fire frame */
 .avatar.avatar-fire,
 .pv-avatar.pvf-fire {
   overflow: visible;
-  border-radius: 26% !important;
+  border-radius: 4px !important;
   isolation: isolate;
-  --fire-a: #ff3b00;
-  --fire-b: #ff8a00;
-  --fire-c: #ffd166;
+  border: 1px solid #d7dcef !important;
+  background: #07030f;
+  box-shadow:
+    0 0 0 1px rgba(3, 2, 8, .9),
+    0 0 18px color-mix(in srgb, var(--fire-b, #8b5cf6) 48%, transparent);
+  animation: none !important;
+  --fire-a: #4c1d95;
+  --fire-b: #8b5cf6;
+  --fire-c: #e9d5ff;
 }
-.avatar.avatar-fire .avatar-img { border-radius: 26% !important; }
-.avatar.avatar-crown { isolation: isolate; }
-
+.avatar.avatar-fire .avatar-img,
+.pv-avatar.pvf-fire .avatar-img { border-radius: 3px !important; }
 .avatar.avatar-fire::before,
-.pv-avatar.pvf-fire::before {
-  content: "";
+.avatar.avatar-fire::after,
+.pv-avatar.pvf-fire::before,
+.pv-avatar.pvf-fire::after { content: none !important; display: none !important; }
+
+/* The SVG is 200 units wide and the frame square is 30..170, so
+   the deco must be 200/140 = 142.86% of the avatar and pulled
+   out by (200-140)/2/140 = 21.43% on every side. */
+.avatar-deco {
   position: absolute;
-  inset: -18%;
-  box-sizing: border-box;
-  padding: 15%;
+  inset: -21.43%;
   z-index: -1;
-  border-radius: 32% !important;
+  display: block;
   pointer-events: none;
-  background:
-    repeating-conic-gradient(from 0deg,
-      transparent 0deg 4deg,
-      color-mix(in srgb, var(--fire-c) 70%, #fff) 4deg 7deg,
-      transparent 7deg 14deg),
-    repeating-conic-gradient(from 9deg,
-      transparent 0deg 3deg,
-      var(--fire-c) 3deg 5deg,
-      transparent 5deg 11deg),
-    conic-gradient(from 0deg,
-      var(--fire-a), var(--fire-b) 14%, var(--fire-c) 28%,
-      var(--fire-a) 42%, var(--fire-b) 56%, var(--fire-c) 70%,
-      var(--fire-a) 84%, var(--fire-b) 100%);
-  filter: blur(2.6px) saturate(1.4) contrast(1.08);
-  opacity: .95;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  animation: fireSpin 4.2s linear infinite, fireFlicker .75s ease-in-out infinite alternate;
+}
+.avatar-deco-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: none;
+}
+.avatar-deco-svg path { stroke: none; }
+
+.flame-glow,
+.flame-mid,
+.flame-core {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.flame-glow {
+  filter: blur(5px) saturate(1.35);
+  opacity: .72;
+  transform: scale(1.07);
+  mix-blend-mode: screen;
+}
+.flame-mid {
+  filter: blur(1.2px) saturate(1.15);
+  opacity: .94;
+  transform: scale(1.02);
+}
+.flame-core {
+  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--fire-c) 80%, transparent));
+  opacity: .96;
+}
+.flame-glow path,
+.flame-mid path,
+.flame-core path {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.flame-glow path {
+  fill: var(--fire-a);
+  animation: tongueFlicker 1.45s ease-in-out infinite alternate;
+}
+.flame-mid path {
+  fill: var(--fire-b);
+  animation: tongueFlicker 1.15s ease-in-out infinite alternate-reverse;
+}
+.flame-core path {
+  fill: color-mix(in srgb, var(--fire-c) 82%, #fff);
+  animation: tongueFlicker .92s ease-in-out infinite alternate;
+}
+.flame-glow path:nth-child(3n),
+.flame-mid path:nth-child(3n),
+.flame-core path:nth-child(3n) { animation-duration: 1.72s; }
+.flame-glow path:nth-child(4n),
+.flame-mid path:nth-child(4n),
+.flame-core path:nth-child(4n) { animation-duration: 1.28s; }
+.flame-glow path:nth-child(5n),
+.flame-mid path:nth-child(5n),
+.flame-core path:nth-child(5n) { animation-duration: 1.6s; }
+
+.deco-crown {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: decoCrownBob 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(226, 232, 255, .55));
+}
+.deco-crown path {
+  fill: #e8eefc;
+  stroke: rgba(255, 255, 255, .7);
+  stroke-width: .8;
+}
+.deco-crown rect { fill: #9aa7c7; stroke: none; }
+.deco-crown circle { fill: var(--fire-b); stroke: none; }
+
+@keyframes tongueFlicker {
+  0%   { opacity: .5;  transform: translateY(1px) scale(.95); }
+  45%  { opacity: 1;   transform: translateY(-1px) scale(1.05); }
+  100% { opacity: .76; transform: translateY(0) scale(.99); }
+}
+@keyframes decoCrownBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5%); }
 }
 
-.avatar.avatar-crown::after,
-.pv-avatar.pvf-crown::after {
-  content: "";
-  position: absolute;
+/* =============================================================
+   FULL-BLEED FRAME CARDS - the shop's Frames tab
+   ============================================================= */
+.shop-grid.frame-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.shop-item.frame-card {
+  position: relative;
+  background: #07030f;
+  border: 1px solid color-mix(in srgb, #8b5cf6 42%, #1b1230);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -24px rgba(0, 0, 0, .85);
+}
+.shop-item.frame-card:hover {
+  border-color: rgba(167, 139, 250, .8);
+  box-shadow: 0 24px 52px -22px rgba(76, 29, 149, .85);
+}
+.frame-card .fc-preview {
+  height: 330px;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: #05020a;
+}
+.frame-card .fc-preview::after { display: none; }
+.frame-card .si-type {
+  top: 14px;
+  left: 14px;
+  z-index: 6;
+  padding: 4px 8px;
+  color: #f4f0ff;
+  background: rgba(5, 2, 10, .55);
+  border: 1px solid rgba(226, 232, 255, .22);
+  border-radius: 2px;
+  font-size: 7px;
+  letter-spacing: .2em;
+  backdrop-filter: blur(4px);
+}
+.frame-card .si-owned-tag {
+  top: 14px;
+  right: 14px;
+  z-index: 6;
+  background: rgba(5, 2, 10, .55);
+  color: #e9d5ff;
+  border-color: rgba(226, 232, 255, .28);
+  backdrop-filter: blur(4px);
+}
+.frame-card .si-animated {
+  top: 14px;
   left: 50%;
-  top: -30%;
-  width: 54%;
-  height: 32%;
-  z-index: 3;
-  pointer-events: none;
+  bottom: auto;
+  z-index: 6;
   transform: translateX(-50%);
-  background: linear-gradient(180deg, #fff6c4 0%, #ffd166 44%, #b8791f 100%);
-  clip-path: polygon(0% 100%, 0% 42%, 15% 62%, 26% 16%, 40% 56%, 50% 8%, 60% 56%, 74% 16%, 85% 62%, 100% 42%, 100% 100%);
-  filter: drop-shadow(0 2px 5px rgba(255, 209, 102, .85));
-  animation: crownBob 2.8s ease-in-out infinite;
+  color: #f4f0ff;
+  background: rgba(5, 2, 10, .5);
+  border-color: rgba(226, 232, 255, .22);
+  backdrop-filter: blur(4px);
 }
 
-/* per-frame fire palettes - real avatars */
-.avatar[data-frame="frame-neon"]    { --fire-a: #ff2e88; --fire-b: #b06bff; --fire-c: #6ff0ff; }
-.avatar[data-frame="frame-holo"]    { --fire-a: #ff2e88; --fire-b: #2bff88; --fire-c: #6fd4ff; }
-.avatar[data-frame="frame-flame"]   { --fire-a: #ff3b00; --fire-b: #ff8a00; --fire-c: #ffd166; }
-.avatar[data-frame="frame-frost"]   { --fire-a: #4d8dff; --fire-b: #9fd6ff; --fire-c: #e8fbff; }
-.avatar[data-frame="frame-anime"]   { --fire-a: #ff2e88; --fire-b: #ff8fb3; --fire-c: #ffd166; }
-.avatar[data-frame="frame-football"]{ --fire-a: #1f8a4c; --fire-b: #38d67a; --fire-c: #f3e8d0; }
-.avatar[data-frame="frame-monarch"] { --fire-a: #4a2bd6; --fire-b: #8b6bff; --fire-c: #c9b8ff; }
-.avatar[data-frame="frame-gate"]    { --fire-a: #1b4fa8; --fire-b: #4d8dff; --fire-c: #9fd6ff; }
-.avatar[data-frame="frame-blossom"] { --fire-a: #c81f5a; --fire-b: #ff5c8a; --fire-c: #ffd6e6; }
-.avatar[data-frame="frame-thunder"] { --fire-a: #a88f00; --fire-b: #f5e642; --fire-c: #fffbd1; }
+.fc-scene {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  --scene-glow: #8b5cf6;
+  background: var(--scene, radial-gradient(circle at 50% 38%, #2a1650, #08030f 72%));
+}
+.fc-scene::after {
+  background: linear-gradient(180deg, rgba(5, 2, 10, 0) 28%, rgba(5, 2, 10, .42) 56%, rgba(5, 2, 10, .92) 100%);
+}
+.fc-scene .pv-frame-haze { opacity: .55; }
+.fc-scene .pv-frame-spark { opacity: .55; }
+.fc-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke: none;
+  fill: none;
+}
+.fc-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding-bottom: 96px;
+  pointer-events: none;
+}
+.fc-stage .pv-avatar {
+  width: 124px;
+  height: 124px;
+  font-size: 42px;
+}
+.fc-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  padding: 46px 20px 16px;
+  color: #f4f0ff;
+  background: linear-gradient(180deg, rgba(4, 2, 9, 0) 0%, rgba(4, 2, 9, .58) 22%, rgba(4, 2, 9, .92) 52%, rgba(4, 2, 9, .98) 100%);
+}
+.fc-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fc-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Manrope", var(--sans);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: #f8f5ff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .7);
+}
+.fc-crown-ic {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  fill: #dfe6f5;
+  stroke: none;
+  filter: drop-shadow(0 0 5px rgba(226, 232, 255, .55));
+}
+.fc-cat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(233, 213, 255, .65);
+  white-space: nowrap;
+}
+.fc-cat span {
+  width: 24px;
+  height: 1px;
+  background: rgba(233, 213, 255, .45);
+}
+.fc-desc {
+  margin: 7px 0 0;
+  font-family: "Manrope", var(--sans);
+  font-size: .72rem;
+  line-height: 1.5;
+  color: rgba(244, 240, 255, .68);
+  max-width: 46ch;
+}
+.fc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 13px;
+}
+.frame-card .si-price {
+  color: #e9d5ff;
+  font-size: .78rem;
+}
+.frame-card .si-price .coin {
+  width: 12px;
+  height: 12px;
+}
+.frame-card .si-buy {
+  width: auto;
+  padding: 9px 22px;
+  border: 1px solid rgba(216, 199, 255, .55);
+  border-radius: 3px;
+  background: linear-gradient(180deg, #8b5cf6, #5b21b6);
+  color: #f8f5ff;
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 16px rgba(139, 92, 246, .55),
+    inset 0 1px 0 rgba(255, 255, 255, .25);
+}
+.frame-card .si-buy:hover {
+  background: linear-gradient(180deg, #a78bfa, #6d28d9);
+  border-color: rgba(233, 213, 255, .85);
+  color: #fff;
+  box-shadow:
+    0 0 26px rgba(139, 92, 246, .85),
+    inset 0 1px 0 rgba(255, 255, 255, .3);
+}
+.frame-card .si-buy.equipped {
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(226, 232, 255, .3);
+  color: #cbd5e1;
+  box-shadow: none;
+}
+.frame-card .si-buy.equip {
+  background: linear-gradient(180deg, #7c3aed, #4c1d95);
+  border-color: rgba(216, 199, 255, .6);
+  color: #f8f5ff;
+}
+
+/* =============================================================
+   PER-FRAME FIRE + SCENE PALETTES
+   ============================================================= */
+.avatar[data-frame="frame-neon"]    { --fire-a: #5b21b6; --fire-b: #a855f7; --fire-c: #e9d5ff; }
+.avatar[data-frame="frame-holo"]    { --fire-a: #0f766e; --fire-b: #2bff88; --fire-c: #6fd4ff; }
+.avatar[data-frame="frame-flame"]   { --fire-a: #b91c1c; --fire-b: #ff7a1a; --fire-c: #ffd166; }
+.avatar[data-frame="frame-frost"]   { --fire-a: #1e3a8a; --fire-b: #4d8dff; --fire-c: #e8fbff; }
+.avatar[data-frame="frame-anime"]   { --fire-a: #9d174d; --fire-b: #ff5c8a; --fire-c: #ffd166; }
+.avatar[data-frame="frame-football"]{ --fire-a: #14532d; --fire-b: #38d67a; --fire-c: #f3e8d0; }
+.avatar[data-frame="frame-monarch"] { --fire-a: #4c1d95; --fire-b: #8b6bff; --fire-c: #c9b8ff; }
+.avatar[data-frame="frame-gate"]    { --fire-a: #1e3a8a; --fire-b: #4d8dff; --fire-c: #9fd6ff; }
+.avatar[data-frame="frame-blossom"] { --fire-a: #9d174d; --fire-b: #ff5c8a; --fire-c: #ffd6e6; }
+.avatar[data-frame="frame-thunder"] { --fire-a: #854d0e; --fire-b: #f5e642; --fire-c: #fffbd1; }
 .avatar[data-frame="frame-curse"]   { --fire-a: #3a0410; --fire-b: #8c1428; --fire-c: #ff4d6d; }
-.avatar[data-frame="frame-player"]  { --fire-a: #ff2e88; --fire-b: #2bff88; --fire-c: #6fd4ff; }
-.avatar[data-frame="frame-boss"]    { --fire-a: #8c0f12; --fire-b: #ff2e2e; --fire-c: #ffb347; }
-.avatar[data-frame="frame-mecha"]   { --fire-a: #1b6b8c; --fire-b: #6fd4ff; --fire-c: #ffb347; }
-.avatar[data-frame="frame-study"]   { --fire-a: #a8621a; --fire-b: #ffb347; --fire-c: #ffe6a8; }
-.avatar[data-frame="frame-library"] { --fire-a: #7a5a24; --fire-b: #c9a15d; --fire-c: #ffe6a8; }
+.avatar[data-frame="frame-player"]  { --fire-a: #14532d; --fire-b: #2bff88; --fire-c: #6fd4ff; }
+.avatar[data-frame="frame-boss"]    { --fire-a: #7f1d1d; --fire-b: #ff2e2e; --fire-c: #ffb347; }
+.avatar[data-frame="frame-mecha"]   { --fire-a: #155e75; --fire-b: #6fd4ff; --fire-c: #ffb347; }
+.avatar[data-frame="frame-study"]   { --fire-a: #92400e; --fire-b: #ffb347; --fire-c: #ffe6a8; }
+.avatar[data-frame="frame-library"] { --fire-a: #713f12; --fire-b: #c9a15d; --fire-c: #ffe6a8; }
 
-/* per-frame fire palettes - shop previews */
-.pv-avatar.pvf-neon    { --fire-a: #ff2e88; --fire-b: #b06bff; --fire-c: #6ff0ff; }
-.pv-avatar.pvf-holo    { --fire-a: #ff2e88; --fire-b: #2bff88; --fire-c: #6fd4ff; }
-.pv-avatar.pvf-flame   { --fire-a: #ff3b00; --fire-b: #ff8a00; --fire-c: #ffd166; }
-.pv-avatar.pvf-frost   { --fire-a: #4d8dff; --fire-b: #9fd6ff; --fire-c: #e8fbff; }
-.pv-avatar.pvf-anime   { --fire-a: #ff2e88; --fire-b: #ff8fb3; --fire-c: #ffd166; }
-.pv-avatar.pvf-football{ --fire-a: #1f8a4c; --fire-b: #38d67a; --fire-c: #f3e8d0; }
-.pv-avatar.pvf-monarch { --fire-a: #4a2bd6; --fire-b: #8b6bff; --fire-c: #c9b8ff; }
-.pv-avatar.pvf-gate    { --fire-a: #1b4fa8; --fire-b: #4d8dff; --fire-c: #9fd6ff; }
-.pv-avatar.pvf-blossom { --fire-a: #c81f5a; --fire-b: #ff5c8a; --fire-c: #ffd6e6; }
-.pv-avatar.pvf-thunder { --fire-a: #a88f00; --fire-b: #f5e642; --fire-c: #fffbd1; }
+.pv-avatar.pvf-neon    { --fire-a: #5b21b6; --fire-b: #a855f7; --fire-c: #e9d5ff; }
+.pv-avatar.pvf-holo    { --fire-a: #0f766e; --fire-b: #2bff88; --fire-c: #6fd4ff; }
+.pv-avatar.pvf-flame   { --fire-a: #b91c1c; --fire-b: #ff7a1a; --fire-c: #ffd166; }
+.pv-avatar.pvf-frost   { --fire-a: #1e3a8a; --fire-b: #4d8dff; --fire-c: #e8fbff; }
+.pv-avatar.pvf-anime   { --fire-a: #9d174d; --fire-b: #ff5c8a; --fire-c: #ffd166; }
+.pv-avatar.pvf-football{ --fire-a: #14532d; --fire-b: #38d67a; --fire-c: #f3e8d0; }
+.pv-avatar.pvf-monarch { --fire-a: #4c1d95; --fire-b: #8b6bff; --fire-c: #c9b8ff; }
+.pv-avatar.pvf-gate    { --fire-a: #1e3a8a; --fire-b: #4d8dff; --fire-c: #9fd6ff; }
+.pv-avatar.pvf-blossom { --fire-a: #9d174d; --fire-b: #ff5c8a; --fire-c: #ffd6e6; }
+.pv-avatar.pvf-thunder { --fire-a: #854d0e; --fire-b: #f5e642; --fire-c: #fffbd1; }
 .pv-avatar.pvf-curse   { --fire-a: #3a0410; --fire-b: #8c1428; --fire-c: #ff4d6d; }
-.pv-avatar.pvf-player  { --fire-a: #ff2e88; --fire-b: #2bff88; --fire-c: #6fd4ff; }
-.pv-avatar.pvf-boss    { --fire-a: #8c0f12; --fire-b: #ff2e2e; --fire-c: #ffb347; }
-.pv-avatar.pvf-mecha   { --fire-a: #1b6b8c; --fire-b: #6fd4ff; --fire-c: #ffb347; }
-.pv-avatar.pvf-study   { --fire-a: #a8621a; --fire-b: #ffb347; --fire-c: #ffe6a8; }
-.pv-avatar.pvf-library { --fire-a: #7a5a24; --fire-b: #c9a15d; --fire-c: #ffe6a8; }
+.pv-avatar.pvf-player  { --fire-a: #14532d; --fire-b: #2bff88; --fire-c: #6fd4ff; }
+.pv-avatar.pvf-boss    { --fire-a: #7f1d1d; --fire-b: #ff2e2e; --fire-c: #ffb347; }
+.pv-avatar.pvf-mecha   { --fire-a: #155e75; --fire-b: #6fd4ff; --fire-c: #ffb347; }
+.pv-avatar.pvf-study   { --fire-a: #92400e; --fire-b: #ffb347; --fire-c: #ffe6a8; }
+.pv-avatar.pvf-library { --fire-a: #713f12; --fire-b: #c9a15d; --fire-c: #ffe6a8; }
 
-@keyframes fireSpin { to { rotate: 360deg; } }
-@keyframes fireFlicker {
-  0%   { opacity: .8;  scale: .97; }
-  55%  { opacity: 1;   scale: 1.04; }
-  100% { opacity: .92; scale: 1; }
+/* scene glow + palettes for the full-bleed cards */
+.pvfs-neon {
+  --scene-glow: #a855f7;
+  --scene: radial-gradient(circle at 68% 18%, #7c3aed 0, transparent 42%), radial-gradient(circle at 30% 88%, #4c1d95 0, transparent 55%), linear-gradient(160deg, #1b0b33, #07030f 72%);
+  --haze: radial-gradient(circle, rgba(168, 85, 247, .45), transparent 62%);
 }
-@keyframes crownBob {
-  0%, 100% { translate: 0 0; }
-  50%      { translate: 0 -9%; }
+.pvfs-holo {
+  --scene-glow: #2bff88;
+  --scene: radial-gradient(circle at 64% 22%, #0f766e 0, transparent 42%), radial-gradient(circle at 28% 82%, #4c1d95 0, transparent 54%), linear-gradient(160deg, #071a18, #05020a 72%);
+  --haze: radial-gradient(circle, rgba(43, 255, 136, .38), transparent 62%);
+}
+.pvfs-flame {
+  --scene-glow: #ff7a1a;
+  --scene: radial-gradient(circle at 66% 20%, #b91c1c 0, transparent 42%), radial-gradient(circle at 32% 88%, #7c2d12 0, transparent 56%), linear-gradient(160deg, #1c0705, #07030f 72%);
+  --haze: radial-gradient(circle, rgba(255, 122, 26, .42), transparent 62%);
+}
+.pvfs-frost {
+  --scene-glow: #9fd6ff;
+  --scene: radial-gradient(circle at 66% 20%, #1e3a8a 0, transparent 42%), radial-gradient(circle at 30% 86%, #0e7490 0, transparent 56%), linear-gradient(160deg, #06101f, #05020a 72%);
+  --haze: radial-gradient(circle, rgba(159, 214, 255, .38), transparent 62%);
+}
+.pvfs-anime {
+  --scene-glow: #ff5c8a;
+  --scene: radial-gradient(circle at 66% 20%, #9d174d 0, transparent 42%), radial-gradient(circle at 30% 86%, #4c1d95 0, transparent 56%), linear-gradient(160deg, #1d0714, #07030f 72%);
+  --haze: radial-gradient(circle, rgba(255, 92, 138, .4), transparent 62%);
+}
+.pvfs-football {
+  --scene-glow: #38d67a;
+  --scene: radial-gradient(circle at 66% 20%, #14532d 0, transparent 42%), radial-gradient(circle at 30% 86%, #052e16 0, transparent 56%), linear-gradient(160deg, #06140b, #05020a 72%);
+  --haze: radial-gradient(circle, rgba(56, 214, 122, .38), transparent 62%);
+}
+.pvfs-monarch { --scene-glow: #8b6bff; }
+.pvfs-gate    { --scene-glow: #4d8dff; }
+.pvfs-blossom { --scene-glow: #ff5c8a; }
+.pvfs-thunder { --scene-glow: #f5e642; }
+.pvfs-curse   { --scene-glow: #ff2e4d; }
+.pvfs-player  { --scene-glow: #2bff88; }
+.pvfs-boss    { --scene-glow: #ff2e2e; }
+.pvfs-mecha   { --scene-glow: #6fd4ff; }
+.pvfs-study   { --scene-glow: #ffb347; }
+.pvfs-library { --scene-glow: #ffd166; }
+
+/* the older frames still get a full-bleed scene on their big card */
+.pvfs-classic {
+  --scene-glow: #c9a15d;
+  --scene: radial-gradient(circle at 50% 26%, #1b2a4a 0, transparent 46%), linear-gradient(160deg, #0a1228, #05020a 72%);
+}
+.pvfs-gold {
+  --scene-glow: #c9a15d;
+  --scene: radial-gradient(circle at 64% 20%, #7a4a12 0, transparent 42%), linear-gradient(160deg, #1a1208, #07030f 72%);
+  --haze: radial-gradient(circle, rgba(201, 161, 93, .4), transparent 62%);
+}
+.pvfs-orbit {
+  --scene-glow: #38d6a4;
+  --scene: radial-gradient(circle at 64% 20%, #0f766e 0, transparent 42%), linear-gradient(160deg, #061a18, #07030f 72%);
+  --haze: radial-gradient(circle, rgba(56, 214, 164, .38), transparent 62%);
+}
+.pvfs-inferno {
+  --scene-glow: #ff5a3c;
+  --scene: radial-gradient(circle at 64% 20%, #7f1d1d 0, transparent 42%), linear-gradient(160deg, #1c0705, #07030f 72%);
+  --haze: radial-gradient(circle, rgba(255, 90, 60, .42), transparent 62%);
+}
+.pvfs-starlit {
+  --scene-glow: #d7a87c;
+  --scene: radial-gradient(circle at 64% 20%, #5e1b2c 0, transparent 42%), linear-gradient(160deg, #1a0c1f, #07030f 72%);
+  --haze: radial-gradient(circle, rgba(215, 168, 124, .38), transparent 62%);
+}
+
+@media (max-width: 820px) {
+  .shop-grid.frame-grid { grid-template-columns: 1fr; }
+  .frame-card .fc-preview { height: 310px; }
+  .fc-stage { padding-bottom: 94px; }
+  .fc-stage .pv-avatar { width: 112px; height: 112px; font-size: 40px; }
+}
+@media (max-width: 460px) {
+  .frame-card .fc-preview { height: 286px; }
+  .fc-stage { padding-bottom: 88px; }
+  .fc-stage .pv-avatar { width: 98px; height: 98px; font-size: 34px; }
+  .fc-panel { padding: 42px 14px 14px; }
+  .fc-name { font-size: 1rem; }
+  .fc-desc { font-size: .68rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .avatar.avatar-fire::before,
-  .pv-avatar.pvf-fire::before,
-  .avatar.avatar-crown::after,
-  .pv-avatar.pvf-crown::after { animation: none !important; }
+  .flame-glow path,
+  .flame-mid path,
+  .flame-core path,
+  .deco-crown { animation: none !important; }
 }

@@ -25,6 +25,18 @@ function renderIdentity() {
     el.dataset.frame = frame ? frame.id : "frame-classic";
     el.classList.toggle("avatar-fire", !!(frame && frame.animated));
     el.classList.toggle("avatar-crown", !!(frame && frame.crown));
+    let deco = el.querySelector(".avatar-deco");
+    if (frame && frame.animated && typeof frameDecoSVG === "function") {
+      if (!deco || deco.dataset.frame !== frame.id) {
+        const html = frameDecoSVG(!!frame.crown);
+        if (deco) deco.outerHTML = html;
+        else el.insertAdjacentHTML("beforeend", html);
+        deco = el.querySelector(".avatar-deco");
+        if (deco) deco.dataset.frame = frame.id;
+      }
+    } else if (deco) {
+      deco.remove();
+    }
     const letter = el.querySelector(".avatar-letter");
     if (letter) letter.textContent = (u.avatarLetter || u.name.charAt(0) || "A").toUpperCase();
     let img = el.querySelector(".avatar-img");
