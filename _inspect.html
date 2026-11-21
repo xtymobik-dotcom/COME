@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>video inspect</title></head>
+<body style="margin:0;background:#000">
+<video id="v" src="_tmp_profile_video.mp4" muted playsinline style="width:100%;height:auto"></video>
+<script>
+  window.framesAt = async function(times) {
+    const v = document.getElementById('v');
+    if (!v.videoWidth) await new Promise(r => v.addEventListener('loadedmetadata', r, {once:true}));
+    const out = [];
+    for (const t of times) {
+      await new Promise(r => { v.addEventListener('seeked', r, {once:true}); v.currentTime = Math.min(t, v.duration); });
+      const c = document.createElement('canvas');
+      c.width = v.videoWidth; c.height = v.videoHeight;
+      c.getContext('2d').drawImage(v, 0, 0);
+      out.push({ t, data: c.toDataURL('image/jpeg', 0.88) });
+    }
+    return out;
+  };
+</script>
+</body>
+</html>

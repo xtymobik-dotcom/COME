@@ -116,7 +116,7 @@ function renderShop() {
       } else if (item.type === "frame") {
         const css = esc(item.css || "classic");
         const fire = item.animated ? " pvf-fire" : "";
-        const deco = item.animated && typeof frameDecoSVG === "function" ? frameDecoSVG(!!item.crown) : "";
+        const deco = item.animated && typeof frameDecoHTML === "function" ? frameDecoHTML(item) : "";
         const catMatch = (item.desc || "").match(/^(Anime|Gaming|Study)\b/);
         const cat = catMatch ? catMatch[1].toUpperCase() : "FRAME";
         const descText = (item.desc || "").replace(/^(Anime|Gaming|Study)\s*[\u2014\u2013-]\s*/, "");

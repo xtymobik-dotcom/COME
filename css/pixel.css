@@ -1188,127 +1188,74 @@ html.coach-tour .sidebar-scrim { transition: none !important; }
 }
 
 /* =============================================================
-   FRAME DECORATIONS - sharp SVG flame tongues + silver crown
-   The flames are drawn as separate jagged paths around a 30..170
-   square in a 200x200 viewBox. Three copies (glow, mid, core)
-   give the fire depth; every tongue flickers on its own delay.
+   FRAME DECORATIONS - the reference flame clip
+   One 96-frame sprite sheet drives every animated frame. A
+   luminance mask turns its black backdrop into transparency, so
+   the owner's picture shows through the middle and the flames
+   sit cleanly on any theme. Hue-rotate recolours the same fire
+   for each frame.
    ============================================================= */
 .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-/* square PFP inside the fire frame */
+/* portrait PFP inside the flame frame (sprite hole is 450x550) */
 .avatar.avatar-fire,
 .pv-avatar.pvf-fire {
+  aspect-ratio: 9 / 11;
+  height: auto !important;
   overflow: visible;
-  border-radius: 4px !important;
-  isolation: isolate;
-  border: 1px solid #d7dcef !important;
+  border: 0 !important;
+  border-radius: 0 !important;
   background: #07030f;
-  box-shadow:
-    0 0 0 1px rgba(3, 2, 8, .9),
-    0 0 18px color-mix(in srgb, var(--fire-b, #8b5cf6) 48%, transparent);
+  box-shadow: none !important;
   animation: none !important;
-  --fire-a: #4c1d95;
-  --fire-b: #8b5cf6;
-  --fire-c: #e9d5ff;
+  isolation: isolate;
 }
 .avatar.avatar-fire .avatar-img,
-.pv-avatar.pvf-fire .avatar-img { border-radius: 3px !important; }
+.pv-avatar.pvf-fire .avatar-img { border-radius: 0 !important; }
 .avatar.avatar-fire::before,
 .avatar.avatar-fire::after,
 .pv-avatar.pvf-fire::before,
 .pv-avatar.pvf-fire::after { content: none !important; display: none !important; }
 
-/* The SVG is 200 units wide and the frame square is 30..170, so
-   the deco must be 200/140 = 142.86% of the avatar and pulled
-   out by (200-140)/2/140 = 21.43% on every side. */
+/* The 240x300 sprite has its picture hole at x 42.33..192.33 and
+   y 72..255.33. These insets line that hole up with the 9:11
+   avatar box. The deco itself is 4:5, exactly like the sprite. */
 .avatar-deco {
   position: absolute;
-  inset: -21.43%;
+  inset: -39.273% -31.778% -24.364% -28.222%;
   z-index: -1;
   display: block;
+  overflow: hidden;
   pointer-events: none;
+  filter: hue-rotate(var(--fire-hue, 0deg)) saturate(var(--fire-sat, 1.12)) brightness(1.05);
 }
-.avatar-deco-svg {
-  width: 100%;
+.avatar-deco::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 9600%;
   height: 100%;
-  overflow: visible;
-  fill: none;
-  stroke: none;
+  background-image: url("../assets/frames/flame-sprite.jpg?v=20261121a");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-image: url("../assets/frames/flame-sprite.jpg?v=20261121a");
+  mask-image: url("../assets/frames/flame-sprite.jpg?v=20261121a");
+  -webkit-mask-mode: luminance;
+  mask-mode: luminance;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: flameSprite 6s steps(95) infinite;
 }
-.avatar-deco-svg path { stroke: none; }
+@keyframes flameSprite {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-98.958333%); }
+}
 
-.flame-glow,
-.flame-mid,
-.flame-core {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.flame-glow {
-  filter: blur(5px) saturate(1.35);
-  opacity: .72;
-  transform: scale(1.07);
-  mix-blend-mode: screen;
-}
-.flame-mid {
-  filter: blur(1.2px) saturate(1.15);
-  opacity: .94;
-  transform: scale(1.02);
-}
-.flame-core {
-  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--fire-c) 80%, transparent));
-  opacity: .96;
-}
-.flame-glow path,
-.flame-mid path,
-.flame-core path {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.flame-glow path {
-  fill: var(--fire-a);
-  animation: tongueFlicker 1.45s ease-in-out infinite alternate;
-}
-.flame-mid path {
-  fill: var(--fire-b);
-  animation: tongueFlicker 1.15s ease-in-out infinite alternate-reverse;
-}
-.flame-core path {
-  fill: color-mix(in srgb, var(--fire-c) 82%, #fff);
-  animation: tongueFlicker .92s ease-in-out infinite alternate;
-}
-.flame-glow path:nth-child(3n),
-.flame-mid path:nth-child(3n),
-.flame-core path:nth-child(3n) { animation-duration: 1.72s; }
-.flame-glow path:nth-child(4n),
-.flame-mid path:nth-child(4n),
-.flame-core path:nth-child(4n) { animation-duration: 1.28s; }
-.flame-glow path:nth-child(5n),
-.flame-mid path:nth-child(5n),
-.flame-core path:nth-child(5n) { animation-duration: 1.6s; }
-
-.deco-crown {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: decoCrownBob 2.8s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(226, 232, 255, .55));
-}
-.deco-crown path {
-  fill: #e8eefc;
-  stroke: rgba(255, 255, 255, .7);
-  stroke-width: .8;
-}
-.deco-crown rect { fill: #9aa7c7; stroke: none; }
-.deco-crown circle { fill: var(--fire-b); stroke: none; }
-
-@keyframes tongueFlicker {
-  0%   { opacity: .5;  transform: translateY(1px) scale(.95); }
-  45%  { opacity: 1;   transform: translateY(-1px) scale(1.05); }
-  100% { opacity: .76; transform: translateY(0) scale(.99); }
-}
-@keyframes decoCrownBob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-5%); }
-}
+/* compact previews use a slightly smaller frame so the crown
+   clears the top of the 130px preview tile */
+.pv-frame-scene:not(.fc-scene) .pv-avatar.pvf-fire { width: 54px; }
 
 /* =============================================================
    FULL-BLEED FRAME CARDS - the shop's Frames tab
@@ -1401,9 +1348,9 @@ html.coach-tour .sidebar-scrim { transition: none !important; }
   pointer-events: none;
 }
 .fc-stage .pv-avatar {
-  width: 124px;
-  height: 124px;
-  font-size: 42px;
+  width: 96px;
+  height: 96px;
+  font-size: 34px;
 }
 .fc-panel {
   position: absolute;
@@ -1624,12 +1571,12 @@ html.coach-tour .sidebar-scrim { transition: none !important; }
   .shop-grid.frame-grid { grid-template-columns: 1fr; }
   .frame-card .fc-preview { height: 310px; }
   .fc-stage { padding-bottom: 94px; }
-  .fc-stage .pv-avatar { width: 112px; height: 112px; font-size: 40px; }
+  .fc-stage .pv-avatar { width: 88px; height: 88px; font-size: 32px; }
 }
 @media (max-width: 460px) {
   .frame-card .fc-preview { height: 286px; }
   .fc-stage { padding-bottom: 88px; }
-  .fc-stage .pv-avatar { width: 98px; height: 98px; font-size: 34px; }
+  .fc-stage .pv-avatar { width: 80px; height: 80px; font-size: 28px; }
   .fc-panel { padding: 42px 14px 14px; }
   .fc-name { font-size: 1rem; }
   .fc-desc { font-size: .68rem; }

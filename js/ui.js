@@ -26,9 +26,9 @@ function renderIdentity() {
     el.classList.toggle("avatar-fire", !!(frame && frame.animated));
     el.classList.toggle("avatar-crown", !!(frame && frame.crown));
     let deco = el.querySelector(".avatar-deco");
-    if (frame && frame.animated && typeof frameDecoSVG === "function") {
+    if (frame && frame.animated && typeof frameDecoHTML === "function") {
       if (!deco || deco.dataset.frame !== frame.id) {
-        const html = frameDecoSVG(!!frame.crown);
+        const html = frameDecoHTML(frame);
         if (deco) deco.outerHTML = html;
         else el.insertAdjacentHTML("beforeend", html);
         deco = el.querySelector(".avatar-deco");
